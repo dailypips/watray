@@ -1,0 +1,59 @@
+NULL = 
+
+AM_CPPFLAGS = \
+	$(WATRAY_CFLAGS) \
+	-DPACKAGE_DATADIR=\""$(pkgdatadir)"\" \
+	-DPACKAGE_LIBDIR=\""$(libdir)"\" \
+	-include $(CONFIG_HEADER) \
+	$(NULL)
+
+BUILT_SOURCES = watray.vala.stamp
+
+bin_PROGRAMS = watray
+
+watray_VALASOURCES = \
+	watraydocumentspanel.vala \
+	watraydocumentspanelinterface.vala \
+	watraydocumentspanelview.vala \
+	watraymainwindow.vala \
+	watraymainwindowinterface.vala \
+	watrayprojectspanel.vala \
+	watrayprojectspanelinterface.vala \
+	watrayprojectspanelitem.vala \
+	watrayplugin.vala \
+	watrayplugininfo.vala \
+	watrayplugininterface.vala \
+	watraypluginmanager.vala \
+	$(NULL)
+
+watray_SOURCES = \
+	$(watray_VALASOURCES:.vala=.c) \
+	$(watray_VALASOURCES:.vala=.h) \
+	$(NULL)
+
+watrayincludedir = $(includedir)/watray-1.0/watray
+
+watrayinclude_HEADERS = \
+	watraydocumentspanelinterface.h \
+	watraydocumentspanelview.h \
+	watraymainwindowinterface.h \
+	watrayprojectspanelinterface.h \
+	watrayprojectspanelitem.h \
+	$(NULL)
+
+watray.vala.stamp: $(watray_VALASOURCES)
+	$(VALAC) -C --pkg gtk+-2.0 --pkg gdk-2.0 --pkg gmodule-2.0 --pkg config --basedir $(top_srcdir) --library watray-1.0 --vapidir $(top_srcdir)/vapi $^
+	touch $@
+
+watray_LDADD = \
+	$(WATRAY_LIBS) \
+	$(NULL)
+
+EXTRA_DIST = \
+	$(watray_VALASOURCES) \
+	watray.vala.stamp \
+	$(NULL)
+
+DISTCLEANFILES = \
+	$(NULL)
+

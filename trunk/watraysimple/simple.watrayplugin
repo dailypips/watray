@@ -1,0 +1,6 @@
+[Watray Plugin]
+Module=watraysimple
+Name=simple
+Description=A simple plugin
+Authors=Matias De la Puente <mfpuente.ar@gmail.com>
+License=LGPL
