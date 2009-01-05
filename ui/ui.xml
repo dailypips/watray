@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<ui>
+	<menubar name="MainMenu">
+		<menu name="FileMenu" action="FileMenuAction">
+			<menuitem name="NewMenu" action="NewMenuAction"/>
+			<menuitem name="OpenMenu" action="OpenMenuAction"/>
+			<separator/>
+			<menuitem action="SaveAction"/>
+			<menuitem action="SaveAsAction"/>
+			<separator/>
+			<menuitem action="PrintAction"/>
+			<separator/>
+			<menuitem action="CloseAction"/>
+			<menuitem action="QuitAction" />
+		</menu>
+		
+		<menu name="EditMenu" action="EditMenuAction">
+			<menuitem action="UndoAction"/>
+			<menuitem action="RedoAction"/>
+			<separator/>
+			<menuitem action="CutAction"/>
+			<menuitem action="CopyAction"/>
+			<menuitem action="PasteAction"/>
+			<separator/>
+			<menuitem action="FindAction"/>
+			<menuitem action="FindAndReplaceAction"/>
+			<separator/>
+			<menuitem action="PreferencesAction"/>
+		</menu>
+		
+	</menubar>
+	
+	<toolbar name="MainToolbar" action="MainMenuBarAction">
+		<toolitem action="SaveAction"/>
+		<separator/>
+		<toolitem action="PrintAction"/>
+		<separator/>
+		<toolitem action="UndoAction"/>
+		<toolitem action="RedoAction"/>
+		<separator/>
+		<toolitem action="CutAction"/>
+		<toolitem action="CopyAction"/>
+		<toolitem action="PasteAction"/>
+	</toolbar>
+
+</ui>
+
