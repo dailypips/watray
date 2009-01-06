@@ -1,3 +1,5 @@
 [encoding: UTF-8]
 # List of source files which contain translatable strings.
 watray/watraymainwindow.vala
+watraysimple/simpleplugin.vala
+watraysimple/simpledocumentmanager.vala

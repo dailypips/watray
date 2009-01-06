@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: watray 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-02 12:55-0200\n"
+"POT-Creation-Date: 2009-01-06 12:54-0200\n"
 "PO-Revision-Date: 2008-12-23 12:15-0200\n"
 "Last-Translator: Matias De la Puente <mfpuente.ar@gmail.com>\n"
 "Language-Team: Spanish <mfpuente.ar@gmail.com>\n"
@@ -23,31 +23,20 @@ msgstr "_Archivo"
 msgid "_Edit"
 msgstr "_Editar"
 
-#: ../watray/watraymainwindow.vala:13 ../watray/watraymainwindow.vala:29
-msgid "_Project"
-msgstr "_Proyecto"
+#: ../watraysimple/simpleplugin.vala:21 ../watraysimple/simpleplugin.vala:24
+msgid "Text file"
+msgstr "Archivo de texto"
 
-#: ../watray/watraymainwindow.vala:30
-msgid "_Document"
-msgstr "_Documento"
+#: ../watraysimple/simpledocumentmanager.vala:19
+msgid "Open"
+msgstr "Abrir"
 
-#~ msgid "_New"
-#~ msgstr "_Nuevo"
+#: ../watraysimple/simpledocumentmanager.vala:24
+msgid "All files"
+msgstr "Todos los archivos"
 
-#~ msgid "_Build"
-#~ msgstr "_Construir"
+#: ../watraysimple/simpledocumentmanager.vala:42
+#, c-format
+msgid "Want to save the document %s?"
+msgstr "¿Desea guardar el documento %s?"
 
-#~ msgid "_Configure project"
-#~ msgstr "_Configurar proyecto"
-
-#~ msgid "C_lose current project"
-#~ msgstr "C_errar proyecto actual"
-
-#~ msgid "Open"
-#~ msgstr "Abrir"
-
-#~ msgid "Watray Project"
-#~ msgstr "Proyecto de Watray"
-
-#~ msgid "All files"
-#~ msgstr "Todos los archivos"

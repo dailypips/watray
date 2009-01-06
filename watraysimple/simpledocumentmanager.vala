@@ -39,7 +39,7 @@ public class Simple.DocumentManager : GLib.Object
 	{
 		if (document_view.tab_mark)
 		{
-			var message = new MessageDialog (null, DialogFlags.MODAL, MessageType.WARNING, ButtonsType.NONE, "¿Desea guardar el documento %s?", document_view.tab_text);
+			var message = new MessageDialog (null, DialogFlags.MODAL, MessageType.WARNING, ButtonsType.NONE, _("Want to save the document %s?"), document_view.tab_text);
 			message.add_button (STOCK_YES, ResponseType.YES);
 			message.add_button (STOCK_NO, ResponseType.NO);
 			message.add_button (STOCK_CANCEL, ResponseType.CANCEL);
