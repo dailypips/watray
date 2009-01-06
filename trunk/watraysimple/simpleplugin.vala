@@ -18,10 +18,10 @@ public class Simple.Plugin : GLib.Object, IPlugin
 	construct
 	{
 		_document_manager = new DocumentManager (documents_panel);
-		_new_item = new ImageMenuItem.with_label ("Archivo de texto nuevo");
+		_new_item = new ImageMenuItem.with_label (_("Text file"));
 		_new_item.image = new Image.from_stock (STOCK_FILE, IconSize.MENU);
 		main_window.add_menu_item (MenuType.NEW, _new_item);
-		_open_item = new ImageMenuItem.with_label ("Archivo de texto");
+		_open_item = new ImageMenuItem.with_label (_("Text file"));
 		_open_item.image = new Image.from_stock (STOCK_FILE, IconSize.MENU);
 		_open_item.activate += () => { _document_manager.open (); _main_window.remove_menu_item (MenuType.NEW, _new_item); };
 		main_window.add_menu_item (MenuType.OPEN, _open_item);

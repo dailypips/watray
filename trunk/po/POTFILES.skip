@@ -1,1 +1,3 @@
 watray/watraymainwindow.c
+watraysimple/simpleplugin.c
+watraysimple/simpledocumentmanager.c
