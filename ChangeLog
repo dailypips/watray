@@ -1,5 +1,13 @@
 2009-01-07  Matias De la Puente  <mfpuente.ar@gmail.com>
 
+	* watray/watrayprojectspanel.vala:
+	* watray/watraymainwindow.vala:
+	
+	Added title and body to the projects panel.
+	Update the toggle option on the view menu when the panel hides.
+	
+2009-01-07  Matias De la Puente  <mfpuente.ar@gmail.com>
+
 	* watray/watrayprojectspanelitem.vala:
 	* watray/watrayprojectspanel.vala:
 	* watray/watraypluginmanager.vala:

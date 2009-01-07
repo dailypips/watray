@@ -106,6 +106,9 @@ internal class Watray.MainWindow : Window, IMainWindow
 		menu_item = (MenuItem)ui_manager.get_widget ("/MainMenu/FileMenu/OpenMenu");
 		menu_item.set_submenu (_open_menu);
 		
+		projects_panel.hide += on_projects_panel_visibility_changed;
+		projects_panel.show += on_projects_panel_visibility_changed;
+		
 		var vpaned = new VPaned ();
 		vpaned.pack1 (documents_panel, true, false);
 		
@@ -121,6 +124,7 @@ internal class Watray.MainWindow : Window, IMainWindow
 		this.add (vbox);
 		this.add_accel_group (ui_manager.get_accel_group ());
 		
+		//TODO: implement in the preference dialog a plugin tab
 		plugin_manager = new PluginManager (this, projects_panel, documents_panel);
 		plugin_manager.load_plugins ();
 		if (plugin_manager.activate_plugin ("simple"))
@@ -208,10 +212,13 @@ internal class Watray.MainWindow : Window, IMainWindow
 	public void on_show_projects_panel ()
 	{
 		var action = (ToggleAction)_action_group.get_action ("ViewProjectsPanelAction");
-		if (action.active)
-			projects_panel.show ();
-		else
-			projects_panel.hide ();
+		projects_panel.visible = action.active;
+	}
+	
+	public void on_projects_panel_visibility_changed ()
+	{
+		var action = (ToggleAction)_action_group.get_action ("ViewProjectsPanelAction");
+		action.active = projects_panel.visible;
 	}
 }
 
