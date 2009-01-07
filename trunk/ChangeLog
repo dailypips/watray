@@ -1,3 +1,31 @@
+2009-01-07  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	* watray/watrayprojectspanelitem.vala:
+	* watray/watrayprojectspanel.vala:
+	* watray/watraypluginmanager.vala:
+	* watray/watrayplugininfo.vala:
+	* watray/watrayprojectspanelinterface.vala:
+	* watray/watraymainwindow.vala:
+	* watray/watraydocumentspanelview.vala:
+	* watray/watraymainwindowinterface.vala:
+	* watray/watrayplugin.vala:
+	* watray/watrayplugininterface.vala:
+	* watray/watraydocumentspanel.vala:
+	* watray/watraydocumentspanelinterface.vala:
+	* watraysimple/simpleplugin.vala:
+	* watraysimple/simpledocumentmanager.vala:
+	* watraysimple/simpledocumentview.vala:
+	
+	Added LGPL license
+	
+	* watray/watraymainwindow.vala:
+	
+	Start support for show/hide projects panel
+	
+	* ui/ui.xml:
+	
+	Added view menu
+	
 2009-01-06  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	* watraysimple/simpledocumentmanager.vala

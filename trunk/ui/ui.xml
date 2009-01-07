@@ -28,6 +28,10 @@
 			<menuitem action="PreferencesAction"/>
 		</menu>
 		
+		<menu name="ViewMenu" action="ViewMenuAction">
+			<menuitem name="ViewProjectsPanel" action="ViewProjectsPanelAction"/>
+		</menu>
+		
 	</menubar>
 	
 	<toolbar name="MainToolbar" action="MainMenuBarAction">
