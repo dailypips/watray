@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: watray 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-06 21:16-0200\n"
+"POT-Creation-Date: 2009-01-07 12:24-0200\n"
 "PO-Revision-Date: 2008-12-23 12:15-0200\n"
 "Last-Translator: Matias De la Puente <mfpuente.ar@gmail.com>\n"
 "Language-Team: Spanish <mfpuente.ar@gmail.com>\n"
@@ -15,35 +15,39 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../watray/watraymainwindow.vala:11
+#: ../watray/watraymainwindow.vala:28
 msgid "_File"
 msgstr "_Archivo"
 
-#: ../watray/watraymainwindow.vala:12
+#: ../watray/watraymainwindow.vala:29
 msgid "_Edit"
 msgstr "_Editar"
 
-#: ../watray/watraymainwindow.vala:13
+#: ../watray/watraymainwindow.vala:30
 msgid "_View"
 msgstr "_Ver"
 
-#: ../watray/watraymainwindow.vala:33
+#: ../watray/watraymainwindow.vala:50
 msgid "Projects Panel"
 msgstr "Panel de proyectos"
 
-#: ../watraysimple/simpleplugin.vala:21 ../watraysimple/simpleplugin.vala:24
+#: ../watray/watrayprojectspanel.vala:35
+msgid "Projects"
+msgstr "Proyectos"
+
+#: ../watraysimple/simpleplugin.vala:38 ../watraysimple/simpleplugin.vala:41
 msgid "Text file"
 msgstr "Archivo de texto"
 
-#: ../watraysimple/simpledocumentmanager.vala:19
+#: ../watraysimple/simpledocumentmanager.vala:36
 msgid "Open"
 msgstr "Abrir"
 
-#: ../watraysimple/simpledocumentmanager.vala:24
+#: ../watraysimple/simpledocumentmanager.vala:41
 msgid "All files"
 msgstr "Todos los archivos"
 
-#: ../watraysimple/simpledocumentmanager.vala:42
+#: ../watraysimple/simpledocumentmanager.vala:59
 #, c-format
 msgid "Want to save the document %s?"
 msgstr "¿Desea guardar el documento %s?"
