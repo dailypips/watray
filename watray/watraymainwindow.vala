@@ -1,6 +1,23 @@
-/* mainwindow.vala
- * 
- * Coyright (C) 2008 Matias de la Puente
+/* watraymainwindow.vala
+ *
+ * Copyright (C) 2008-2009  Matias De la Puente
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * Author:
+ * 	Matias De la Puente <mfpuente.ar@gmail.com>
  */
 using Gtk;
 
@@ -10,6 +27,7 @@ internal class Watray.MainWindow : Window, IMainWindow
 	{
 		{ "FileMenuAction", null, N_("_File") },
 		{ "EditMenuAction", null, N_("_Edit") },
+		{ "ViewMenuAction", null, N_("_View") },
 		{ "NewMenuAction", STOCK_NEW },
 		{ "OpenMenuAction", STOCK_OPEN },
 		{ "SaveAction", STOCK_SAVE, null, null, null, on_save },
@@ -26,9 +44,15 @@ internal class Watray.MainWindow : Window, IMainWindow
 		{ "FindAndReplaceAction", STOCK_FIND_AND_REPLACE, null, null, null, on_quit },
 		{ "PreferencesAction", STOCK_PREFERENCES, null, null, null, on_quit }
 	};
+	
+	const ToggleActionEntry[] toggle_action_entries =
+	{
+		{ "ViewProjectsPanelAction", null, N_("Projects Panel"), null, null, on_show_projects_panel, true }
+	};
 
-	private DocumentsPanel documents_panel;
-	private ProjectsPanel projects_panel;
+	private ActionGroup _action_group;
+	private DocumentsPanel documents_panel = new DocumentsPanel ();
+	private ProjectsPanel projects_panel = new ProjectsPanel ();
 	private PluginManager plugin_manager;
 	private Menu _new_menu = new Menu ();
 	private Menu _open_menu = new Menu ();
@@ -47,12 +71,13 @@ internal class Watray.MainWindow : Window, IMainWindow
 		this.destroy += on_quit;
 		this.set_size_request (1000, 500);
 		
-		var action_group = new ActionGroup ("WatrayActions");
-		action_group.set_translation_domain (Config.GETTEXT_PACKAGE);
-		action_group.add_actions (action_entries, this);
+		_action_group = new ActionGroup ("WatrayActions");
+		_action_group.set_translation_domain (Config.GETTEXT_PACKAGE);
+		_action_group.add_actions (action_entries, this);
+		_action_group.add_toggle_actions (toggle_action_entries, this);
 
 		var ui_manager = new UIManager ();
-		ui_manager.insert_action_group (action_group, 0);
+		ui_manager.insert_action_group (_action_group, 0);
 		try
 		{
 			ui_manager.add_ui_from_file (Path.build_filename (Config.PACKAGE_DATADIR, "ui", "ui.xml"));
@@ -80,9 +105,6 @@ internal class Watray.MainWindow : Window, IMainWindow
 		menu_item.set_submenu (_new_menu);
 		menu_item = (MenuItem)ui_manager.get_widget ("/MainMenu/FileMenu/OpenMenu");
 		menu_item.set_submenu (_open_menu);
-
-		projects_panel = new ProjectsPanel ();
-		documents_panel = new DocumentsPanel ();
 		
 		var vpaned = new VPaned ();
 		vpaned.pack1 (documents_panel, true, false);
@@ -181,6 +203,15 @@ internal class Watray.MainWindow : Window, IMainWindow
 	public void on_close ()
 	{
 		documents_panel.current_view.close_action ();
+	}
+	
+	public void on_show_projects_panel ()
+	{
+		var action = (ToggleAction)_action_group.get_action ("ViewProjectsPanelAction");
+		if (action.active)
+			projects_panel.show ();
+		else
+			projects_panel.hide ();
 	}
 }
 
