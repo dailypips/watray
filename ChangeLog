@@ -1,3 +1,9 @@
+2009-01-08  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	* watray/watraydocumentspanel.vala:
+	
+	Fix remove_view method due to compiler update
+	
 2009-01-07  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	* watray/watrayprojectspanel.vala:
