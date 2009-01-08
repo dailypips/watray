@@ -1,5 +1,14 @@
 2009-01-08  Matias De la Puente  <mfpuente.ar@gmail.com>
 
+	* watray/watrayprojectspanelitem.vala:
+	* watray/watrayprojectspanelinterface.vala:
+	* watray/Makefile.am
+	* watray/watrayprojectspanelproject.vala
+	
+	Replace Watray.ProjectsPanelItem with Watray.ProjectsPanelProject.
+	
+2009-01-08  Matias De la Puente  <mfpuente.ar@gmail.com>
+
 	* watray/watraydocumentspanel.vala:
 	
 	Fix remove_view method due to compiler update

@@ -19,7 +19,7 @@ watray_VALASOURCES = \
 	watraymainwindowinterface.vala \
 	watrayprojectspanel.vala \
 	watrayprojectspanelinterface.vala \
-	watrayprojectspanelitem.vala \
+	watrayprojectspanelproject.vala \
 	watrayplugin.vala \
 	watrayplugininfo.vala \
 	watrayplugininterface.vala \
@@ -38,7 +38,7 @@ watrayinclude_HEADERS = \
 	watraydocumentspanelview.h \
 	watraymainwindowinterface.h \
 	watrayprojectspanelinterface.h \
-	watrayprojectspanelitem.h \
+	watrayprojectspanelproject.h \
 	$(NULL)
 
 watray.vala.stamp: $(watray_VALASOURCES)
