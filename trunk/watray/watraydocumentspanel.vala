@@ -37,8 +37,7 @@ internal class Watray.DocumentsPanel : Gtk.Notebook, IDocumentsPanel
 	
 	public void remove_view (DocumentsPanelView view)
 	{
-		var page_num = NotebookPage.num (this, view);
-		this.remove_page (page_num);
+		this.remove_page (this.page_num (view));
 	}
 }
 
