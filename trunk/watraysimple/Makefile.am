@@ -23,6 +23,7 @@ libwatraysimple_la_VALASOURCES = \
 	simpleplugin.vala \
 	simpledocumentmanager.vala \
 	simpledocumentview.vala \
+	simpleprojectmanager.vala \
 	$(NULL)
 
 

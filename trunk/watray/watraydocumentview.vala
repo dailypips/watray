@@ -1,4 +1,4 @@
-/* watraydocumentspanelview.vala
+/* watraydocumentview.vala
  *
  * Copyright (C) 2008-2009  Matias De la Puente
  *
@@ -21,7 +21,7 @@
  */
 using Gtk;
 
-public class Watray.DocumentsPanelView : Gtk.VBox
+public class Watray.DocumentView : Gtk.VBox
 {
 	private HBox _tab_label;
 	private Label _tab_text = new Label (null);
@@ -54,7 +54,7 @@ public class Watray.DocumentsPanelView : Gtk.VBox
 	public signal void undo_action ();
 	public signal void redo_action ();
 	
-	public DocumentsPanelView ()
+	public DocumentView ()
 	{
 		var close_button = new Button ();
 		close_button.relief = ReliefStyle.NONE;
