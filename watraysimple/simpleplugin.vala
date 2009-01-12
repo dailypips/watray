@@ -25,8 +25,7 @@ using Gtk;
 public class Simple.Plugin : GLib.Object, IPlugin
 {
 	private DocumentManager _document_manager;
-	private ImageMenuItem _new_item;
-	private ImageMenuItem _open_item;
+	private ProjectManager _project_manager;
 	
 	public IProjectsPanel projects_panel { construct set; get; }
 	public IDocumentsPanel documents_panel { construct set; get; }
@@ -35,13 +34,16 @@ public class Simple.Plugin : GLib.Object, IPlugin
 	construct
 	{
 		_document_manager = new DocumentManager (documents_panel);
-		_new_item = new ImageMenuItem.with_label (_("Text file"));
-		_new_item.image = new Image.from_stock (STOCK_FILE, IconSize.MENU);
-		main_window.add_menu_item (MenuType.NEW, _new_item);
-		_open_item = new ImageMenuItem.with_label (_("Text file"));
-		_open_item.image = new Image.from_stock (STOCK_FILE, IconSize.MENU);
-		_open_item.activate += () => { _document_manager.open (); _main_window.remove_menu_item (MenuType.NEW, _new_item); };
-		main_window.add_menu_item (MenuType.OPEN, _open_item);
+		var new_item = new ImageMenuItem.with_label (_("Text file"));
+		new_item.image = new Image.from_stock (STOCK_FILE, IconSize.MENU);
+		main_window.add_menu_item (MenuType.NEW, new_item);
+
+		var open_item = new ImageMenuItem.with_label (_("Text file"));
+		open_item.image = new Image.from_stock (STOCK_FILE, IconSize.MENU);
+		open_item.activate += () => { _document_manager.open (); };
+		main_window.add_menu_item (MenuType.OPEN, open_item);
+		
+		_project_manager = new ProjectManager (projects_panel);
 	}
 }
 

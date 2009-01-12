@@ -14,12 +14,12 @@ bin_PROGRAMS = watray
 watray_VALASOURCES = \
 	watraydocumentspanel.vala \
 	watraydocumentspanelinterface.vala \
-	watraydocumentspanelview.vala \
+	watraydocumentview.vala \
 	watraymainwindow.vala \
 	watraymainwindowinterface.vala \
+	watrayproject.vala \
 	watrayprojectspanel.vala \
 	watrayprojectspanelinterface.vala \
-	watrayprojectspanelproject.vala \
 	watrayplugin.vala \
 	watrayplugininfo.vala \
 	watrayplugininterface.vala \
@@ -35,10 +35,10 @@ watrayincludedir = $(includedir)/watray-1.0/watray
 
 watrayinclude_HEADERS = \
 	watraydocumentspanelinterface.h \
-	watraydocumentspanelview.h \
+	watraydocumentview.h \
 	watraymainwindowinterface.h \
+	watrayproject.h \
 	watrayprojectspanelinterface.h \
-	watrayprojectspanelproject.h \
 	$(NULL)
 
 watray.vala.stamp: $(watray_VALASOURCES)

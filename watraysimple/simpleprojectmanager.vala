@@ -1,4 +1,4 @@
-/* watraydocumentspanel.vala
+/* simpleprojectmanager.vala
  *
  * Copyright (C) 2008-2009  Matias De la Puente
  *
@@ -19,25 +19,14 @@
  * Author:
  * 	Matias De la Puente <mfpuente.ar@gmail.com>
  */
-using Gtk;
+using Watray;
 
-internal class Watray.DocumentsPanel : Gtk.Notebook, IDocumentsPanel
+public class Simple.ProjectManager: GLib.Object
 {
-	public DocumentView current_view { private set; get; }
+	private IProjectsPanel _projects_panel;
 	
-	public DocumentsPanel ()
+	public ProjectManager (IProjectsPanel projects_panel)
 	{
-		this.switch_page += (panel, page, page_num) => { current_view = (DocumentView)this.get_nth_page ((int)page_num); };
-	}
-
-	public void add_view (DocumentView view)
-	{
-		this.append_page (view, view.tab_label);
-	}
-	
-	public void remove_view (DocumentView view)
-	{
-		this.remove_page (this.page_num (view));
+		_projects_panel = projects_panel;
 	}
 }
-

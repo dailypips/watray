@@ -1,4 +1,4 @@
-/* watrayprojectspanelproject.vala
+/* watrayproject.vala
  *
  * Copyright (C) 2009  Matias De la Puente
  *
@@ -20,8 +20,20 @@
  * 	Matias De la Puente <mfpuente.ar@gmail.com>
  */
 
-public class Watray.ProjectsPanelProject: GLib.Object
+public class Watray.Project: GLib.Object
 {
+	internal Gtk.TreeIter? iter = null;
 
+	public string name { set; get; }
 	
+	public signal void project_selected ();
+	public signal void project_activated ();
+	public signal void item_selected (string item_path, void* data);
+	public signal void item_activated (string item_path, void* data);
+	
+	public Project (string name)
+	{
+		this.name = name;
+	}
 }
+

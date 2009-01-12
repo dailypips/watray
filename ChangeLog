@@ -1,3 +1,20 @@
+2009-01-12  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpledocumentview.vala:
+	*  watraysimple/Makefile.am:
+	*  watraysimple/simpleplugin.vala:
+	*  watraysimple/simpleprojectmanager.vala:
+	*  configure.ac:
+	*  watray/watrayproject.vala:
+	*  watray/watrayprojectspanel.vala:
+	*  watray/watraydocumentview.vala:
+	*  watray/watraydocumentspanel.vala:
+	*  watray/watrayprojectspanelinterface.vala:
+	*  watray/Makefile.am:
+	*  watray/watraydocumentspanelinterface.vala:
+
+	Start basic support for a project manager.
+
 2009-01-08  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	* watray/watrayprojectspanelitem.vala:

@@ -23,8 +23,19 @@ using Gtk;
 
 internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 {
-	private TreeView projects_view;
+	private TreeView _projects_view;
+	private TreeStore _projects_store;
 	
+	private enum Columns
+	{
+		STOCK_ID = 0,
+		PIXBUF,
+		ITEM_NAME,
+		PROJECT,
+		ITEM_DATA,
+		N_COLUMNS
+	}
+
 	public ProjectsPanel ()
 	{
 		this.spacing = 5;
@@ -51,13 +62,165 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		
 		this.pack_start (hbox, false, false, 0);
 		
+		_projects_store = new TreeStore (Columns.N_COLUMNS, typeof (string), typeof (Gdk.Pixbuf), typeof (string), typeof (Project), typeof(void*));
+		_projects_view = new TreeView.with_model (_projects_store);
+		_projects_view.row_activated += (view, path, column) => { this.on_row_activated (view, path, column); };
+
+		CellRenderer renderer = new CellRendererPixbuf ();
+		var column = new TreeViewColumn ();
+ 		column.pack_start (renderer, false);
+		column.add_attribute (renderer, "stock-id", Columns.STOCK_ID);
+		column.add_attribute (renderer, "pixbuf", Columns.PIXBUF);
+		renderer = new CellRendererText ();
+		column.pack_start (renderer, true);
+		column.add_attribute (renderer, "text", Columns.ITEM_NAME);
+		_projects_view.append_column (column);
+		_projects_view.set_headers_visible (false);
+
 		var scrolled_window = new ScrolledWindow (null, null);
-		projects_view = new TreeView ();
-		scrolled_window.add (projects_view);
+		scrolled_window.add (_projects_view);
 		scrolled_window.set_policy (PolicyType.NEVER, PolicyType.AUTOMATIC);
 		this.pack_start (scrolled_window, true, true, 0);
 		
 		this.show_all ();
+	}
+	
+	public void add_project (Project project)
+	{
+		_projects_store.append (out project.iter, null);
+		_projects_store.set (project.iter, Columns.STOCK_ID, STOCK_DIRECTORY, Columns.ITEM_NAME, project.name, Columns.PROJECT, project, -1);
+		
+	}
+	
+	public void remove_project (Project project)
+	{
+		
+	}
+	
+	public void create_item (Project project, string item_path, void* data = null)
+	{
+		var parent_iter = get_iter_from_item_path (project, Path.get_dirname (item_path));
+		TreeIter new_item_iter;
+		_projects_store.append (out new_item_iter, parent_iter);
+		_projects_store.set (new_item_iter, Columns.ITEM_NAME, Path.get_basename (item_path), Columns.PROJECT, project, Columns.ITEM_DATA, data);
+	}
+	
+	public void create_item_from_stock (Project project, string item_path, string stock_id, void*data = null)
+	{
+		var parent_iter = get_iter_from_item_path (project, Path.get_dirname (item_path));
+		TreeIter new_item_iter;
+		_projects_store.append (out new_item_iter, parent_iter);
+		_projects_store.set (new_item_iter, Columns.STOCK_ID, stock_id, Columns.ITEM_NAME, Path.get_basename (item_path), Columns.PROJECT, project, Columns.ITEM_DATA, data);
+	}
+	
+	public void create_item_from_pixbuf (Project project, string item_path, Gdk.Pixbuf pixbuf, void*data = null)
+	{
+		var parent_iter = get_iter_from_item_path (project, Path.get_dirname (item_path));
+		TreeIter new_item_iter;
+		_projects_store.append (out new_item_iter, parent_iter);
+		_projects_store.set (new_item_iter, Columns.PIXBUF, pixbuf, Columns.ITEM_NAME, Path.get_basename (item_path), Columns.PROJECT, project, Columns.ITEM_DATA, data);
+	}
+	
+	public void remove_item (Project project, string item_path)
+	{
+		
+	}
+
+	public void set_item_data (Project project, string item_path, void* data)
+	{
+		var iter = get_iter_from_item_path (project, item_path);
+		_projects_store.set (iter, Columns.ITEM_DATA, data);
+	}
+	
+	public void* get_item_data (Project project, string item_path)
+	{
+		var iter = get_iter_from_item_path (project, item_path);
+		void* data;
+		_projects_store.get (iter, Columns.ITEM_DATA, out data);
+		return data;
+	}
+	
+	public void set_item_icon_from_stock (Project project, string item_path, string stock_id)
+	{
+		var item_iter = get_iter_from_item_path (project, item_path);
+		_projects_store.set (item_iter, Columns.STOCK_ID, stock_id);
+	}
+	
+	public void set_item_icon_from_pixbuf (Project project, string item_path, Gdk.Pixbuf pixbuf)
+	{
+		var item_iter = get_iter_from_item_path (project, item_path);
+		_projects_store.set (item_iter, Columns.PIXBUF, pixbuf);
+	}
+	
+	private TreeIter? get_iter_from_item_path (Project project, string item_path)
+	{
+		//TODO: add error domain
+		TreeIter parent_iter = project.iter;
+		if (item_path == "/")
+			return parent_iter;
+		foreach (string item_name in item_path.split ("/"))
+		{
+			if (item_name!="")
+			{
+				if (!_projects_store.iter_has_child (parent_iter))
+				{
+					debug ("No childrens!!");
+					return null;
+				}
+				TreeIter iter;
+				bool item_founded = false;
+				for (int i=0; i<_projects_store.iter_n_children (parent_iter); i++)
+				{
+					string name;
+					_projects_store.iter_nth_child (out iter, parent_iter, i);
+					_projects_store.get (iter, Columns.ITEM_NAME, out name);
+					if (name==item_name)
+					{
+						item_founded = true;
+						parent_iter = iter;
+						break;
+					}
+				}
+				if (!item_founded)
+				{
+					debug ("Item not founded");
+					return null;
+				}
+			}
+		}
+		return parent_iter;
+	}
+	
+	private string get_item_path_from_iter (TreePath path)
+	{
+		string item_path = "";
+		string str;
+		TreeIter iter;
+		do
+		{
+			_projects_store.get_iter (out iter, path);
+			_projects_store.get (iter, Columns.ITEM_NAME, out str);
+			item_path = "/" + str + item_path;
+			path.up ();
+		} while (path.get_depth () > 1);
+		return item_path;
+	}
+	
+	private void on_row_activated (TreeView view, TreePath path, TreeViewColumn column)
+	{
+		TreeIter iter;
+		_projects_store.get_iter (out iter, path);
+		Project project;
+		_projects_store.get (iter, Columns.PROJECT, out project);
+		if (path.get_depth () == 1)
+			project.project_activated ();
+		else
+		{
+			string item_path = get_item_path_from_iter (path);
+			void* data;
+			_projects_store.get (iter, Columns.ITEM_DATA, out data);
+			project.item_activated (item_path, data);
+		}
 	}
 }
 

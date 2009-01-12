@@ -22,7 +22,7 @@
 using Watray;
 using Gtk;
 
-public class Simple.DocumentView : DocumentsPanelView
+public class Simple.DocumentView : Watray.DocumentView
 {
 	private TextBuffer _text_buffer;
 	private TextView _text_view;
