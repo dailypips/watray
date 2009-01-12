@@ -1,5 +1,13 @@
 2009-01-12  Matias De la Puente  <mfpuente.ar@gmail.com>
 
+	*  watray/watrayprojectspanel.vala:
+	*  watray/watrayprojectspanelinterface.vala:
+
+	Added error handling to the project panel to check if the project was
+	added to the projects panel and if the item's path is correct.
+
+2009-01-12  Matias De la Puente  <mfpuente.ar@gmail.com>
+
 	*  watraysimple/simpledocumentview.vala:
 	*  watraysimple/Makefile.am:
 	*  watraysimple/simpleplugin.vala:
