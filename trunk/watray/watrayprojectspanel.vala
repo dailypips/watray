@@ -21,6 +21,12 @@
  */
 using Gtk;
 
+public errordomain Watray.ProjectError
+{
+	PROJECT_NOT_ADDED,
+	WRONG_ITEM_PATH
+}
+
 internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 {
 	private TreeView _projects_view;
@@ -97,7 +103,7 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		
 	}
 	
-	public void create_item (Project project, string item_path, void* data = null)
+	public void create_item (Project project, string item_path, void* data = null) throws ProjectError
 	{
 		var parent_iter = get_iter_from_item_path (project, Path.get_dirname (item_path));
 		TreeIter new_item_iter;
@@ -105,7 +111,7 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		_projects_store.set (new_item_iter, Columns.ITEM_NAME, Path.get_basename (item_path), Columns.PROJECT, project, Columns.ITEM_DATA, data);
 	}
 	
-	public void create_item_from_stock (Project project, string item_path, string stock_id, void*data = null)
+	public void create_item_from_stock (Project project, string item_path, string stock_id, void*data = null) throws ProjectError
 	{
 		var parent_iter = get_iter_from_item_path (project, Path.get_dirname (item_path));
 		TreeIter new_item_iter;
@@ -113,7 +119,7 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		_projects_store.set (new_item_iter, Columns.STOCK_ID, stock_id, Columns.ITEM_NAME, Path.get_basename (item_path), Columns.PROJECT, project, Columns.ITEM_DATA, data);
 	}
 	
-	public void create_item_from_pixbuf (Project project, string item_path, Gdk.Pixbuf pixbuf, void*data = null)
+	public void create_item_from_pixbuf (Project project, string item_path, Gdk.Pixbuf pixbuf, void*data = null) throws ProjectError
 	{
 		var parent_iter = get_iter_from_item_path (project, Path.get_dirname (item_path));
 		TreeIter new_item_iter;
@@ -121,18 +127,18 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		_projects_store.set (new_item_iter, Columns.PIXBUF, pixbuf, Columns.ITEM_NAME, Path.get_basename (item_path), Columns.PROJECT, project, Columns.ITEM_DATA, data);
 	}
 	
-	public void remove_item (Project project, string item_path)
+	public void remove_item (Project project, string item_path) throws ProjectError
 	{
 		
 	}
 
-	public void set_item_data (Project project, string item_path, void* data)
+	public void set_item_data (Project project, string item_path, void* data) throws ProjectError
 	{
 		var iter = get_iter_from_item_path (project, item_path);
 		_projects_store.set (iter, Columns.ITEM_DATA, data);
 	}
 	
-	public void* get_item_data (Project project, string item_path)
+	public void* get_item_data (Project project, string item_path) throws ProjectError
 	{
 		var iter = get_iter_from_item_path (project, item_path);
 		void* data;
@@ -140,21 +146,22 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		return data;
 	}
 	
-	public void set_item_icon_from_stock (Project project, string item_path, string stock_id)
+	public void set_item_icon_from_stock (Project project, string item_path, string stock_id) throws ProjectError
 	{
 		var item_iter = get_iter_from_item_path (project, item_path);
 		_projects_store.set (item_iter, Columns.STOCK_ID, stock_id);
 	}
 	
-	public void set_item_icon_from_pixbuf (Project project, string item_path, Gdk.Pixbuf pixbuf)
+	public void set_item_icon_from_pixbuf (Project project, string item_path, Gdk.Pixbuf pixbuf) throws ProjectError
 	{
 		var item_iter = get_iter_from_item_path (project, item_path);
 		_projects_store.set (item_iter, Columns.PIXBUF, pixbuf);
 	}
 	
-	private TreeIter? get_iter_from_item_path (Project project, string item_path)
+	private TreeIter? get_iter_from_item_path (Project project, string item_path) throws ProjectError
 	{
-		//TODO: add error domain
+		if (project.iter == null)
+			throw new ProjectError.PROJECT_NOT_ADDED ("The project %s was not added", project.name);
 		TreeIter parent_iter = project.iter;
 		if (item_path == "/")
 			return parent_iter;
@@ -163,10 +170,7 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 			if (item_name!="")
 			{
 				if (!_projects_store.iter_has_child (parent_iter))
-				{
-					debug ("No childrens!!");
-					return null;
-				}
+					throw new ProjectError.WRONG_ITEM_PATH ("Item %s not founded", item_name);
 				TreeIter iter;
 				bool item_founded = false;
 				for (int i=0; i<_projects_store.iter_n_children (parent_iter); i++)
@@ -182,10 +186,7 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 					}
 				}
 				if (!item_founded)
-				{
-					debug ("Item not founded");
-					return null;
-				}
+					throw new ProjectError.WRONG_ITEM_PATH ("Item %s not founded", item_name);
 			}
 		}
 		return parent_iter;

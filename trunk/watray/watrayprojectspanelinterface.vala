@@ -24,12 +24,12 @@ public interface Watray.IProjectsPanel : GLib.Object
 {
 	public abstract void add_project (Project project);
 	public abstract void remove_project (Project project);
-	public abstract void create_item (Project project, string item_path, void* data = null);
-	public abstract void create_item_from_stock (Project project, string item_path, string stock_id, void*data = null);
-	public abstract void create_item_from_pixbuf (Project project, string item_path, Gdk.Pixbuf pixbuf, void*data = null);
-	public abstract void remove_item (Project project, string item_path);
-	public abstract void set_item_data (Project project, string item_path, void* data);
-	public abstract void* get_item_data (Project project, string item_path);
-	public abstract void set_item_icon_from_stock (Project project, string item_path, string stock_id);
-	public abstract void set_item_icon_from_pixbuf (Project project, string item_path, Gdk.Pixbuf pixbuf);
+	public abstract void create_item (Project project, string item_path, void* data = null) throws ProjectError;
+	public abstract void create_item_from_stock (Project project, string item_path, string stock_id, void*data = null) throws ProjectError;
+	public abstract void create_item_from_pixbuf (Project project, string item_path, Gdk.Pixbuf pixbuf, void*data = null) throws ProjectError;
+	public abstract void remove_item (Project project, string item_path) throws ProjectError;
+	public abstract void set_item_data (Project project, string item_path, void* data) throws ProjectError;
+	public abstract void* get_item_data (Project project, string item_path) throws ProjectError;
+	public abstract void set_item_icon_from_stock (Project project, string item_path, string stock_id) throws ProjectError;
+	public abstract void set_item_icon_from_pixbuf (Project project, string item_path, Gdk.Pixbuf pixbuf) throws ProjectError;
 }
