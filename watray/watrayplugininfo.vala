@@ -36,6 +36,7 @@ internal class Watray.PluginInfo : GLib.Object
 	}
 	public string path { private set; get; }
 	public string name { private set; get; }
+	public string icon { private set; get; }
 	public string module { private set; get; }
 	public string description { private set; get; }
 	public string authors { private set; get; }
@@ -55,6 +56,7 @@ internal class Watray.PluginInfo : GLib.Object
 			if (!key_file.has_group (GROUP_NAME))
 				throw new KeyFileError.GROUP_NOT_FOUND ("Invalid plugin file");
 			this.name = key_file.get_string (GROUP_NAME, "Name");
+			this.icon = key_file.get_string (GROUP_NAME, "Icon");
 			this.module = key_file.get_string (GROUP_NAME, "Module");
 			this.description = key_file.get_string (GROUP_NAME, "Description");
 			this.authors = key_file.get_string (GROUP_NAME, "Authors");
