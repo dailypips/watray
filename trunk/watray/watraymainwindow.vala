@@ -42,7 +42,7 @@ internal class Watray.MainWindow : Window, IMainWindow
 		{ "PasteAction", STOCK_PASTE, null, null, null, on_paste },
 		{ "FindAction", STOCK_FIND, null, null, null, on_quit },
 		{ "FindAndReplaceAction", STOCK_FIND_AND_REPLACE, null, null, null, on_quit },
-		{ "PreferencesAction", STOCK_PREFERENCES, null, null, null, on_quit }
+		{ "PreferencesAction", STOCK_PREFERENCES, null, null, null, on_preferences }
 	};
 	
 	const ToggleActionEntry[] toggle_action_entries =
@@ -219,6 +219,13 @@ internal class Watray.MainWindow : Window, IMainWindow
 	{
 		var action = (ToggleAction)_action_group.get_action ("ViewProjectsPanelAction");
 		action.active = projects_panel.visible;
+	}
+	
+	public void on_preferences ()
+	{
+		var dialog = new PreferenceDialog (plugin_manager);
+		dialog.run ();
+		dialog.destroy ();
 	}
 }
 

@@ -1,3 +1,13 @@
+2009-01-13  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watraymainwindow.vala:
+	*  watray/watraypluginmanagerview.vala:
+	*  watray/watraypluginmanager.vala:
+	*  watray/watraypreferencedialog.vala:
+	*  watray/Makefile.am:
+
+	Added preferences dialog with plugins tab.
+
 2009-01-12  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	*  watray/watrayprojectspanel.vala:
