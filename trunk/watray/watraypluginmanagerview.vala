@@ -45,7 +45,7 @@ internal class Watray.PluginManagerView: VBox
 		title.set_alignment (0, 0);
 		this.pack_start (title, false, false, 5);
 		
-		_plugins_store = new Gtk.ListStore (Columns.N_COLUMNS, typeof (bool), typeof (Gdk.Pixbuf), typeof (string));
+		_plugins_store = new Gtk.ListStore (Columns.N_COLUMNS, typeof (bool), typeof (string), typeof (string));
 		_plugins_view = new TreeView.with_model (_plugins_store);
 		
 		var toggle = new CellRendererToggle ();
@@ -53,8 +53,9 @@ internal class Watray.PluginManagerView: VBox
 		column.pack_start (toggle, false);
 		column.add_attribute (toggle, "active", Columns.ACTIVATED);
 		var pixbuf = new CellRendererPixbuf ();
+		pixbuf.stock_size = IconSize.SMALL_TOOLBAR;
  		column.pack_start (pixbuf, false);
-		column.add_attribute (pixbuf, "pixbuf", Columns.ICON);
+		column.add_attribute (pixbuf, "stock-id", Columns.ICON);
 		var text = new CellRendererText ();
 		column.pack_start (text, true);
 		column.add_attribute (text, "markup", Columns.TEXT);
@@ -78,7 +79,7 @@ internal class Watray.PluginManagerView: VBox
 		{
 			_plugins_store.append (out iter);
 			string text = "<b>" + plugin.plugin_info.name + "</b>\n" + plugin.plugin_info.description;
-			_plugins_store.set (iter, Columns.ACTIVATED, plugin.is_activated, Columns.TEXT, text);
+			_plugins_store.set (iter, Columns.ACTIVATED, plugin.is_activated, Columns.ICON, plugin.plugin_info.icon, Columns.TEXT, text);
 		}
 	}
 } 

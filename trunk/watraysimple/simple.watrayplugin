@@ -1,6 +1,7 @@
 [Watray Plugin]
 Module=watraysimple
 Name=simple
+Icon=gtk-file
 Description=A simple plugin
 Authors=Matias De la Puente <mfpuente.ar@gmail.com>
 License=LGPL

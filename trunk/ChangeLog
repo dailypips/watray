@@ -1,5 +1,14 @@
 2009-01-13  Matias De la Puente  <mfpuente.ar@gmail.com>
 
+	*  watraysimple/simple.watrayplugin:
+	*  watray/watrayplugininfo.vala:
+	*  watray/watraypluginmanagerview.vala:
+
+	Added support for stock-id icons in plugins.
+	Add icon field in watraysimple plugin information file.
+
+2009-01-13  Matias De la Puente  <mfpuente.ar@gmail.com>
+
 	*  watray/watraypluginmanagerview.vala:
 	
 	Fix creation year.
