@@ -1,5 +1,17 @@
 2009-01-13  Matias De la Puente  <mfpuente.ar@gmail.com>
 
+	*  watray/watraypluginmanagerview.vala:
+	
+	Fix creation year.
+	
+	*  po/es.po:
+	*  po/POTFILES.skip:
+	*  po/POTFILES.in:
+
+	Added spanish translation of PluginManagerView and PreferenceDialog
+
+2009-01-13  Matias De la Puente  <mfpuente.ar@gmail.com>
+
 	*  watray/watraymainwindow.vala:
 	*  watray/watraypluginmanagerview.vala:
 	*  watray/watraypluginmanager.vala:
