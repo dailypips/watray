@@ -24,6 +24,8 @@ watray_VALASOURCES = \
 	watrayplugininfo.vala \
 	watrayplugininterface.vala \
 	watraypluginmanager.vala \
+	watraypluginmanagerview.vala \
+	watraypreferencedialog.vala \
 	$(NULL)
 
 watray_SOURCES = \
