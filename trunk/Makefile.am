@@ -6,7 +6,6 @@ SUBDIRS = \
 	watray \
 	watraysimple \
 	po \
-	pixmaps \
 	ui \
 	$(NULL)
 

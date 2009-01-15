@@ -1,3 +1,11 @@
+2009-01-15  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	* pixmaps/:
+	* configure.ac:
+	* Makefile.am:
+	
+	Remove pixmaps files. Not used for now
+
 2009-01-13  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	*  watraysimple/simple.watrayplugin:
