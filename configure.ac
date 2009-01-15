@@ -25,7 +25,6 @@ AC_SUBST(LDFLAGS)
 
 GLIB_REQUIRED=2.12.0
 GTK_REQUIRED=2.10.0
-GTKSOURCEVIEW_REQUIRED=2.4.0
 
 PKG_CHECK_MODULES(WATRAY,
 	[glib-2.0 >= $GLIB_REQUIRED
@@ -47,7 +46,6 @@ AC_SUBST(WATRAYSIMPLE_LIBS)
 AC_CONFIG_FILES([Makefile
 	watray/Makefile
 	watraysimple/Makefile
-	pixmaps/Makefile
 	ui/Makefile
 	po/Makefile.in])
 
