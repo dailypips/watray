@@ -1,5 +1,11 @@
 2009-01-16  Matias De la Puente  <mfpuente.ar@gmail.com>
 
+	*  po/es.po:
+
+	Update spanish translation of the about and configure plugin buttons.
+
+2009-01-16  Matias De la Puente  <mfpuente.ar@gmail.com>
+
 	*  configure.ac:
 	*  watray/watraypreferencemanager.vala:
 	*  watray/watrayprojectspanel.vala:
