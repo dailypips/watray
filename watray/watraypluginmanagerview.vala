@@ -40,7 +40,7 @@ internal class Watray.PluginManagerView: VBox
 		_plugin_manager = plugin_manager;
 		this.border_width = 5;
 		
-		var title = new Label (_("<b>Loaded Plugins</b>"));
+		var title = new Label ("<b>" + _("Loaded Plugins") + "</b>");
 		title.use_markup = true;
 		title.set_alignment (0, 0);
 		this.pack_start (title, false, false, 5);

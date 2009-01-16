@@ -22,9 +22,9 @@
 
 internal class Watray.Plugin : GLib.Object
 {
-	private Module module;
-	private Type type;
-	private IPlugin activated_plugin;
+	private Module _module;
+	private Type _type;
+	private IPlugin _activated_plugin;
 
 	private delegate Type PluginFunction ();
 	
@@ -41,17 +41,17 @@ internal class Watray.Plugin : GLib.Object
 	{
 		if (this.is_loaded)
 			return true;
-		string plugin_filename = Module.build_path (plugin_info.path, plugin_info.module);
-		this.module = Module.open (plugin_filename, ModuleFlags.BIND_LAZY);
-		if (module == null)
+		string plugin_filename = Module.build_path (this.plugin_info.path, this.plugin_info.module);
+		_module = Module.open (plugin_filename, ModuleFlags.BIND_LAZY);
+		if (_module == null)
 			return false;
 		
 		void* function;
-		this.module.symbol ("register_watray_plugin", out function);
+		_module.symbol ("register_watray_plugin", out function);
 		
 		var register_plugin = (PluginFunction)function;
 		
-		this.type = register_plugin ();
+		_type = register_plugin ();
 		this.is_loaded = true;
 		return true;
 	}
@@ -62,8 +62,8 @@ internal class Watray.Plugin : GLib.Object
 			return false;
 		if (this.is_activated)
 			return true;
-		activated_plugin = (IPlugin)Object.new (this.type, "main-window", main_window, "projects-panel", projects_panel, "documents-panel", documents_panel, null);
-		if (activated_plugin == null)
+		_activated_plugin = (IPlugin)Object.new (_type, "main-window", main_window, "projects-panel", projects_panel, "documents-panel", documents_panel, null);
+		if (_activated_plugin == null)
 			return false;
 		this.is_activated = true;
 		return true;
@@ -71,7 +71,7 @@ internal class Watray.Plugin : GLib.Object
 	
 	public void deactivate ()
 	{
-		this.activated_plugin == null;
+		_activated_plugin = null;
 		this.is_activated = false;
 	}
 }
