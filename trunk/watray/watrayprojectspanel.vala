@@ -32,6 +32,8 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 	private TreeView _projects_view;
 	private TreeStore _projects_store;
 	
+	public signal void closed ();
+	
 	private enum Columns
 	{
 		STOCK_ID = 0,
@@ -63,7 +65,7 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		style.xthickness = style.ythickness = 0;
 		close_button.modify_style (style);
 		close_button.add (new Image.from_stock (Gtk.STOCK_CLOSE, IconSize.MENU));
-		close_button.clicked += () => { this.hide (); };
+		close_button.clicked += () => { this.closed (); };
 		hbox.pack_start (close_button, false, false, 0);
 		
 		this.pack_start (hbox, false, false, 0);

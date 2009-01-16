@@ -20,6 +20,7 @@
  * 	Matias De la Puente <mfpuente.ar@gmail.com>
  */
 using Gtk;
+using GConf;
 
 internal class Watray.MainWindow : Window, IMainWindow
 {
@@ -47,13 +48,14 @@ internal class Watray.MainWindow : Window, IMainWindow
 	
 	const ToggleActionEntry[] toggle_action_entries =
 	{
-		{ "ViewProjectsPanelAction", null, N_("Projects Panel"), null, null, on_show_projects_panel, true }
+		{ "ViewProjectsPanelAction", null, N_("Projects Panel"), null, null, on_show_projects_panel, false }
 	};
 
 	private ActionGroup _action_group;
 	private DocumentsPanel documents_panel = new DocumentsPanel ();
 	private ProjectsPanel projects_panel = new ProjectsPanel ();
 	private PluginManager plugin_manager;
+	private PreferenceManager _preference_manager;
 	private Menu _new_menu = new Menu ();
 	private Menu _open_menu = new Menu ();
 	
@@ -61,7 +63,7 @@ internal class Watray.MainWindow : Window, IMainWindow
 	{
 		Gtk.init (ref args);
 		var main_window = new MainWindow ();
-		main_window.show_all ();
+		main_window.show ();
 		Gtk.main ();
 	}
 
@@ -82,7 +84,7 @@ internal class Watray.MainWindow : Window, IMainWindow
 		{
 			ui_manager.add_ui_from_file (Path.build_filename (Config.PACKAGE_DATADIR, "ui", "ui.xml"));
 		}
-		catch (Error err)
+		catch (GLib.Error err)
 		{
 			error (err.message);
 		}
@@ -96,30 +98,43 @@ internal class Watray.MainWindow : Window, IMainWindow
 		var toolbutton = new MenuToolButton.from_stock (STOCK_NEW);
 		toolbutton.set_menu (_new_menu);
 		toolbar.insert (toolbutton, 0);
-
+		
 		toolbutton = new MenuToolButton.from_stock (STOCK_OPEN);
 		toolbutton.set_menu (_open_menu);
 		toolbar.insert (toolbutton, 1);
+		toolbar.show_all ();
 		
 		var menu_item = (MenuItem)ui_manager.get_widget ("/MainMenu/FileMenu/NewMenu");
 		menu_item.set_submenu (_new_menu);
 		menu_item = (MenuItem)ui_manager.get_widget ("/MainMenu/FileMenu/OpenMenu");
 		menu_item.set_submenu (_open_menu);
 		
-		projects_panel.hide += on_projects_panel_visibility_changed;
-		projects_panel.show += on_projects_panel_visibility_changed;
+		_preference_manager = new PreferenceManager ();
+
+		_preference_manager.notify["projects-panel-visible"] += () => {
+			this.update_projects_panel_visibility ();
+		};
+
+		this.update_projects_panel_visibility ();
+		
+		projects_panel.closed += () => {
+			_preference_manager.projects_panel_visible = false;
+		};
 		
 		var vpaned = new VPaned ();
 		vpaned.pack1 (documents_panel, true, false);
+		vpaned.show ();
 		
 		var hpaned = new HPaned ();
 		hpaned.add1 (projects_panel);
 		hpaned.add2 (vpaned);
-		
+		hpaned.show ();
+	
 		var vbox = new VBox (false, 0);
 		vbox.pack_start (menubar, false, false, 0);
 		vbox.pack_start (toolbar, false, false, 0);
 		vbox.pack_start_defaults (hpaned);
+		vbox.show ();
 
 		this.add (vbox);
 		this.add_accel_group (ui_manager.get_accel_group ());
@@ -211,14 +226,8 @@ internal class Watray.MainWindow : Window, IMainWindow
 	
 	public void on_show_projects_panel ()
 	{
-		var action = (ToggleAction)_action_group.get_action ("ViewProjectsPanelAction");
-		projects_panel.visible = action.active;
-	}
-	
-	public void on_projects_panel_visibility_changed ()
-	{
-		var action = (ToggleAction)_action_group.get_action ("ViewProjectsPanelAction");
-		action.active = projects_panel.visible;
+		var toggle_action = (ToggleAction)_action_group.get_action ("ViewProjectsPanelAction");
+		_preference_manager.projects_panel_visible = toggle_action.active;
 	}
 	
 	public void on_preferences ()
@@ -226,6 +235,13 @@ internal class Watray.MainWindow : Window, IMainWindow
 		var dialog = new PreferenceDialog (plugin_manager);
 		dialog.run ();
 		dialog.destroy ();
+	}
+	
+	private void update_projects_panel_visibility ()
+	{
+		projects_panel.visible = _preference_manager.projects_panel_visible;
+		var toggle_action = (ToggleAction)_action_group.get_action ("ViewProjectsPanelAction");
+		toggle_action.active = _preference_manager.projects_panel_visible;
 	}
 }
 
