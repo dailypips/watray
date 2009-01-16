@@ -1,3 +1,17 @@
+2009-01-16  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  configure.ac:
+	*  watray/watraypreferencemanager.vala:
+	*  watray/watrayprojectspanel.vala:
+	*  watray/watraymainwindow.vala:
+	*  watray/Makefile.am:
+
+	Added basic support for gconf.
+
+	*  watray/watraypluginmanagerview.vala:
+
+	Added about and configure plugin buttons.
+
 2009-01-15  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	* pixmaps/:

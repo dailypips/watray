@@ -67,7 +67,17 @@ internal class Watray.PluginManagerView: VBox
 		scrolled_window.add (_plugins_view);
 		scrolled_window.set_policy (PolicyType.NEVER, PolicyType.AUTOMATIC);
 		
+		var hbox = new HBox (false, 5);
+		hbox.border_width = 5;
+		var button = new Button.with_label (_("About plugin"));
+		button.image = new Image.from_stock (STOCK_ABOUT, IconSize.BUTTON);
+		hbox.pack_start (button, false, false, 0);
+		button = new Button.with_label (_("Configure plugin"));
+		button.image = new Image.from_stock (STOCK_PREFERENCES, IconSize.BUTTON);
+		hbox.pack_start (button, false, false, 0);
+		
 		this.pack_start (scrolled_window, true, true, 5);
+		this.pack_start (hbox, false, false, 5);
 		this.show_all ();
 	}
 	
