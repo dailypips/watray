@@ -102,7 +102,7 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 	
 	public void remove_project (Project project)
 	{
-		
+		//TODO: Implement remove_project
 	}
 	
 	public void create_item (Project project, string item_path, void* data = null) throws ProjectError
@@ -131,7 +131,7 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 	
 	public void remove_item (Project project, string item_path) throws ProjectError
 	{
-		
+		//TODO: Implement remove_item
 	}
 
 	public void set_item_data (Project project, string item_path, void* data) throws ProjectError

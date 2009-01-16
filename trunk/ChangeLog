@@ -1,5 +1,20 @@
 2009-01-16  Matias De la Puente  <mfpuente.ar@gmail.com>
 
+	*  watray/watrayprojectspanel.vala:
+	*  watray/watrayplugininfo.vala:
+	*  watray/watraymainwindow.vala:
+	*  watray/watraypluginmanagerview.vala:
+	*  watray/watraypluginmanager.vala:
+	*  watray/watrayplugin.vala:
+	
+	Code cleanup.
+	
+	*  po/es.po:
+
+	Update spanish translation.
+
+2009-01-16  Matias De la Puente  <mfpuente.ar@gmail.com>
+
 	*  po/es.po:
 
 	Update spanish translation of the about and configure plugin buttons.

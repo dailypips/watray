@@ -34,6 +34,7 @@ internal class Watray.PluginInfo : GLib.Object
 		}
 		get { return this._filename; }
 	}
+	
 	public string path { private set; get; }
 	public string name { private set; get; }
 	public string icon { private set; get; }
@@ -49,6 +50,7 @@ internal class Watray.PluginInfo : GLib.Object
 	
 	public bool load_info ()
 	{
+		//TODO: implement error domain
 		var key_file = new KeyFile ();
 		try
 		{

@@ -24,7 +24,7 @@ using GConf;
 
 internal class Watray.MainWindow : Window, IMainWindow
 {
-	const ActionEntry[] action_entries = 
+	private const ActionEntry[] action_entries = 
 	{
 		{ "FileMenuAction", null, N_("_File") },
 		{ "EditMenuAction", null, N_("_Edit") },
@@ -46,15 +46,15 @@ internal class Watray.MainWindow : Window, IMainWindow
 		{ "PreferencesAction", STOCK_PREFERENCES, null, null, null, on_preferences }
 	};
 	
-	const ToggleActionEntry[] toggle_action_entries =
+	private const ToggleActionEntry[] toggle_action_entries =
 	{
 		{ "ViewProjectsPanelAction", null, N_("Projects Panel"), null, null, on_show_projects_panel, false }
 	};
 
 	private ActionGroup _action_group;
-	private DocumentsPanel documents_panel = new DocumentsPanel ();
-	private ProjectsPanel projects_panel = new ProjectsPanel ();
-	private PluginManager plugin_manager;
+	private DocumentsPanel _documents_panel = new DocumentsPanel ();
+	private ProjectsPanel _projects_panel = new ProjectsPanel ();
+	private PluginManager _plugin_manager;
 	private PreferenceManager _preference_manager;
 	private Menu _new_menu = new Menu ();
 	private Menu _open_menu = new Menu ();
@@ -117,16 +117,16 @@ internal class Watray.MainWindow : Window, IMainWindow
 
 		this.update_projects_panel_visibility ();
 		
-		projects_panel.closed += () => {
+		_projects_panel.closed += () => {
 			_preference_manager.projects_panel_visible = false;
 		};
 		
 		var vpaned = new VPaned ();
-		vpaned.pack1 (documents_panel, true, false);
+		vpaned.pack1 (_documents_panel, true, false);
 		vpaned.show ();
 		
 		var hpaned = new HPaned ();
-		hpaned.add1 (projects_panel);
+		hpaned.add1 (_projects_panel);
 		hpaned.add2 (vpaned);
 		hpaned.show ();
 	
@@ -140,9 +140,9 @@ internal class Watray.MainWindow : Window, IMainWindow
 		this.add_accel_group (ui_manager.get_accel_group ());
 		
 		//TODO: implement in the preference dialog a plugin tab
-		plugin_manager = new PluginManager (this, projects_panel, documents_panel);
-		plugin_manager.load_plugins ();
-		if (plugin_manager.activate_plugin ("simple"))
+		_plugin_manager = new PluginManager (this, _projects_panel, _documents_panel);
+		_plugin_manager.load_plugins ();
+		if (_plugin_manager.activate_plugin ("simple"))
 			message ("Plugin activated\n");
 	}
 	
@@ -175,17 +175,17 @@ internal class Watray.MainWindow : Window, IMainWindow
 	
 	public void on_save ()
 	{
-		documents_panel.current_view.save_action ();
+		_documents_panel.current_view.save_action ();
 	}
 	
 	public void on_save_as ()
 	{
-		documents_panel.current_view.save_as_action ();
+		_documents_panel.current_view.save_as_action ();
 	}
 	
 	public void on_print ()
 	{
-		documents_panel.current_view.print_action ();
+		_documents_panel.current_view.print_action ();
 	}
 	
 	public void on_quit ()
@@ -196,32 +196,32 @@ internal class Watray.MainWindow : Window, IMainWindow
 	
 	public void on_undo ()
 	{
-		documents_panel.current_view.undo_action ();
+		_documents_panel.current_view.undo_action ();
 	}
 	
 	public void on_redo ()
 	{
-		documents_panel.current_view.redo_action ();
+		_documents_panel.current_view.redo_action ();
 	}
 	
 	public void on_cut ()
 	{
-		documents_panel.current_view.cut_action ();
+		_documents_panel.current_view.cut_action ();
 	}
 	
 	public void on_copy ()
 	{
-		documents_panel.current_view.copy_action ();
+		_documents_panel.current_view.copy_action ();
 	}
 	
 	public void on_paste ()
 	{
-		documents_panel.current_view.paste_action ();
+		_documents_panel.current_view.paste_action ();
 	}
 	
 	public void on_close ()
 	{
-		documents_panel.current_view.close_action ();
+		_documents_panel.current_view.close_action ();
 	}
 	
 	public void on_show_projects_panel ()
@@ -232,14 +232,14 @@ internal class Watray.MainWindow : Window, IMainWindow
 	
 	public void on_preferences ()
 	{
-		var dialog = new PreferenceDialog (plugin_manager);
+		var dialog = new PreferenceDialog (_plugin_manager);
 		dialog.run ();
 		dialog.destroy ();
 	}
 	
 	private void update_projects_panel_visibility ()
 	{
-		projects_panel.visible = _preference_manager.projects_panel_visible;
+		_projects_panel.visible = _preference_manager.projects_panel_visible;
 		var toggle_action = (ToggleAction)_action_group.get_action ("ViewProjectsPanelAction");
 		toggle_action.active = _preference_manager.projects_panel_visible;
 	}

@@ -22,20 +22,20 @@
 
 internal class Watray.PluginManager : GLib.Object
 {
-	private string plugins_path;
-	private HashTable<string, Plugin> plugins;
-	private IMainWindow main_window;
-	private IProjectsPanel projects_panel;
-	private IDocumentsPanel documents_panel;
+	private string _plugins_path;
+	private HashTable<string, Plugin> _plugins;
+	private IMainWindow _main_window;
+	private IProjectsPanel _projects_panel;
+	private IDocumentsPanel _documents_panel;
 	
 	public PluginManager (IMainWindow main_window, IProjectsPanel projects_panel, IDocumentsPanel documents_panel)
 	{
 		assert (Module.supported());
-		this.plugins_path = Path.build_filename (Config.PACKAGE_LIBDIR, "watray", "plugins");
-		plugins = new HashTable<string, Plugin> (str_hash, str_equal);
-		this.main_window = main_window;
-		this.projects_panel = projects_panel;
-		this.documents_panel = documents_panel;
+		_plugins_path = Path.build_filename (Config.PACKAGE_LIBDIR, "watray", "plugins");
+		_plugins = new HashTable<string, Plugin> (str_hash, str_equal);
+		_main_window = main_window;
+		_projects_panel = projects_panel;
+		_documents_panel = documents_panel;
 	}
 	
 	public void load_plugins ()
@@ -49,7 +49,7 @@ internal class Watray.PluginManager : GLib.Object
 			{
 				plugin = new Plugin (plugin_info);
 				if (plugin.load ())
-					plugins.insert (plugin_info.name, plugin);
+					_plugins.insert (plugin_info.name, plugin);
 				else
 					warning ("Can't load the plugin");
 			}
@@ -58,17 +58,17 @@ internal class Watray.PluginManager : GLib.Object
 	
 	public List<unowned Plugin> get_plugins ()
 	{
-		return plugins.get_values ();
+		return _plugins.get_values ();
 	}
 	
 	public bool activate_plugin (string plugin_name)
 	{
-		return plugins.lookup (plugin_name).activate (this.main_window, this.projects_panel, this.documents_panel);
+		return _plugins.lookup (plugin_name).activate (_main_window, _projects_panel, _documents_panel);
 	}
 	
 	public void deactivate_plugin (string plugin_name)
 	{
-		plugins.lookup (plugin_name).deactivate ();
+		_plugins.lookup (plugin_name).deactivate ();
 	}
 
 	private List<string> get_plugins_descriptors ()
@@ -76,13 +76,13 @@ internal class Watray.PluginManager : GLib.Object
 		var list = new List<string> ();
 		try
 		{
-			var dir = Dir.open (this.plugins_path);
+			var dir = Dir.open (_plugins_path);
 			string filename;
 			do
 			{
 				filename = dir.read_name ();
 				if (filename != null && filename.has_suffix (".watrayplugin"))
-					list.append (Path.build_filename (this.plugins_path, filename));
+					list.append (Path.build_filename (_plugins_path, filename));
 			} while (filename != null);
 		}
 		catch (Error err)

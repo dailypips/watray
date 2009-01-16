@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: watray 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-16 15:51-0200\n"
+"POT-Creation-Date: 2009-01-16 19:31-0200\n"
 "PO-Revision-Date: 2008-12-23 12:15-0200\n"
 "Last-Translator: Matias De la Puente <mfpuente.ar@gmail.com>\n"
 "Language-Team: Spanish <mfpuente.ar@gmail.com>\n"
@@ -36,8 +36,8 @@ msgid "Projects"
 msgstr "Proyectos"
 
 #: ../watray/watraypluginmanagerview.vala:43
-msgid "<b>Loaded Plugins</b>"
-msgstr "<b>Complementos cargados</b>"
+msgid "Loaded Plugins"
+msgstr "Complementos cargados"
 
 #: ../watray/watraypluginmanagerview.vala:72
 msgid "About plugin"
