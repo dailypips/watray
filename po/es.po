@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: watray 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-13 15:12-0200\n"
+"POT-Creation-Date: 2009-01-16 15:51-0200\n"
 "PO-Revision-Date: 2008-12-23 12:15-0200\n"
 "Last-Translator: Matias De la Puente <mfpuente.ar@gmail.com>\n"
 "Language-Team: Spanish <mfpuente.ar@gmail.com>\n"
@@ -15,29 +15,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../watray/watraymainwindow.vala:28
+#: ../watray/watraymainwindow.vala:29
 msgid "_File"
 msgstr "_Archivo"
 
-#: ../watray/watraymainwindow.vala:29
+#: ../watray/watraymainwindow.vala:30
 msgid "_Edit"
 msgstr "_Editar"
 
-#: ../watray/watraymainwindow.vala:30
+#: ../watray/watraymainwindow.vala:31
 msgid "_View"
 msgstr "_Ver"
 
-#: ../watray/watraymainwindow.vala:50
+#: ../watray/watraymainwindow.vala:51
 msgid "Projects Panel"
 msgstr "Panel de proyectos"
 
-#: ../watray/watrayprojectspanel.vala:55
+#: ../watray/watrayprojectspanel.vala:57
 msgid "Projects"
 msgstr "Proyectos"
 
 #: ../watray/watraypluginmanagerview.vala:43
 msgid "<b>Loaded Plugins</b>"
 msgstr "<b>Complementos cargados</b>"
+
+#: ../watray/watraypluginmanagerview.vala:72
+msgid "About plugin"
+msgstr "Acerca del complemento"
+
+#: ../watray/watraypluginmanagerview.vala:75
+msgid "Configure plugin"
+msgstr "Configurar complemento"
 
 #: ../watray/watraypreferencedialog.vala:28
 msgid "Preferences"
