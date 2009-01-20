@@ -58,8 +58,24 @@ internal class Watray.PreferenceManager: GLib.Object
 			_config.set_schema ("/schemas" + WATRAY_PROJECTS_PANEL_VISIBLE_KEY, schema);
 			_config.set_bool (WATRAY_PROJECTS_PANEL_VISIBLE_KEY, false);
 		}
+		if (!schema_exists || _config.get_schema ("/schemas" + WATRAY_ACTIVATED_PLUGINS_KEY) == null)
+		{
+			var schema = new Schema ();
+			schema.set_short_desc (_("List of activated plugins"));
+			schema.set_type (ValueType.LIST);
+			schema.set_list_type (ValueType.STRING);
+			var default_value = new GConf.Value (ValueType.LIST);
+			default_value.set_list_type (ValueType.STRING);
+			var list = new SList<string> ();
+			default_value.set_list (list);
+			schema.set_default_value (default_value);
+			_config.set_schema ("/schemas" + WATRAY_ACTIVATED_PLUGINS_KEY, schema);
+			_config.set_list (WATRAY_ACTIVATED_PLUGINS_KEY, ValueType.STRING, list);
+		}
 		_config.engine.associate_schema (WATRAY_PROJECTS_PANEL_VISIBLE_KEY, "/schemas" + WATRAY_PROJECTS_PANEL_VISIBLE_KEY);
+		_config.engine.associate_schema (WATRAY_ACTIVATED_PLUGINS_KEY, "/schemas" + WATRAY_ACTIVATED_PLUGINS_KEY);
 		_projects_panel_visible = _config.get_bool (WATRAY_PROJECTS_PANEL_VISIBLE_KEY);
+		//TODO: Activate plugins
 		_config.add_dir (WATRAY_BASE_KEY, ClientPreloadType.ONELEVEL);
 		_config.value_changed += this.on_gconf_value_changed;
 	}
@@ -70,6 +86,9 @@ internal class Watray.PreferenceManager: GLib.Object
 		{
 			case WATRAY_PROJECTS_PANEL_VISIBLE_KEY:
 				this.projects_panel_visible = config.get_bool (WATRAY_PROJECTS_PANEL_VISIBLE_KEY);
+				break;
+			case WATRAY_ACTIVATED_PLUGINS_KEY:
+				//TODO: do something
 				break;
 		}
 	}

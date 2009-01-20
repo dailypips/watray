@@ -1,4 +1,10 @@
 2009-01-20  Matias De la Puente  <mfpuente.ar@gmail.com>
+	
+	*  watray/watraypreferencemanager.vala:
+	
+	Added activated plugins key to gconf.
+	
+2009-01-20  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	*  watray/watrayproject.vala:
 	*  watray/watrayprojectspanel.vala:
