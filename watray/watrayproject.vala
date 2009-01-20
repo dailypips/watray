@@ -39,6 +39,7 @@ public class Watray.Project: GLib.Object
 	public signal void project_activated ();
 	public signal void item_selected (string item_path, void* data);
 	public signal void item_activated (string item_path, void* data);
+	public signal void item_removed (string item_path, void* data);
 	
 	public Project (string name)
 	{
@@ -79,7 +80,13 @@ public class Watray.Project: GLib.Object
 	
 	public void remove_item (string item_path) throws ProjectError
 	{
-		//TODO: Implement remove_item
+		var iter = get_iter_from_item_path (item_path);
+		if (_projects_store.iter_has_child (iter))
+			throw new ProjectError.ITEM_HAS_CHILDRENS ("Item %s has childrens", Path.get_basename (item_path));
+		void* data;
+		_projects_store.get (iter, Columns.ITEM_DATA, out data);
+		_projects_store.remove (iter);
+		this.item_removed (item_path, data);
 	}
 
 	public void set (string item_path, void* data) throws ProjectError
