@@ -1,3 +1,11 @@
+2009-01-20  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayproject.vala:
+	*  watray/watrayprojectspanel.vala:
+	*  watray/watrayprojectspanelinterface.vala:
+	
+	Better project managment.
+
 2009-01-16  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	*  watray/watrayprojectspanel.vala:

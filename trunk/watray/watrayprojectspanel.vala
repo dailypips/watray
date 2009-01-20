@@ -21,10 +21,14 @@
  */
 using Gtk;
 
-public errordomain Watray.ProjectError
+internal enum Columns
 {
-	PROJECT_NOT_ADDED,
-	WRONG_ITEM_PATH
+	STOCK_ID = 0,
+	PIXBUF,
+	ITEM_NAME,
+	PROJECT,
+	ITEM_DATA,
+	N_COLUMNS
 }
 
 internal class Watray.ProjectsPanel : VBox, IProjectsPanel
@@ -34,16 +38,6 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 	
 	public signal void closed ();
 	
-	private enum Columns
-	{
-		STOCK_ID = 0,
-		PIXBUF,
-		ITEM_NAME,
-		PROJECT,
-		ITEM_DATA,
-		N_COLUMNS
-	}
-
 	public ProjectsPanel ()
 	{
 		this.spacing = 5;
@@ -95,103 +89,12 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 	
 	public void add_project (Project project)
 	{
-		_projects_store.append (out project.iter, null);
-		_projects_store.set (project.iter, Columns.STOCK_ID, STOCK_DIRECTORY, Columns.ITEM_NAME, project.name, Columns.PROJECT, project, -1);
-		
+		project.add_to_projects_store (_projects_store);
 	}
 	
 	public void remove_project (Project project)
 	{
 		//TODO: Implement remove_project
-	}
-	
-	public void create_item (Project project, string item_path, void* data = null) throws ProjectError
-	{
-		var parent_iter = get_iter_from_item_path (project, Path.get_dirname (item_path));
-		TreeIter new_item_iter;
-		_projects_store.append (out new_item_iter, parent_iter);
-		_projects_store.set (new_item_iter, Columns.ITEM_NAME, Path.get_basename (item_path), Columns.PROJECT, project, Columns.ITEM_DATA, data);
-	}
-	
-	public void create_item_from_stock (Project project, string item_path, string stock_id, void*data = null) throws ProjectError
-	{
-		var parent_iter = get_iter_from_item_path (project, Path.get_dirname (item_path));
-		TreeIter new_item_iter;
-		_projects_store.append (out new_item_iter, parent_iter);
-		_projects_store.set (new_item_iter, Columns.STOCK_ID, stock_id, Columns.ITEM_NAME, Path.get_basename (item_path), Columns.PROJECT, project, Columns.ITEM_DATA, data);
-	}
-	
-	public void create_item_from_pixbuf (Project project, string item_path, Gdk.Pixbuf pixbuf, void*data = null) throws ProjectError
-	{
-		var parent_iter = get_iter_from_item_path (project, Path.get_dirname (item_path));
-		TreeIter new_item_iter;
-		_projects_store.append (out new_item_iter, parent_iter);
-		_projects_store.set (new_item_iter, Columns.PIXBUF, pixbuf, Columns.ITEM_NAME, Path.get_basename (item_path), Columns.PROJECT, project, Columns.ITEM_DATA, data);
-	}
-	
-	public void remove_item (Project project, string item_path) throws ProjectError
-	{
-		//TODO: Implement remove_item
-	}
-
-	public void set_item_data (Project project, string item_path, void* data) throws ProjectError
-	{
-		var iter = get_iter_from_item_path (project, item_path);
-		_projects_store.set (iter, Columns.ITEM_DATA, data);
-	}
-	
-	public void* get_item_data (Project project, string item_path) throws ProjectError
-	{
-		var iter = get_iter_from_item_path (project, item_path);
-		void* data;
-		_projects_store.get (iter, Columns.ITEM_DATA, out data);
-		return data;
-	}
-	
-	public void set_item_icon_from_stock (Project project, string item_path, string stock_id) throws ProjectError
-	{
-		var item_iter = get_iter_from_item_path (project, item_path);
-		_projects_store.set (item_iter, Columns.STOCK_ID, stock_id);
-	}
-	
-	public void set_item_icon_from_pixbuf (Project project, string item_path, Gdk.Pixbuf pixbuf) throws ProjectError
-	{
-		var item_iter = get_iter_from_item_path (project, item_path);
-		_projects_store.set (item_iter, Columns.PIXBUF, pixbuf);
-	}
-	
-	private TreeIter? get_iter_from_item_path (Project project, string item_path) throws ProjectError
-	{
-		if (project.iter == null)
-			throw new ProjectError.PROJECT_NOT_ADDED ("The project %s was not added", project.name);
-		TreeIter parent_iter = project.iter;
-		if (item_path == "/")
-			return parent_iter;
-		foreach (string item_name in item_path.split ("/"))
-		{
-			if (item_name!="")
-			{
-				if (!_projects_store.iter_has_child (parent_iter))
-					throw new ProjectError.WRONG_ITEM_PATH ("Item %s not founded", item_name);
-				TreeIter iter;
-				bool item_founded = false;
-				for (int i=0; i<_projects_store.iter_n_children (parent_iter); i++)
-				{
-					string name;
-					_projects_store.iter_nth_child (out iter, parent_iter, i);
-					_projects_store.get (iter, Columns.ITEM_NAME, out name);
-					if (name==item_name)
-					{
-						item_founded = true;
-						parent_iter = iter;
-						break;
-					}
-				}
-				if (!item_founded)
-					throw new ProjectError.WRONG_ITEM_PATH ("Item %s not founded", item_name);
-			}
-		}
-		return parent_iter;
 	}
 	
 	private string get_item_path_from_iter (TreePath path)
@@ -212,8 +115,8 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 	private void on_row_activated (TreeView view, TreePath path, TreeViewColumn column)
 	{
 		TreeIter iter;
-		_projects_store.get_iter (out iter, path);
 		Project project;
+		_projects_store.get_iter (out iter, path);
 		_projects_store.get (iter, Columns.PROJECT, out project);
 		if (path.get_depth () == 1)
 			project.project_activated ();
