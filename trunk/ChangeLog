@@ -1,4 +1,10 @@
 2009-01-20  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayproject.vala:
+	
+	Added remove_item.
+	
+2009-01-20  Matias De la Puente  <mfpuente.ar@gmail.com>
 	
 	*  watray/watraypreferencemanager.vala:
 	
