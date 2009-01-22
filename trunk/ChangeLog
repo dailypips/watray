@@ -1,5 +1,12 @@
 2009-01-22  Matias De la Puente  <mfpuente.ar@gmail.com>
 
+	*  watray/watrayplugininfo.vala:
+	*  watray/watrayplugin.vala:
+
+	Code cleanup.
+
+2009-01-22  Matias De la Puente  <mfpuente.ar@gmail.com>
+
 	*  watraysimple/simple.watrayplugin:
 	
 	Added Website and Copyright.

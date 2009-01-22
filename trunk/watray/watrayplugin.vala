@@ -41,7 +41,7 @@ internal class Watray.Plugin : GLib.Object
 	{
 		if (this.is_loaded)
 			return true;
-		string plugin_filename = Module.build_path (this.plugin_info.path, this.plugin_info.module);
+		string plugin_filename = Module.build_path (Path.get_dirname (this.plugin_info.filename), this.plugin_info.module);
 		_module = Module.open (plugin_filename, ModuleFlags.BIND_LAZY);
 		if (_module == null)
 			return false;

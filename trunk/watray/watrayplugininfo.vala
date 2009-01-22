@@ -23,20 +23,9 @@
 internal class Watray.PluginInfo : GLib.Object
 {
 	private const string GROUP_NAME = "Watray Plugin";
-	private string _filename;
 	private string[] _authors;
 	
-	public string filename
-	{
-		private set
-		{
-			this._filename = value;
-			this.path = Path.get_dirname (this._filename);
-		}
-		get { return this._filename; }
-	}
-	
-	public string path { private set; get; }
+	public string filename { private set; get; }
 	public string name { private set; get; }
 	public string icon { private set; get; }
 	public string module { private set; get; }
@@ -52,7 +41,7 @@ internal class Watray.PluginInfo : GLib.Object
 	
 	public PluginInfo (string filename)
 	{
-		this.filename = filename;
+		_filename = filename;
 	}
 	
 	public bool load_info ()
@@ -61,22 +50,22 @@ internal class Watray.PluginInfo : GLib.Object
 		var key_file = new KeyFile ();
 		try
 		{
-			key_file.load_from_file (this.filename, KeyFileFlags.NONE);
+			key_file.load_from_file (_filename, KeyFileFlags.NONE);
 			if (!key_file.has_group (GROUP_NAME))
 				throw new KeyFileError.GROUP_NOT_FOUND ("Invalid plugin file");
-			this.name = key_file.get_string (GROUP_NAME, "Name");
-			this.icon = key_file.get_string (GROUP_NAME, "Icon");
-			this.module = key_file.get_string (GROUP_NAME, "Module");
-			this.description = key_file.get_string (GROUP_NAME, "Description");
+			_name = key_file.get_string (GROUP_NAME, "Name");
+			_icon = key_file.get_string (GROUP_NAME, "Icon");
+			_module = key_file.get_string (GROUP_NAME, "Module");
+			_description = key_file.get_string (GROUP_NAME, "Description");
 			_authors = key_file.get_string_list (GROUP_NAME, "Authors");
-			this.website = key_file.get_string (GROUP_NAME, "Website");
-			this.license = key_file.get_string (GROUP_NAME, "License");
-			this.copyright = key_file.get_string (GROUP_NAME, "Copyright");
+			_website = key_file.get_string (GROUP_NAME, "Website");
+			_license = key_file.get_string (GROUP_NAME, "License");
+			_copyright = key_file.get_string (GROUP_NAME, "Copyright");
 			return true;
 		}
 		catch (Error err)
 		{
-			print (this.filename + ": " + err.message);
+			print (_filename + ": " + err.message);
 			return false;
 		}
 	}
