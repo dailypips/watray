@@ -75,9 +75,25 @@ internal class Watray.PreferenceManager: GLib.Object
 		_config.engine.associate_schema (WATRAY_PROJECTS_PANEL_VISIBLE_KEY, "/schemas" + WATRAY_PROJECTS_PANEL_VISIBLE_KEY);
 		_config.engine.associate_schema (WATRAY_ACTIVATED_PLUGINS_KEY, "/schemas" + WATRAY_ACTIVATED_PLUGINS_KEY);
 		_projects_panel_visible = _config.get_bool (WATRAY_PROJECTS_PANEL_VISIBLE_KEY);
-		//TODO: Activate plugins
 		_config.add_dir (WATRAY_BASE_KEY, ClientPreloadType.ONELEVEL);
 		_config.value_changed += this.on_gconf_value_changed;
+	}
+	
+	public void add_activated_plugin (string plugin_name)
+	{
+		var list = _config.get_list (WATRAY_ACTIVATED_PLUGINS_KEY, ValueType.STRING).copy ();
+		list.append (plugin_name);
+		_config.set_list (WATRAY_ACTIVATED_PLUGINS_KEY, ValueType.STRING, list);
+	}
+	
+	public void remove_activated_plugin (string plugin_name)
+	{
+		_config.get_list (WATRAY_ACTIVATED_PLUGINS_KEY, ValueType.STRING).remove (plugin_name);
+	}
+	
+	public SList<string> get_activated_plugins ()
+	{
+		return null;
 	}
 	
 	private void on_gconf_value_changed (Client config, string key, void* data)

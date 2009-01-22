@@ -56,6 +56,11 @@ internal class Watray.PluginManager : GLib.Object
 		}
 	}
 	
+	public unowned Plugin get_plugin (string plugin_name)
+	{
+		return _plugins.lookup (plugin_name);
+	}
+	
 	public List<unowned Plugin> get_plugins ()
 	{
 		return _plugins.get_values ();

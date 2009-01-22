@@ -1,3 +1,26 @@
+2009-01-22  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simple.watrayplugin:
+	
+	Added Website and Copyright.
+	
+	*  watray/watraypreferencemanager.vala:
+	
+	Added basic activated plugins list
+	
+	*  watray/watrayplugininfo.vala:
+	
+	Added website and copyright properties. Return authors as an array.
+	
+	*  watray/watraymainwindow.vala:
+	*  watray/watraypluginmanagerview.vala:
+	
+	Added about plugin dialog.
+	
+	*  watray/watraypluginmanager.vala:
+	
+	Get plugin by name.
+	
 2009-01-20  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	*  watray/watrayproject.vala:

@@ -31,6 +31,7 @@ internal class Watray.PluginManagerView: VBox
 	{
 		ACTIVATED,
 		ICON,
+		NAME,
 		TEXT,
 		N_COLUMNS
 	}
@@ -45,7 +46,7 @@ internal class Watray.PluginManagerView: VBox
 		title.set_alignment (0, 0);
 		this.pack_start (title, false, false, 5);
 		
-		_plugins_store = new Gtk.ListStore (Columns.N_COLUMNS, typeof (bool), typeof (string), typeof (string));
+		_plugins_store = new Gtk.ListStore (Columns.N_COLUMNS, typeof (bool), typeof (string), typeof (string), typeof (string));
 		_plugins_view = new TreeView.with_model (_plugins_store);
 		
 		var toggle = new CellRendererToggle ();
@@ -71,6 +72,7 @@ internal class Watray.PluginManagerView: VBox
 		hbox.border_width = 5;
 		var button = new Button.with_label (_("About plugin"));
 		button.image = new Image.from_stock (STOCK_ABOUT, IconSize.BUTTON);
+		button.clicked += on_about_plugin_clicked;
 		hbox.pack_start (button, false, false, 0);
 		button = new Button.with_label (_("Configure plugin"));
 		button.image = new Image.from_stock (STOCK_PREFERENCES, IconSize.BUTTON);
@@ -89,7 +91,27 @@ internal class Watray.PluginManagerView: VBox
 		{
 			_plugins_store.append (out iter);
 			string text = "<b>" + plugin.plugin_info.name + "</b>\n" + plugin.plugin_info.description;
-			_plugins_store.set (iter, Columns.ACTIVATED, plugin.is_activated, Columns.ICON, plugin.plugin_info.icon, Columns.TEXT, text);
+			_plugins_store.set (iter, Columns.ACTIVATED, plugin.is_activated, Columns.ICON, plugin.plugin_info.icon, Columns.NAME, plugin.plugin_info.name, Columns.TEXT, text);
+		}
+	}
+	
+	private void on_about_plugin_clicked (Button button)
+	{
+		TreeIter iter;
+		if (_plugins_view.get_selection ().get_selected (null, out iter))
+		{
+			string plugin_name;
+			_plugins_store.get (iter, Columns.NAME, out plugin_name);
+			var plugin_info = _plugin_manager.get_plugin (plugin_name).plugin_info;
+			var about_dialog = new AboutDialog ();
+			about_dialog.authors = plugin_info.get_authors ();
+			about_dialog.comments = plugin_info.description;
+			about_dialog.logo_icon_name = plugin_info.icon;
+			about_dialog.website = plugin_info.website;
+			about_dialog.program_name = plugin_info.name;
+			about_dialog.copyright = plugin_info.copyright;
+			about_dialog.run ();
+			about_dialog.destroy ();
 		}
 	}
 } 
