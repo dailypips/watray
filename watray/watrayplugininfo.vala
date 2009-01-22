@@ -24,6 +24,7 @@ internal class Watray.PluginInfo : GLib.Object
 {
 	private const string GROUP_NAME = "Watray Plugin";
 	private string _filename;
+	private string[] _authors;
 	
 	public string filename
 	{
@@ -40,8 +41,14 @@ internal class Watray.PluginInfo : GLib.Object
 	public string icon { private set; get; }
 	public string module { private set; get; }
 	public string description { private set; get; }
-	public string authors { private set; get; }
+	public string website { private set; get; }
 	public string license { private set; get; }
+	public string copyright { private set; get; }
+	
+	public string[] get_authors ()
+	{
+		return _authors;
+	}
 	
 	public PluginInfo (string filename)
 	{
@@ -61,8 +68,10 @@ internal class Watray.PluginInfo : GLib.Object
 			this.icon = key_file.get_string (GROUP_NAME, "Icon");
 			this.module = key_file.get_string (GROUP_NAME, "Module");
 			this.description = key_file.get_string (GROUP_NAME, "Description");
-			this.authors = key_file.get_string (GROUP_NAME, "Authors");
+			_authors = key_file.get_string_list (GROUP_NAME, "Authors");
+			this.website = key_file.get_string (GROUP_NAME, "Website");
 			this.license = key_file.get_string (GROUP_NAME, "License");
+			this.copyright = key_file.get_string (GROUP_NAME, "Copyright");
 			return true;
 		}
 		catch (Error err)

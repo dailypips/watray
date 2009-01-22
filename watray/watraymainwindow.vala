@@ -62,6 +62,10 @@ internal class Watray.MainWindow : Window, IMainWindow
 	public static void main (string[] args)
 	{
 		Gtk.init (ref args);
+		AboutDialogActivateLinkFunc url_hook_func = (dialog, url) => {
+			show_uri (dialog.get_screen (), url, Gdk.CURRENT_TIME);
+		};
+		AboutDialog.set_url_hook (url_hook_func);
 		var main_window = new MainWindow ();
 		main_window.show ();
 		Gtk.main ();
@@ -144,6 +148,8 @@ internal class Watray.MainWindow : Window, IMainWindow
 		_plugin_manager.load_plugins ();
 		if (_plugin_manager.activate_plugin ("simple"))
 			message ("Plugin activated\n");
+		//_preference_manager.add_activated_plugin ("hola");
+		_preference_manager.remove_activated_plugin ("hola");
 	}
 	
 	public void add_menu_item (MenuType menu_type, MenuItem menu_item)
