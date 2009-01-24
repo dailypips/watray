@@ -23,7 +23,7 @@ using Gtk;
 
 internal class Watray.PreferenceDialog: Gtk.Dialog
 {
-	public PreferenceDialog (PluginManager plugin_manager)
+	public PreferenceDialog (PluginManager plugin_manager, PreferenceManager preference_manager)
 	{
 		this.title = _("Preferences");
 		this.has_separator = false;
@@ -33,7 +33,7 @@ internal class Watray.PreferenceDialog: Gtk.Dialog
 		var notebook = new Notebook ();
 		this.vbox.pack_start (notebook, true, true, 5);
 		
-		var plugin_manager_view = new PluginManagerView (plugin_manager);
+		var plugin_manager_view = new PluginManagerView (plugin_manager, preference_manager);
 		plugin_manager_view.refresh_plugin_list ();
 		
 		notebook.append_page (plugin_manager_view, new Label (_("Plugins")));
