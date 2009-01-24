@@ -88,12 +88,18 @@ internal class Watray.PreferenceManager: GLib.Object
 	
 	public void remove_activated_plugin (string plugin_name)
 	{
-		_config.get_list (WATRAY_ACTIVATED_PLUGINS_KEY, ValueType.STRING).remove (plugin_name);
+		var list = new SList<string> ();
+		foreach (string str in (SList<string>)_config.get_list (WATRAY_ACTIVATED_PLUGINS_KEY, ValueType.STRING))
+		{
+			if (str != plugin_name)
+				list.append (str);
+		}
+		_config.set_list (WATRAY_ACTIVATED_PLUGINS_KEY, ValueType.STRING, list);
 	}
 	
 	public SList<string> get_activated_plugins ()
 	{
-		return null;
+		return _config.get_list (WATRAY_ACTIVATED_PLUGINS_KEY, ValueType.STRING).copy ();
 	}
 	
 	private void on_gconf_value_changed (Client config, string key, void* data)
@@ -102,9 +108,6 @@ internal class Watray.PreferenceManager: GLib.Object
 		{
 			case WATRAY_PROJECTS_PANEL_VISIBLE_KEY:
 				this.projects_panel_visible = config.get_bool (WATRAY_PROJECTS_PANEL_VISIBLE_KEY);
-				break;
-			case WATRAY_ACTIVATED_PLUGINS_KEY:
-				//TODO: do something
 				break;
 		}
 	}

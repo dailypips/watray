@@ -127,7 +127,7 @@ internal class Watray.MainWindow : Window, IMainWindow
 		
 		var vpaned = new VPaned ();
 		vpaned.pack1 (_documents_panel, true, false);
-		vpaned.show ();
+		vpaned.show_all ();
 		
 		var hpaned = new HPaned ();
 		hpaned.add1 (_projects_panel);
@@ -143,13 +143,12 @@ internal class Watray.MainWindow : Window, IMainWindow
 		this.add (vbox);
 		this.add_accel_group (ui_manager.get_accel_group ());
 		
-		//TODO: implement in the preference dialog a plugin tab
 		_plugin_manager = new PluginManager (this, _projects_panel, _documents_panel);
 		_plugin_manager.load_plugins ();
-		if (_plugin_manager.activate_plugin ("simple"))
-			message ("Plugin activated\n");
-		//_preference_manager.add_activated_plugin ("hola");
-		_preference_manager.remove_activated_plugin ("hola");
+		foreach (string plugin_name in _preference_manager.get_activated_plugins ())
+		{
+			_plugin_manager.activate_plugin (plugin_name);
+		}
 	}
 	
 	public void add_menu_item (MenuType menu_type, MenuItem menu_item)
@@ -238,7 +237,7 @@ internal class Watray.MainWindow : Window, IMainWindow
 	
 	public void on_preferences ()
 	{
-		var dialog = new PreferenceDialog (_plugin_manager);
+		var dialog = new PreferenceDialog (_plugin_manager, _preference_manager);
 		dialog.run ();
 		dialog.destroy ();
 	}

@@ -1,3 +1,16 @@
+2009-01-24  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpleplugin.vala:
+	
+	Remove menu items when the plugin is deactivated.
+	
+	*  watray/watraypreferencemanager.vala:
+	*  watray/watraymainwindow.vala:
+	*  watray/watraypluginmanagerview.vala:
+	*  watray/watraypreferencedialog.vala:
+
+	Added plugins activated list support using gconf.
+
 2009-01-22  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	*  watray/watrayplugininfo.vala:

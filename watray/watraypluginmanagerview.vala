@@ -26,6 +26,7 @@ internal class Watray.PluginManagerView: VBox
 	private ListStore _plugins_store;
 	private TreeView _plugins_view;
 	private PluginManager _plugin_manager;
+	private PreferenceManager _preference_manager;
 	
 	private enum Columns
 	{
@@ -36,9 +37,10 @@ internal class Watray.PluginManagerView: VBox
 		N_COLUMNS
 	}
 	
-	public PluginManagerView (PluginManager plugin_manager)
+	public PluginManagerView (PluginManager plugin_manager, PreferenceManager preference_manager)
 	{
 		_plugin_manager = plugin_manager;
+		_preference_manager = preference_manager;
 		this.border_width = 5;
 		
 		var title = new Label ("<b>" + _("Loaded Plugins") + "</b>");
@@ -46,18 +48,43 @@ internal class Watray.PluginManagerView: VBox
 		title.set_alignment (0, 0);
 		this.pack_start (title, false, false, 5);
 		
-		_plugins_store = new Gtk.ListStore (Columns.N_COLUMNS, typeof (bool), typeof (string), typeof (string), typeof (string));
+		_plugins_store = new ListStore (Columns.N_COLUMNS, typeof (bool), typeof (string), typeof (string), typeof (string));
 		_plugins_view = new TreeView.with_model (_plugins_store);
 		
 		var toggle = new CellRendererToggle ();
+		toggle.toggled += (toggle, path) => {
+			TreeIter iter;
+			var tree_path = new TreePath.from_string (path);
+			_plugins_store.get_iter (out iter, tree_path);
+			string plugin_name;
+			_plugins_store.get (iter, Columns.NAME, out plugin_name);
+			if (toggle.active)
+			{
+				_plugin_manager.deactivate_plugin (plugin_name);
+				_preference_manager.remove_activated_plugin (plugin_name);
+			}
+			else
+			{
+				_plugin_manager.activate_plugin (plugin_name);
+				_preference_manager.add_activated_plugin (plugin_name);
+			}
+			_plugins_store.set (iter, Columns.ACTIVATED, !toggle.active);
+		};
+
 		var column = new TreeViewColumn ();
 		column.pack_start (toggle, false);
 		column.add_attribute (toggle, "active", Columns.ACTIVATED);
+		_plugins_view.append_column (column);
+		
 		var pixbuf = new CellRendererPixbuf ();
 		pixbuf.stock_size = IconSize.SMALL_TOOLBAR;
+ 		
+ 		column = new TreeViewColumn ();
  		column.pack_start (pixbuf, false);
 		column.add_attribute (pixbuf, "stock-id", Columns.ICON);
+		
 		var text = new CellRendererText ();
+
 		column.pack_start (text, true);
 		column.add_attribute (text, "markup", Columns.TEXT);
 		_plugins_view.append_column (column);
