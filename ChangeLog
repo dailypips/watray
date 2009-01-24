@@ -1,5 +1,11 @@
 2009-01-24  Matias De la Puente  <mfpuente.ar@gmail.com>
 
+	*  po/es.po:
+
+	Updated spanish translation.
+
+2009-01-24  Matias De la Puente  <mfpuente.ar@gmail.com>
+
 	*  watraysimple/simpleplugin.vala:
 	
 	Remove menu items when the plugin is deactivated.
