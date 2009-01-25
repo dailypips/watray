@@ -23,5 +23,5 @@
 public interface Watray.IProjectsPanel : GLib.Object
 {
 	public abstract void add_project (Project project);
-	public abstract void remove_project (Project project);
+	public abstract void remove_project (Project project) throws ProjectError;
 }
