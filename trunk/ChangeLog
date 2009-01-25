@@ -1,5 +1,13 @@
 2009-01-25  Matias De la Puente  <mfpuente.ar@gmail.com>
 
+	*  watray/watrayplugininterface.vala:
+	*  watray/watraypluginmanagerview.vala:
+	*  watray/watrayplugin.vala:
+
+	Added configure support for plugins.
+
+2009-01-25  Matias De la Puente  <mfpuente.ar@gmail.com>
+
 	*  watray/watrayproject.vala:
 	*  watray/watrayprojectspanel.vala:
 	*  watray/watrayprojectspanelinterface.vala:

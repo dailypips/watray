@@ -52,24 +52,7 @@ internal class Watray.PluginManagerView: VBox
 		_plugins_view = new TreeView.with_model (_plugins_store);
 		
 		var toggle = new CellRendererToggle ();
-		toggle.toggled += (toggle, path) => {
-			TreeIter iter;
-			var tree_path = new TreePath.from_string (path);
-			_plugins_store.get_iter (out iter, tree_path);
-			string plugin_name;
-			_plugins_store.get (iter, Columns.NAME, out plugin_name);
-			if (toggle.active)
-			{
-				_plugin_manager.deactivate_plugin (plugin_name);
-				_preference_manager.remove_activated_plugin (plugin_name);
-			}
-			else
-			{
-				_plugin_manager.activate_plugin (plugin_name);
-				_preference_manager.add_activated_plugin (plugin_name);
-			}
-			_plugins_store.set (iter, Columns.ACTIVATED, !toggle.active);
-		};
+		toggle.toggled += on_activate_plugin_toggled;
 
 		var column = new TreeViewColumn ();
 		column.pack_start (toggle, false);
@@ -97,12 +80,15 @@ internal class Watray.PluginManagerView: VBox
 		
 		var hbox = new HBox (false, 5);
 		hbox.border_width = 5;
+		
 		var button = new Button.with_label (_("About plugin"));
 		button.image = new Image.from_stock (STOCK_ABOUT, IconSize.BUTTON);
 		button.clicked += on_about_plugin_clicked;
 		hbox.pack_start (button, false, false, 0);
+		
 		button = new Button.with_label (_("Configure plugin"));
 		button.image = new Image.from_stock (STOCK_PREFERENCES, IconSize.BUTTON);
+		button.clicked += on_configure_plugin_clicked;
 		hbox.pack_start (button, false, false, 0);
 		
 		this.pack_start (scrolled_window, true, true, 5);
@@ -122,6 +108,26 @@ internal class Watray.PluginManagerView: VBox
 		}
 	}
 	
+	private void on_activate_plugin_toggled (CellRendererToggle toggle, string path)
+	{
+		TreeIter iter;
+		var tree_path = new TreePath.from_string (path);
+		_plugins_store.get_iter (out iter, tree_path);
+		string plugin_name;
+		_plugins_store.get (iter, Columns.NAME, out plugin_name);
+		if (toggle.active)
+		{
+			_plugin_manager.deactivate_plugin (plugin_name);
+			_preference_manager.remove_activated_plugin (plugin_name);
+		}
+		else
+		{
+			_plugin_manager.activate_plugin (plugin_name);
+			_preference_manager.add_activated_plugin (plugin_name);
+		}
+		_plugins_store.set (iter, Columns.ACTIVATED, !toggle.active);
+	}
+	
 	private void on_about_plugin_clicked (Button button)
 	{
 		TreeIter iter;
@@ -139,6 +145,18 @@ internal class Watray.PluginManagerView: VBox
 			about_dialog.copyright = plugin_info.copyright;
 			about_dialog.run ();
 			about_dialog.destroy ();
+		}
+	}
+	
+	private void on_configure_plugin_clicked (Button button)
+	{
+		TreeIter iter;
+		if (_plugins_view.get_selection ().get_selected (null, out iter))
+		{
+			string plugin_name;
+			_plugins_store.get (iter, Columns.NAME, out plugin_name);
+			var plugin = _plugin_manager.get_plugin (plugin_name);
+			plugin.configure ();
 		}
 	}
 } 
