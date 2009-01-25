@@ -25,7 +25,6 @@ public errordomain Watray.ProjectError
 {
 	PROJECT_NOT_ADDED,
 	WRONG_ITEM_PATH,
-	NOT_EMPTY
 }
 
 public class Watray.Project: GLib.Object
@@ -59,7 +58,7 @@ public class Watray.Project: GLib.Object
 	{
 		return_if_fail (_projects_store == null);
 		if (_projects_store.iter_has_child (_iter))
-			throw new ProjectError.NOT_EMPTY ("Proyect %s is not empty", this.name);
+			empty_item ("/");
 		_projects_store.remove (_iter);
 		this.removed ();
 		_iter = null;
@@ -94,11 +93,27 @@ public class Watray.Project: GLib.Object
 	{
 		var iter = get_iter_from_item_path (item_path);
 		if (_projects_store.iter_has_child (iter))
-			throw new ProjectError.NOT_EMPTY ("Item %s is not empty", Path.get_basename (item_path));
+			empty_item (item_path);
 		void* data;
 		_projects_store.get (iter, Columns.ITEM_DATA, out data);
 		_projects_store.remove (iter);
 		this.item_removed (item_path, data);
+	}
+	
+	public void empty_item (string item_path) throws ProjectError
+	{
+		TreeIter iter;
+		string item_name;
+		void* data;
+		var parent_iter = get_iter_from_item_path (item_path);
+		while (_projects_store.iter_children (out iter, parent_iter))
+		{
+			_projects_store.get (iter, Columns.ITEM_NAME, out item_name, Columns.ITEM_DATA, out data);
+			if (_projects_store.iter_has_child (iter))
+				empty_item (item_path + "/" + item_name);
+			_projects_store.remove (iter);
+			this.item_removed (item_path + "/" + item_name, data);
+		}
 	}
 
 	public void set (string item_path, void* data) throws ProjectError

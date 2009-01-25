@@ -1,5 +1,16 @@
 2009-01-25  Matias De la Puente  <mfpuente.ar@gmail.com>
 
+	*  watray/watrayproject.vala:
+	
+	Added empty_item method.
+	Improved remove_item and remove_project methods using empty_item.
+	
+	*  watray/watraypluginmanagerview.vala:
+
+	Use get_iter_from_string instead of a new TreePath.
+
+2009-01-25  Matias De la Puente  <mfpuente.ar@gmail.com>
+
 	*  watray/watrayplugininterface.vala:
 	*  watray/watraypluginmanagerview.vala:
 	*  watray/watrayplugin.vala:
