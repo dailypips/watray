@@ -22,6 +22,7 @@
 
 public interface Watray.IPlugin : GLib.Object
 {
+	public signal void on_configure_action ();
 	public abstract IProjectsPanel projects_panel { construct set; get; }
 	public abstract IDocumentsPanel documents_panel { construct set; get; }
 	public abstract IMainWindow main_window { construct set; get; }

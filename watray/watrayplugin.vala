@@ -62,7 +62,7 @@ internal class Watray.Plugin : GLib.Object
 			return false;
 		if (this.is_activated)
 			return true;
-		_activated_plugin = (IPlugin)Object.new (_type, "main-window", main_window, "projects-panel", projects_panel, "documents-panel", documents_panel, null);
+		_activated_plugin = (IPlugin)Object.new (_type, "main-window", main_window, "projects-panel", projects_panel, "documents-panel", documents_panel);
 		if (_activated_plugin == null)
 			return false;
 		this.is_activated = true;
@@ -73,5 +73,10 @@ internal class Watray.Plugin : GLib.Object
 	{
 		_activated_plugin = null;
 		this.is_activated = false;
+	}
+	
+	public void configure ()
+	{
+		_activated_plugin.on_configure_action ();
 	}
 }
