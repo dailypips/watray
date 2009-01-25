@@ -25,7 +25,7 @@ public errordomain Watray.ProjectError
 {
 	PROJECT_NOT_ADDED,
 	WRONG_ITEM_PATH,
-	ITEM_HAS_CHILDRENS
+	NOT_EMPTY
 }
 
 public class Watray.Project: GLib.Object
@@ -35,8 +35,9 @@ public class Watray.Project: GLib.Object
 	
 	public string name { set; get; }
 	
-	public signal void project_selected ();
-	public signal void project_activated ();
+	public signal void selected ();
+	public signal void activated ();
+	public signal void removed ();
 	public signal void item_selected (string item_path, void* data);
 	public signal void item_activated (string item_path, void* data);
 	public signal void item_removed (string item_path, void* data);
@@ -54,6 +55,17 @@ public class Watray.Project: GLib.Object
 		_projects_store.set (_iter, Columns.STOCK_ID, STOCK_DIRECTORY, Columns.ITEM_NAME, this.name, Columns.PROJECT, this, -1);
 	}
 	
+	internal void remove_from_projects_store () throws ProjectError
+	{
+		return_if_fail (_projects_store == null);
+		if (_projects_store.iter_has_child (_iter))
+			throw new ProjectError.NOT_EMPTY ("Proyect %s is not empty", this.name);
+		_projects_store.remove (_iter);
+		this.removed ();
+		_iter = null;
+		_projects_store = null;
+	}
+	
 	public void create_item (string item_path, void* data = null) throws ProjectError
 	{
 		var parent_iter = get_iter_from_item_path (Path.get_dirname (item_path));
@@ -62,7 +74,7 @@ public class Watray.Project: GLib.Object
 		_projects_store.set (new_item_iter, Columns.ITEM_NAME, Path.get_basename (item_path), Columns.PROJECT, this, Columns.ITEM_DATA, data);
 	}
 	
-	public void create_item_from_stock (string item_path, string stock_id, void*data = null) throws ProjectError
+	public void create_item_from_stock (string item_path, string stock_id, void* data = null) throws ProjectError
 	{
 		var parent_iter = get_iter_from_item_path (Path.get_dirname (item_path));
 		TreeIter new_item_iter;
@@ -70,7 +82,7 @@ public class Watray.Project: GLib.Object
 		_projects_store.set (new_item_iter, Columns.STOCK_ID, stock_id, Columns.ITEM_NAME, Path.get_basename (item_path), Columns.PROJECT, this, Columns.ITEM_DATA, data);
 	}
 	
-	public void create_item_from_pixbuf (string item_path, Gdk.Pixbuf pixbuf, void*data = null) throws ProjectError
+	public void create_item_from_pixbuf (string item_path, Gdk.Pixbuf pixbuf, void* data = null) throws ProjectError
 	{
 		var parent_iter = get_iter_from_item_path (Path.get_dirname (item_path));
 		TreeIter new_item_iter;
@@ -82,7 +94,7 @@ public class Watray.Project: GLib.Object
 	{
 		var iter = get_iter_from_item_path (item_path);
 		if (_projects_store.iter_has_child (iter))
-			throw new ProjectError.ITEM_HAS_CHILDRENS ("Item %s has childrens", Path.get_basename (item_path));
+			throw new ProjectError.NOT_EMPTY ("Item %s is not empty", Path.get_basename (item_path));
 		void* data;
 		_projects_store.get (iter, Columns.ITEM_DATA, out data);
 		_projects_store.remove (iter);

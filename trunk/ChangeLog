@@ -1,3 +1,11 @@
+2009-01-25  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayproject.vala:
+	*  watray/watrayprojectspanel.vala:
+	*  watray/watrayprojectspanelinterface.vala:
+
+	Added remove_project to the projects panel.
+
 2009-01-24  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	*  po/es.po:

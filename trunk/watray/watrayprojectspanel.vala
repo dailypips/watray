@@ -92,9 +92,9 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		project.add_to_projects_store (_projects_store);
 	}
 	
-	public void remove_project (Project project)
+	public void remove_project (Project project) throws ProjectError
 	{
-		//TODO: Implement remove_project
+		project.remove_from_projects_store ();
 	}
 	
 	private string get_item_path_from_iter (TreePath path)
@@ -119,7 +119,7 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		_projects_store.get_iter (out iter, path);
 		_projects_store.get (iter, Columns.PROJECT, out project);
 		if (path.get_depth () == 1)
-			project.project_activated ();
+			project.activated ();
 		else
 		{
 			string item_path = get_item_path_from_iter (path);
