@@ -111,8 +111,7 @@ internal class Watray.PluginManagerView: VBox
 	private void on_activate_plugin_toggled (CellRendererToggle toggle, string path)
 	{
 		TreeIter iter;
-		var tree_path = new TreePath.from_string (path);
-		_plugins_store.get_iter (out iter, tree_path);
+		_plugins_store.get_iter_from_string (out iter, path);
 		string plugin_name;
 		_plugins_store.get (iter, Columns.NAME, out plugin_name);
 		if (toggle.active)
