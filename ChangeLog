@@ -1,5 +1,13 @@
 2009-01-26  Matias De la Puente  <mfpuente.ar@gmail.com>
 
+	*  configure.ac:
+	*  watray-1.0.pc.in:
+	*  Makefile.am:
+
+	Added watray-1.0.pc for pkg-config
+
+2009-01-26  Matias De la Puente  <mfpuente.ar@gmail.com>
+
 	*  watray/watrayproject.vala:
 	*  watray/watrayprojectspanel.vala:
 	*  watray/watrayiteminfo.vala:

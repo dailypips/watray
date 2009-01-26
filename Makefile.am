@@ -19,8 +19,12 @@ watraydoc_DATA = \
 	NEWS\
 	$(NULL)
 
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = watray-1.0.pc
+
 EXTRA_DIST = \
 	$(watraydoc_DATA) \
+	watray-1.0.pc.in \
 	intltool-extract.in \
 	intltool-merge.in \
 	intltool-update.in\
