@@ -15,6 +15,7 @@ watray_VALASOURCES = \
 	watraydocumentspanel.vala \
 	watraydocumentspanelinterface.vala \
 	watraydocumentview.vala \
+	watrayiteminfo.vala \
 	watraymainwindow.vala \
 	watraymainwindowinterface.vala \
 	watrayproject.vala \
@@ -39,6 +40,7 @@ watrayincludedir = $(includedir)/watray-1.0/watray
 watrayinclude_HEADERS = \
 	watraydocumentspanelinterface.h \
 	watraydocumentview.h \
+	watrayiteminfo.h \
 	watraymainwindowinterface.h \
 	watrayproject.h \
 	watrayprojectspanelinterface.h \

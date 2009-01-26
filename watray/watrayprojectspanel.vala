@@ -27,7 +27,7 @@ internal enum Columns
 	PIXBUF,
 	ITEM_NAME,
 	PROJECT,
-	ITEM_DATA,
+	ITEM_INFO,
 	N_COLUMNS
 }
 
@@ -64,7 +64,7 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		
 		this.pack_start (hbox, false, false, 0);
 		
-		_projects_store = new TreeStore (Columns.N_COLUMNS, typeof (string), typeof (Gdk.Pixbuf), typeof (string), typeof (Project), typeof(void*));
+		_projects_store = new TreeStore (Columns.N_COLUMNS, typeof (string), typeof (Gdk.Pixbuf), typeof (string), typeof (Project), typeof(ItemInfo));
 		_projects_view = new TreeView.with_model (_projects_store);
 		_projects_view.row_activated += (view, path, column) => { this.on_row_activated (view, path, column); };
 
@@ -123,9 +123,10 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		else
 		{
 			string item_path = get_item_path_from_iter (path);
-			void* data;
-			_projects_store.get (iter, Columns.ITEM_DATA, out data);
-			project.item_activated (item_path, data);
+			ItemInfo item_info;
+			_projects_store.get (iter, Columns.ITEM_INFO, out item_info);
+			item_info.path = item_path;
+			project.item_activated (item_info);
 		}
 	}
 }

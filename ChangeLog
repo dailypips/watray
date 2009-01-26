@@ -1,3 +1,12 @@
+2009-01-26  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayproject.vala:
+	*  watray/watrayprojectspanel.vala:
+	*  watray/watrayiteminfo.vala:
+	*  watray/Makefile.am:
+
+	Use ItemInfo instead of void* to hold the data of the item.
+
 2009-01-25  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	*  watray/watrayproject.vala:
