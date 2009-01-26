@@ -46,6 +46,7 @@ AC_SUBST(WATRAYSIMPLE_CFLAGS)
 AC_SUBST(WATRAYSIMPLE_LIBS)
 
 AC_CONFIG_FILES([Makefile
+	watray-1.0.pc
 	watray/Makefile
 	watraysimple/Makefile
 	ui/Makefile
