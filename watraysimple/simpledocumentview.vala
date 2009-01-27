@@ -36,7 +36,8 @@ public class Simple.DocumentView : Watray.DocumentView
 		_text_buffer = new TextBuffer (null);
 		_text_buffer.changed += () => { this.tab_mark = true; };
 		_text_view = new TextView.with_buffer (_text_buffer);
-
+		_text_view.modify_font (Pango.FontDescription.from_string ("Monospace 10"));
+		
 		var scrolled_window = new ScrolledWindow (null, null);
 		scrolled_window.add (_text_view);
 		scrolled_window.set_policy (PolicyType.AUTOMATIC, PolicyType.AUTOMATIC);

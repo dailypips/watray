@@ -1,3 +1,9 @@
+2009-01-27  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpledocumentview.vala:
+
+	Changed TextView font to Monospace 10 by default.
+
 2009-01-26  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	*  configure.ac:
