@@ -20,14 +20,7 @@
  * 	Matias De la Puente <mfpuente.ar@gmail.com>
  */
 
-public enum Watray.MenuType
-{
-	NEW,
-	OPEN
-}
-
 public interface Watray.IMainWindow : GLib.Object
 {
-	public abstract void add_menu_item (MenuType menu_type, Gtk.MenuItem menu_item);
-	public abstract void remove_menu_item (MenuType menu_type, Gtk.MenuItem menu_item);
+	public abstract Gtk.UIManager get_ui_manager ();
 }

@@ -2,8 +2,12 @@
 <ui>
 	<menubar name="MainMenu">
 		<menu name="FileMenu" action="FileMenuAction">
-			<menuitem name="NewMenu" action="NewMenuAction"/>
-			<menuitem name="OpenMenu" action="OpenMenuAction"/>
+			<menu name="NewMenu" action="NewMenuAction">
+				<placeholder name="NewMenuOps"/>
+			</menu>
+			<menu name="OpenMenu" action="OpenMenuAction">
+				<placeholder name="OpenMenuOps"/>
+			</menu>
 			<separator/>
 			<menuitem action="SaveAction"/>
 			<menuitem action="SaveAsAction"/>
@@ -45,7 +49,17 @@
 		<toolitem action="CutAction"/>
 		<toolitem action="CopyAction"/>
 		<toolitem action="PasteAction"/>
+		<separator/>
+		<placeholder name="ToolbarOps"/>
 	</toolbar>
+	
+	<popup name="NewPopup" action="NewPopupAction">
+		<placeholder name="NewPopupOps"/>
+	</popup>
+
+	<popup name="OpenPopup" action="OpenPopupAction">
+		<placeholder name="OpenPopupOps"/>
+	</popup>
 
 </ui>
 

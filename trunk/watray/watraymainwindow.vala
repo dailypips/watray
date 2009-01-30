@@ -31,6 +31,8 @@ internal class Watray.MainWindow : Window, IMainWindow
 		{ "ViewMenuAction", null, N_("_View") },
 		{ "NewMenuAction", STOCK_NEW },
 		{ "OpenMenuAction", STOCK_OPEN },
+		{ "NewPopupAction" },
+		{ "OpenPopupAction" },
 		{ "SaveAction", STOCK_SAVE, null, null, null, on_save },
 		{ "SaveAsAction", STOCK_SAVE_AS, null, null, null, on_save_as },
 		{ "PrintAction", STOCK_PRINT, null, null, null, on_print },
@@ -52,18 +54,17 @@ internal class Watray.MainWindow : Window, IMainWindow
 	};
 
 	private ActionGroup _action_group;
+	private UIManager _ui_manager = new UIManager ();
 	private DocumentsPanel _documents_panel = new DocumentsPanel ();
 	private ProjectsPanel _projects_panel = new ProjectsPanel ();
 	private PluginManager _plugin_manager;
 	private PreferenceManager _preference_manager;
-	private Menu _new_menu = new Menu ();
-	private Menu _open_menu = new Menu ();
 	
 	public static void main (string[] args)
 	{
 		Gtk.init (ref args);
 		AboutDialogActivateLinkFunc url_hook_func = (dialog, url) => {
-			show_uri (dialog.get_screen (), url, Gdk.CURRENT_TIME);
+			Gtk.show_uri (dialog.get_screen (), url, Gdk.CURRENT_TIME);
 		};
 		AboutDialog.set_url_hook (url_hook_func);
 		var main_window = new MainWindow ();
@@ -82,36 +83,32 @@ internal class Watray.MainWindow : Window, IMainWindow
 		_action_group.add_actions (action_entries, this);
 		_action_group.add_toggle_actions (toggle_action_entries, this);
 
-		var ui_manager = new UIManager ();
-		ui_manager.insert_action_group (_action_group, 0);
+		_ui_manager.insert_action_group (_action_group, 0);
 		try
 		{
-			ui_manager.add_ui_from_file (Path.build_filename (Config.PACKAGE_DATADIR, "ui", "ui.xml"));
+			_ui_manager.add_ui_from_file (Path.build_filename (Config.PACKAGE_DATADIR, "ui", "ui.xml"));
 		}
 		catch (GLib.Error err)
 		{
 			error (err.message);
 		}
 		
-		var menubar = (MenuBar)ui_manager.get_widget ("/MainMenu");
-		var toolbar = (Toolbar)ui_manager.get_widget ("/MainToolbar");
+		var menubar = (MenuBar)_ui_manager.get_widget ("/MainMenu");
+		var toolbar = (Toolbar)_ui_manager.get_widget ("/MainToolbar");
 		
 		Gtk.Callback non_homogeneous = (item) => { ((ToolItem)item).set_homogeneous (false); };
 		toolbar.foreach (non_homogeneous);
 		
+		var popup = (Menu)_ui_manager.get_widget ("/NewPopup");
 		var toolbutton = new MenuToolButton.from_stock (STOCK_NEW);
-		toolbutton.set_menu (_new_menu);
+		toolbutton.set_menu (popup);
 		toolbar.insert (toolbutton, 0);
 		
+		popup = (Menu)_ui_manager.get_widget ("/OpenPopup");
 		toolbutton = new MenuToolButton.from_stock (STOCK_OPEN);
-		toolbutton.set_menu (_open_menu);
+		toolbutton.set_menu (popup);
 		toolbar.insert (toolbutton, 1);
 		toolbar.show_all ();
-		
-		var menu_item = (MenuItem)ui_manager.get_widget ("/MainMenu/FileMenu/NewMenu");
-		menu_item.set_submenu (_new_menu);
-		menu_item = (MenuItem)ui_manager.get_widget ("/MainMenu/FileMenu/OpenMenu");
-		menu_item.set_submenu (_open_menu);
 		
 		_preference_manager = new PreferenceManager ();
 
@@ -141,7 +138,7 @@ internal class Watray.MainWindow : Window, IMainWindow
 		vbox.show ();
 
 		this.add (vbox);
-		this.add_accel_group (ui_manager.get_accel_group ());
+		this.add_accel_group (_ui_manager.get_accel_group ());
 		
 		_plugin_manager = new PluginManager (this, _projects_panel, _documents_panel);
 		_plugin_manager.load_plugins ();
@@ -151,31 +148,9 @@ internal class Watray.MainWindow : Window, IMainWindow
 		}
 	}
 	
-	public void add_menu_item (MenuType menu_type, MenuItem menu_item)
+	public UIManager get_ui_manager ()
 	{
-		switch (menu_type)
-		{
-			case MenuType.NEW:
-				_new_menu.append (menu_item);
-				break;
-			case MenuType.OPEN:
-				_open_menu.append (menu_item);
-				break;
-		}
-		menu_item.show_all ();
-	}
-	
-	public void remove_menu_item (MenuType menu_type, MenuItem menu_item)
-	{
-		switch (menu_type)
-		{
-			case MenuType.NEW:
-				_new_menu.children.remove (menu_item);
-				break;
-			case MenuType.OPEN:
-				_open_menu.children.remove (menu_item);
-				break;
-		}
+		return _ui_manager;
 	}
 	
 	public void on_save ()
