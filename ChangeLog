@@ -1,3 +1,13 @@
+2009-01-30  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpleplugin.vala:
+	*  watray/watraymainwindow.vala:
+	*  watray/watraymainwindowinterface.vala:
+	*  ui/ui.xml:
+	*  po/es.po:
+
+	Improve menu and toolbar managment using UIManager.
+
 2009-01-27  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	*  watraysimple/simpledocumentview.vala:

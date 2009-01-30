@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: watray 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-24 15:12-0200\n"
+"POT-Creation-Date: 2009-01-30 14:08-0200\n"
 "PO-Revision-Date: 2008-12-23 12:15-0200\n"
 "Last-Translator: Matias De la Puente <mfpuente.ar@gmail.com>\n"
 "Language-Team: Spanish <mfpuente.ar@gmail.com>\n"
@@ -39,11 +39,11 @@ msgstr "Proyectos"
 msgid "Loaded Plugins"
 msgstr "Complementos cargados"
 
-#: ../watray/watraypluginmanagerview.vala:100
+#: ../watray/watraypluginmanagerview.vala:84
 msgid "About plugin"
 msgstr "Acerca del complemento"
 
-#: ../watray/watraypluginmanagerview.vala:104
+#: ../watray/watraypluginmanagerview.vala:89
 msgid "Configure plugin"
 msgstr "Configurar complemento"
 
@@ -55,7 +55,7 @@ msgstr "Preferencias"
 msgid "Plugins"
 msgstr "Complementos"
 
-#: ../watraysimple/simpleplugin.vala:39 ../watraysimple/simpleplugin.vala:43
+#: ../watraysimple/simpleplugin.vala:50 ../watraysimple/simpleplugin.vala:51
 msgid "Text file"
 msgstr "Archivo de texto"
 

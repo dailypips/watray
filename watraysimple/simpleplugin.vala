@@ -26,8 +26,40 @@ public class Simple.Plugin : GLib.Object, IPlugin
 {
 	private DocumentManager _document_manager;
 	private ProjectManager _project_manager;
-	private ImageMenuItem _new_item;
-	private ImageMenuItem _open_item;
+	
+	private const string _ui = """
+	<ui>
+		<menubar name="MainMenu">
+			<menu name="FileMenu" action="FileMenuAction">
+				<menu name="NewMenu" action="NewMenuAction">
+					<placeholder name="NewMenuOps">
+						<menuitem action="NewTextFileAction"/>
+					</placeholder>
+				</menu>
+				<menu name="OpenMenu" action="OpenMenuAction">
+					<placeholder name="OpenMenuOps">
+						<menuitem action="OpenTextFileAction"/>
+					</placeholder>
+				</menu>
+			</menu>
+		</menubar>
+		<popup name="NewPopup" action="NewPopupAction">
+			<placeholder name="NewPopupOps">
+				<menuitem action="NewTextFileAction"/>
+			</placeholder>
+		</popup>
+		<popup name="OpenPopup" action="OpenPopupAction">
+			<placeholder name="OpenPopupOps">
+				<menuitem action="OpenTextFileAction"/>
+			</placeholder>
+		</popup>
+	</ui>""";
+	private uint _ui_id;
+	private const ActionEntry[] _action_entries =
+	{
+		{ "NewTextFileAction", STOCK_FILE, N_("Text file"), null, null, on_new},
+		{ "OpenTextFileAction", STOCK_FILE, N_("Text file"), null, null, on_open}
+	};
 	
 	public IProjectsPanel projects_panel { construct set; get; }
 	public IDocumentsPanel documents_panel { construct set; get; }
@@ -36,22 +68,31 @@ public class Simple.Plugin : GLib.Object, IPlugin
 	construct
 	{
 		_document_manager = new DocumentManager (documents_panel);
-		_new_item = new ImageMenuItem.with_label (_("Text file"));
-		_new_item.image = new Image.from_stock (STOCK_FILE, IconSize.MENU);
-		main_window.add_menu_item (MenuType.NEW, _new_item);
-
-		_open_item = new ImageMenuItem.with_label (_("Text file"));
-		_open_item.image = new Image.from_stock (STOCK_FILE, IconSize.MENU);
-		_open_item.activate += () => { _document_manager.open (); };
-		main_window.add_menu_item (MenuType.OPEN, _open_item);
-		
 		_project_manager = new ProjectManager (projects_panel);
+
+		var action_group = new ActionGroup ("SimplePluginActions");
+		action_group.set_translation_domain (Config.GETTEXT_PACKAGE);
+		action_group.add_actions (_action_entries, this);
+
+		var ui_manager = this.main_window.get_ui_manager ();
+		ui_manager.insert_action_group (action_group, -1);
+		_ui_id = ui_manager.add_ui_from_string (_ui, -1);
 	}
 	
 	~Plugin ()
 	{
-		this.main_window.remove_menu_item (MenuType.NEW, _new_item);
-		this.main_window.remove_menu_item (MenuType.OPEN, _open_item);
+		var ui_manager = this.main_window.get_ui_manager ();
+		ui_manager.remove_ui (_ui_id);
+	}
+	
+	private void on_new ()
+	{
+		
+	}
+	
+	private void on_open ()
+	{
+		_document_manager.open ();
 	}
 }
 
