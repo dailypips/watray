@@ -37,9 +37,9 @@ public class Watray.Project: GLib.Object
 	public signal void selected ();
 	public signal void activated ();
 	public signal void removed ();
-	public signal void item_selected (ItemInfo item_info);
-	public signal void item_activated (ItemInfo item_info);
-	public signal void item_removed (ItemInfo item_info);
+	public signal void item_selected (string item_path);
+	public signal void item_activated (string item_path);
+	public signal void item_removed (string itemp_path);
 	
 	public Project (string name)
 	{
@@ -51,7 +51,7 @@ public class Watray.Project: GLib.Object
 		return_if_fail (_projects_store == null);
 		_projects_store = projects_store;
 		_projects_store.append (out _iter, null);
-		_projects_store.set (_iter, Columns.STOCK_ID, STOCK_DIRECTORY, Columns.ITEM_NAME, this.name, Columns.PROJECT, this, -1);
+		_projects_store.set (_iter, Columns.STOCK_ID, STOCK_DIRECTORY, Columns.NAME, this.name, Columns.PROJECT, this, -1);
 	}
 	
 	internal void remove_from_projects_store () throws ProjectError
@@ -65,28 +65,28 @@ public class Watray.Project: GLib.Object
 		_projects_store = null;
 	}
 	
-	public void create_item (string item_path, ItemInfo? item_info = null) throws ProjectError
+	public void create_item (string item_path, Value? data = null) throws ProjectError
 	{
 		var parent_iter = get_iter_from_item_path (Path.get_dirname (item_path));
 		TreeIter new_item_iter;
 		_projects_store.append (out new_item_iter, parent_iter);
-		_projects_store.set (new_item_iter, Columns.ITEM_NAME, Path.get_basename (item_path), Columns.PROJECT, this, Columns.ITEM_INFO, item_info);
+		_projects_store.set (new_item_iter, Columns.NAME, Path.get_basename (item_path), Columns.PROJECT, this, Columns.DATA, data);
 	}
 	
-	public void create_item_from_stock (string item_path, string stock_id, ItemInfo? item_info = null) throws ProjectError
+	public void create_item_from_stock (string item_path, string stock_id, Value? data = null) throws ProjectError
 	{
 		var parent_iter = get_iter_from_item_path (Path.get_dirname (item_path));
 		TreeIter new_item_iter;
 		_projects_store.append (out new_item_iter, parent_iter);
-		_projects_store.set (new_item_iter, Columns.STOCK_ID, stock_id, Columns.ITEM_NAME, Path.get_basename (item_path), Columns.PROJECT, this, Columns.ITEM_INFO, item_info);
+		_projects_store.set (new_item_iter, Columns.STOCK_ID, stock_id, Columns.NAME, Path.get_basename (item_path), Columns.PROJECT, this, Columns.DATA, data);
 	}
 	
-	public void create_item_from_pixbuf (string item_path, Gdk.Pixbuf pixbuf, ItemInfo? item_info = null) throws ProjectError
+	public void create_item_from_pixbuf (string item_path, Gdk.Pixbuf pixbuf, Value? data = null) throws ProjectError
 	{
 		var parent_iter = get_iter_from_item_path (Path.get_dirname (item_path));
 		TreeIter new_item_iter;
 		_projects_store.append (out new_item_iter, parent_iter);
-		_projects_store.set (new_item_iter, Columns.PIXBUF, pixbuf, Columns.ITEM_NAME, Path.get_basename (item_path), Columns.PROJECT, this, Columns.ITEM_INFO, item_info);
+		_projects_store.set (new_item_iter, Columns.PIXBUF, pixbuf, Columns.NAME, Path.get_basename (item_path), Columns.PROJECT, this, Columns.DATA, data);
 	}
 	
 	public void remove_item (string item_path) throws ProjectError
@@ -94,43 +94,37 @@ public class Watray.Project: GLib.Object
 		var iter = get_iter_from_item_path (item_path);
 		if (_projects_store.iter_has_child (iter))
 			empty_item (item_path);
-		ItemInfo item_info;
-		_projects_store.get (iter, Columns.ITEM_INFO, out item_info);
 		_projects_store.remove (iter);
-		item_info.path = item_path;
-		this.item_removed (item_info);
+		this.item_removed (item_path);
 	}
 	
 	public void empty_item (string item_path) throws ProjectError
 	{
 		TreeIter iter;
 		string item_name;
-		ItemInfo item_info;
 		var parent_iter = get_iter_from_item_path (item_path);
 		while (_projects_store.iter_children (out iter, parent_iter))
 		{
-			_projects_store.get (iter, Columns.ITEM_NAME, out item_name, Columns.ITEM_INFO, out item_info);
+			_projects_store.get (iter, Columns.NAME, out item_name);
 			if (_projects_store.iter_has_child (iter))
 				empty_item (item_path + "/" + item_name);
 			_projects_store.remove (iter);
-			item_info.path = item_path + "/" + item_name;
-			this.item_removed (item_info);
+			this.item_removed (item_path + "/" + item_name);
 		}
 	}
 
-	public void set (string item_path, ItemInfo item_info) throws ProjectError
+	public void set (string item_path, Value? data) throws ProjectError
 	{
 		var iter = get_iter_from_item_path (item_path);
-		_projects_store.set (iter, Columns.ITEM_INFO, item_info);
+		_projects_store.set (iter, Columns.DATA, data);
 	}
 	
-	public ItemInfo get (string item_path) throws ProjectError
+	public Value? get (string item_path) throws ProjectError
 	{
+		Value? data;
 		var iter = get_iter_from_item_path (item_path);
-		ItemInfo item_info;
-		_projects_store.get (iter, Columns.ITEM_INFO, out item_info);
-		item_info.path = item_path;
-		return item_info;
+		_projects_store.get (iter, Columns.DATA, out data);
+		return data;
 	}
 	
 	public void set_item_icon_from_stock (string item_path, string stock_id) throws ProjectError
@@ -164,7 +158,7 @@ public class Watray.Project: GLib.Object
 				{
 					string name;
 					_projects_store.iter_nth_child (out iter, parent_iter, i);
-					_projects_store.get (iter, Columns.ITEM_NAME, out name);
+					_projects_store.get (iter, Columns.NAME, out name);
 					if (name==item_name)
 					{
 						item_founded = true;

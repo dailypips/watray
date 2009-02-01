@@ -25,9 +25,9 @@ internal enum Columns
 {
 	STOCK_ID = 0,
 	PIXBUF,
-	ITEM_NAME,
+	NAME,
 	PROJECT,
-	ITEM_INFO,
+	DATA,
 	N_COLUMNS
 }
 
@@ -64,7 +64,7 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		
 		this.pack_start (hbox, false, false, 0);
 		
-		_projects_store = new TreeStore (Columns.N_COLUMNS, typeof (string), typeof (Gdk.Pixbuf), typeof (string), typeof (Project), typeof(ItemInfo));
+		_projects_store = new TreeStore (Columns.N_COLUMNS, typeof (string), typeof (Gdk.Pixbuf), typeof (string), typeof (Project), typeof(Value));
 		_projects_view = new TreeView.with_model (_projects_store);
 		_projects_view.row_activated += (view, path, column) => { this.on_row_activated (view, path, column); };
 
@@ -75,7 +75,7 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		column.add_attribute (renderer, "pixbuf", Columns.PIXBUF);
 		renderer = new CellRendererText ();
 		column.pack_start (renderer, true);
-		column.add_attribute (renderer, "text", Columns.ITEM_NAME);
+		column.add_attribute (renderer, "text", Columns.NAME);
 		_projects_view.append_column (column);
 		_projects_view.set_headers_visible (false);
 
@@ -105,7 +105,7 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		do
 		{
 			_projects_store.get_iter (out iter, path);
-			_projects_store.get (iter, Columns.ITEM_NAME, out str);
+			_projects_store.get (iter, Columns.NAME, out str);
 			item_path = "/" + str + item_path;
 			path.up ();
 		} while (path.get_depth () > 1);
@@ -123,10 +123,7 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		else
 		{
 			string item_path = get_item_path_from_iter (path);
-			ItemInfo item_info;
-			_projects_store.get (iter, Columns.ITEM_INFO, out item_info);
-			item_info.path = item_path;
-			project.item_activated (item_info);
+			project.item_activated (item_path);
 		}
 	}
 }
