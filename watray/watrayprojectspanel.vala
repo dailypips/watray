@@ -28,6 +28,7 @@ internal enum Columns
 	NAME,
 	PROJECT,
 	DATA,
+	MENU,
 	N_COLUMNS
 }
 
@@ -64,10 +65,11 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		
 		this.pack_start (hbox, false, false, 0);
 		
-		_projects_store = new TreeStore (Columns.N_COLUMNS, typeof (string), typeof (Gdk.Pixbuf), typeof (string), typeof (Project), typeof(Value));
+		_projects_store = new TreeStore (Columns.N_COLUMNS, typeof (string), typeof (Gdk.Pixbuf), typeof (string), typeof (Project), typeof(Value), typeof(Menu));
 		_projects_view = new TreeView.with_model (_projects_store);
 		_projects_view.row_activated += on_row_activated;
 		_projects_view.get_selection ().changed += on_row_changed;
+		_projects_view.button_press_event += on_button_pressed;
 
 		CellRenderer renderer = new CellRendererPixbuf ();
 		var column = new TreeViewColumn ();
@@ -141,6 +143,23 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 			string item_path = get_item_path_from_iter (_projects_store.get_path (iter));
 			project.item_selected (item_path);
 		}
+	}
+	
+	private bool on_button_pressed (TreeView view, Gdk.EventButton event)
+	{
+		TreePath? path = null;
+		if (event.button == 1)
+			return false;
+		if (event.button == 3 && view.get_path_at_pos ((int)event.x, (int)event.y, out path, null, null, null))
+		{
+			TreeIter iter;
+			Menu? menu;
+			_projects_store.get_iter (out iter, path);
+			_projects_store.get (iter, Columns.MENU, out menu);
+			if (menu != null)
+				menu.popup (null, null, null, event.button, event.time);
+		}
+		return true;
 	}
 }
 

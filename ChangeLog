@@ -1,5 +1,12 @@
 2009-02-02  Matias De la Puente  <mfpuente.ar@gmail.com>
 
+	*  watray/watrayproject.vala:
+	*  watray/watrayprojectspanel.vala:
+
+	Added menu support to project's items.
+
+2009-02-02  Matias De la Puente  <mfpuente.ar@gmail.com>
+
 	*  watray/watrayprojectspanel.vala:
 
 	Improved item and project selection.

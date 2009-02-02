@@ -139,6 +139,12 @@ public class Watray.Project: GLib.Object
 		_projects_store.set (item_iter, Columns.PIXBUF, pixbuf);
 	}
 	
+	public void set_item_menu (string item_path, Menu menu) throws ProjectError
+	{
+		var item_iter = get_iter_from_item_path (item_path);
+		_projects_store.set (item_iter, Columns.MENU, menu);
+	}
+	
 	public List<string> get_items (string item_path) throws ProjectError
 	{
 		var list = new List<string> ();
