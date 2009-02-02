@@ -39,7 +39,7 @@ public class Watray.Project: GLib.Object
 	public signal void removed ();
 	public signal void item_selected (string item_path);
 	public signal void item_activated (string item_path);
-	public signal void item_removed (string itemp_path);
+	public signal void item_removed (string item_path);
 	
 	public Project (string name)
 	{
@@ -137,6 +137,21 @@ public class Watray.Project: GLib.Object
 	{
 		var item_iter = get_iter_from_item_path (item_path);
 		_projects_store.set (item_iter, Columns.PIXBUF, pixbuf);
+	}
+	
+	public List<string> get_items (string item_path) throws ProjectError
+	{
+		var list = new List<string> ();
+		var parent_iter = get_iter_from_item_path (item_path);
+		TreeIter iter;
+		for (int i=0; i<_projects_store.iter_n_children (parent_iter); i++)
+		{
+			string name;
+			_projects_store.iter_nth_child (out iter, parent_iter, i);
+			_projects_store.get (iter, Columns.NAME, out name);
+			list.append (name);
+		}
+		return list;
 	}
 	
 	private TreeIter? get_iter_from_item_path (string item_path) throws ProjectError
