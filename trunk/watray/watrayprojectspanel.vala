@@ -67,7 +67,7 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		_projects_store = new TreeStore (Columns.N_COLUMNS, typeof (string), typeof (Gdk.Pixbuf), typeof (string), typeof (Project), typeof(Value));
 		_projects_view = new TreeView.with_model (_projects_store);
 		_projects_view.row_activated += on_row_activated;
-		_projects_view.cursor_changed += on_row_selected;
+		_projects_view.get_selection ().changed += on_row_changed;
 
 		CellRenderer renderer = new CellRendererPixbuf ();
 		var column = new TreeViewColumn ();
@@ -128,11 +128,11 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		}
 	}
 	
-	private void on_row_selected (TreeView view)
+	private void on_row_changed (TreeSelection selection)
 	{
 		TreeIter iter;
 		Project project;
-		view.get_selection ().get_selected (null, out iter);
+		selection.get_selected (null, out iter);
 		_projects_store.get (iter, Columns.PROJECT, out project);
 		if (_projects_store.iter_depth (iter) == 0)
 			project.selected ();
