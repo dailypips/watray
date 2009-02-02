@@ -2,6 +2,12 @@
 
 	*  watray/watrayprojectspanel.vala:
 
+	Improved item and project selection.
+
+2009-02-02  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayprojectspanel.vala:
+
 	Added Project.selected and Project.item_selected signals.
 
 2009-02-02  Matias De la Puente  <mfpuente.ar@gmail.com>
