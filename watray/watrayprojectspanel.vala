@@ -66,7 +66,8 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		
 		_projects_store = new TreeStore (Columns.N_COLUMNS, typeof (string), typeof (Gdk.Pixbuf), typeof (string), typeof (Project), typeof(Value));
 		_projects_view = new TreeView.with_model (_projects_store);
-		_projects_view.row_activated += (view, path, column) => { this.on_row_activated (view, path, column); };
+		_projects_view.row_activated += on_row_activated;
+		_projects_view.cursor_changed += on_row_selected;
 
 		CellRenderer renderer = new CellRendererPixbuf ();
 		var column = new TreeViewColumn ();
@@ -124,6 +125,21 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 		{
 			string item_path = get_item_path_from_iter (path);
 			project.item_activated (item_path);
+		}
+	}
+	
+	private void on_row_selected (TreeView view)
+	{
+		TreeIter iter;
+		Project project;
+		view.get_selection ().get_selected (null, out iter);
+		_projects_store.get (iter, Columns.PROJECT, out project);
+		if (_projects_store.iter_depth (iter) == 0)
+			project.selected ();
+		else
+		{
+			string item_path = get_item_path_from_iter (_projects_store.get_path (iter));
+			project.item_selected (item_path);
 		}
 	}
 }
