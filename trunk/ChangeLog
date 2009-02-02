@@ -1,5 +1,11 @@
 2009-02-02  Matias De la Puente  <mfpuente.ar@gmail.com>
 
+	*  watray/watrayprojectspanel.vala:
+
+	Added Project.selected and Project.item_selected signals.
+
+2009-02-02  Matias De la Puente  <mfpuente.ar@gmail.com>
+
 	*  watray/watrayproject.vala:
 
 	Added get_items method to return a list of child items.
