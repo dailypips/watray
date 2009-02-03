@@ -1,3 +1,10 @@
+2009-02-03  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watraymainwindow.vala:
+	*  ui/ui.xml:
+
+	Added about dialog and placeholders in ui.
+
 2009-02-02  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	*  watray/watrayproject.vala:

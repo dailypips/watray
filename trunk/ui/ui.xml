@@ -12,6 +12,8 @@
 			<menuitem action="SaveAction"/>
 			<menuitem action="SaveAsAction"/>
 			<separator/>
+			<placeholder name="FileOps"/>
+			<separator/>
 			<menuitem action="PrintAction"/>
 			<separator/>
 			<menuitem action="CloseAction"/>
@@ -29,11 +31,32 @@
 			<menuitem action="FindAction"/>
 			<menuitem action="FindAndReplaceAction"/>
 			<separator/>
+			<placeholder name="EditOps"/>
+			<separator/>
 			<menuitem action="PreferencesAction"/>
 		</menu>
 		
 		<menu name="ViewMenu" action="ViewMenuAction">
 			<menuitem name="ViewProjectsPanel" action="ViewProjectsPanelAction"/>
+			<placeholder name="ViewOps"/>
+		</menu>
+		
+		<menu name="ToolsMenu" action="ToolsMenuAction">
+			<placeholder name="ToolsOps_1"/>
+			<separator/>
+			<placeholder name="ToolsOps_2"/>
+			<separator/>
+			<placeholder name="ToolsOps_3"/>
+			<separator/>
+			<placeholder name="ToolsOps_4"/>
+			<separator/>
+			<placeholder name="ToolsOps_5"/>
+		</menu>
+		
+		<menu name="HelpMenu" action="HelpMenuAction">
+			<placeholder name="HelpOps"/>
+			<separator/>
+			<menuitem action="AboutAction"/>
 		</menu>
 		
 	</menubar>
