@@ -27,25 +27,28 @@ internal class Watray.MainWindow : Window, IMainWindow
 	private const ActionEntry[] action_entries = 
 	{
 		{ "FileMenuAction", null, N_("_File") },
+			{ "SaveAction", STOCK_SAVE, null, null, null, on_save },
+			{ "SaveAsAction", STOCK_SAVE_AS, null, null, null, on_save_as },
+			{ "PrintAction", STOCK_PRINT, null, null, null, on_print },
+			{ "CloseAction", STOCK_CLOSE, null, null, null, on_close },
+			{ "QuitAction", STOCK_QUIT, null, null, null, on_quit },
 		{ "EditMenuAction", null, N_("_Edit") },
+			{ "UndoAction", STOCK_UNDO, null, null, null, on_undo },
+			{ "RedoAction", STOCK_REDO, null, null, null, on_redo },
+			{ "CutAction", STOCK_CUT, null, null, null, on_cut },
+			{ "CopyAction", STOCK_COPY, null, null, null, on_copy },
+			{ "PasteAction", STOCK_PASTE, null, null, null, on_paste },
+			{ "FindAction", STOCK_FIND, null, null, null, on_quit },
+			{ "FindAndReplaceAction", STOCK_FIND_AND_REPLACE, null, null, null, on_quit },
+			{ "PreferencesAction", STOCK_PREFERENCES, null, null, null, on_preferences },
 		{ "ViewMenuAction", null, N_("_View") },
+		{ "ToolsMenuAction", null, N_("_Tools") },
+		{ "HelpMenuAction", null, N_("_Help") },
+			{ "AboutAction", STOCK_ABOUT, null, null, null, on_about },
 		{ "NewMenuAction", STOCK_NEW },
 		{ "OpenMenuAction", STOCK_OPEN },
 		{ "NewPopupAction" },
-		{ "OpenPopupAction" },
-		{ "SaveAction", STOCK_SAVE, null, null, null, on_save },
-		{ "SaveAsAction", STOCK_SAVE_AS, null, null, null, on_save_as },
-		{ "PrintAction", STOCK_PRINT, null, null, null, on_print },
-		{ "CloseAction", STOCK_CLOSE, null, null, null, on_close },
-		{ "QuitAction", STOCK_QUIT, null, null, null, on_quit },
-		{ "UndoAction", STOCK_UNDO, null, null, null, on_undo },
-		{ "RedoAction", STOCK_REDO, null, null, null, on_redo },
-		{ "CutAction", STOCK_CUT, null, null, null, on_cut },
-		{ "CopyAction", STOCK_COPY, null, null, null, on_copy },
-		{ "PasteAction", STOCK_PASTE, null, null, null, on_paste },
-		{ "FindAction", STOCK_FIND, null, null, null, on_quit },
-		{ "FindAndReplaceAction", STOCK_FIND_AND_REPLACE, null, null, null, on_quit },
-		{ "PreferencesAction", STOCK_PREFERENCES, null, null, null, on_preferences }
+		{ "OpenPopupAction" }
 	};
 	
 	private const ToggleActionEntry[] toggle_action_entries =
@@ -215,6 +218,18 @@ internal class Watray.MainWindow : Window, IMainWindow
 		var dialog = new PreferenceDialog (_plugin_manager, _preference_manager);
 		dialog.run ();
 		dialog.destroy ();
+	}
+	
+	public void on_about ()
+	{
+		var about_dialog = new AboutDialog ();
+		about_dialog.title = Config.PACKAGE_NAME;
+		about_dialog.comments = "General purpose IDE";
+		about_dialog.version = Config.PACKAGE_VERSION;
+		about_dialog.authors = new string[] { "Matias De la Puente <mfpuente.ar@gmail.com>" };
+		about_dialog.copyright = "Copyright (C) 2008-2009  Matias De la Puente";
+		about_dialog.run ();
+		about_dialog.destroy ();
 	}
 	
 	private void update_projects_panel_visibility ()
