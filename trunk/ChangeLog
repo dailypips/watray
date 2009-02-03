@@ -1,6 +1,12 @@
 2009-02-03  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	*  watray/watraymainwindow.vala:
+
+	Added website to the about dialog.
+
+2009-02-03  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watraymainwindow.vala:
 	*  ui/ui.xml:
 
 	Added about dialog and placeholders in ui.

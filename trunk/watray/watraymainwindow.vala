@@ -228,6 +228,7 @@ internal class Watray.MainWindow : Window, IMainWindow
 		about_dialog.version = Config.PACKAGE_VERSION;
 		about_dialog.authors = new string[] { "Matias De la Puente <mfpuente.ar@gmail.com>" };
 		about_dialog.copyright = "Copyright (C) 2008-2009  Matias De la Puente";
+		about_dialog.website = "http://code.google.com/p/watray/";
 		about_dialog.run ();
 		about_dialog.destroy ();
 	}
