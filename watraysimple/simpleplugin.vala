@@ -25,7 +25,6 @@ using Gtk;
 public class Simple.Plugin : GLib.Object, IPlugin
 {
 	private DocumentManager _document_manager;
-	private ProjectManager _project_manager;
 	private ConfigureManager _configure_manager;
 	
 	private const string _ui = """
@@ -69,8 +68,7 @@ public class Simple.Plugin : GLib.Object, IPlugin
 	construct
 	{
 		_configure_manager = new ConfigureManager ();
-		_document_manager = new DocumentManager (documents_panel, _configure_manager);
-		_project_manager = new ProjectManager (projects_panel, _configure_manager);
+		_document_manager = new DocumentManager (documents_panel, projects_panel, _configure_manager);
 		
 		var action_group = new ActionGroup ("SimplePluginActions");
 		action_group.set_translation_domain (Config.GETTEXT_PACKAGE);
