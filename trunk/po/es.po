@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: watray 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-30 14:08-0200\n"
+"POT-Creation-Date: 2009-02-03 22:54-0200\n"
 "PO-Revision-Date: 2008-12-23 12:15-0200\n"
 "Last-Translator: Matias De la Puente <mfpuente.ar@gmail.com>\n"
 "Language-Team: Spanish <mfpuente.ar@gmail.com>\n"
@@ -19,19 +19,27 @@ msgstr ""
 msgid "_File"
 msgstr "_Archivo"
 
-#: ../watray/watraymainwindow.vala:30
+#: ../watray/watraymainwindow.vala:35
 msgid "_Edit"
 msgstr "_Editar"
 
-#: ../watray/watraymainwindow.vala:31
+#: ../watray/watraymainwindow.vala:44
 msgid "_View"
 msgstr "_Ver"
 
-#: ../watray/watraymainwindow.vala:51
+#: ../watray/watraymainwindow.vala:45
+msgid "_Tools"
+msgstr "_Herramientas"
+
+#: ../watray/watraymainwindow.vala:46
+msgid "_Help"
+msgstr "Ay_uda"
+
+#: ../watray/watraymainwindow.vala:56
 msgid "Projects Panel"
 msgstr "Panel de proyectos"
 
-#: ../watray/watrayprojectspanel.vala:51
+#: ../watray/watrayprojectspanel.vala:52
 msgid "Projects"
 msgstr "Proyectos"
 
@@ -55,19 +63,34 @@ msgstr "Preferencias"
 msgid "Plugins"
 msgstr "Complementos"
 
-#: ../watraysimple/simpleplugin.vala:50 ../watraysimple/simpleplugin.vala:51
+#: ../watraysimple/simpleconfiguredialog.vala:34
+msgid "Text font:"
+msgstr "Tipografía del texto:"
+
+#: ../watraysimple/simpleconfiguremanager.vala:65
+msgid "Show opened text files"
+msgstr "Mostrar archivos de texto abiertos"
+
+#: ../watraysimple/simpleconfiguremanager.vala:76
+msgid "Text font"
+msgstr "Tipografía del texto"
+
+#: ../watraysimple/simpleplugin.vala:61 ../watraysimple/simpleplugin.vala:62
 msgid "Text file"
 msgstr "Archivo de texto"
 
-#: ../watraysimple/simpledocumentmanager.vala:36
+#: ../watraysimple/simpledocumentmanager.vala:38
 msgid "Open"
 msgstr "Abrir"
 
-#: ../watraysimple/simpledocumentmanager.vala:41
+#: ../watraysimple/simpledocumentmanager.vala:43
 msgid "All files"
 msgstr "Todos los archivos"
 
-#: ../watraysimple/simpledocumentmanager.vala:59
+#: ../watraysimple/simpledocumentmanager.vala:61
 #, c-format
 msgid "Want to save the document %s?"
 msgstr "¿Desea guardar el documento %s?"
+
+#~ msgid "Select text font:"
+#~ msgstr "Seleccione tipografía del texto:"
