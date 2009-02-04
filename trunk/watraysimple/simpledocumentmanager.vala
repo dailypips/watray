@@ -25,11 +25,13 @@ using Gtk;
 public class Simple.DocumentManager : GLib.Object
 {
 	private IDocumentsPanel _documents_panel;
+	private IProjectsPanel _projects_panel;
 	private ConfigureManager _configure_manager;
 	
-	public DocumentManager (IDocumentsPanel documents_panel, ConfigureManager configure_manager)
+	public DocumentManager (IDocumentsPanel documents_panel, IProjectsPanel projects_panel, ConfigureManager configure_manager)
 	{
 		_documents_panel = documents_panel;
+		_projects_panel = projects_panel;
 		_configure_manager = configure_manager;
 	}
 	
