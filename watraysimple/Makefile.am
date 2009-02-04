@@ -20,6 +20,8 @@ libwatraysimple_LTLIBRARIES = libwatraysimple.la
 
 
 libwatraysimple_la_VALASOURCES = \
+	simpleconfiguredialog.vala \
+	simpleconfiguremanager.vala \
 	simpleplugin.vala \
 	simpledocumentmanager.vala \
 	simpledocumentview.vala \
@@ -33,7 +35,7 @@ libwatraysimple_la_SOURCES = \
 	$(NULL)
 
 libwatraysimple.vala.stamp: $(libwatraysimple_la_VALASOURCES)
-	$(VALAC) -C  --pkg config --pkg gtk+-2.0 --pkg watray-1.0 --vapidir $(top_srcdir)/watray --basedir $(top_srcdir) --vapidir $(top_srcdir)/vapi $^
+	$(VALAC) -C  --pkg config --pkg gtk+-2.0 --pkg gconf-2.0 --pkg watray-1.0 --vapidir $(top_srcdir)/watray --basedir $(top_srcdir) --vapidir $(top_srcdir)/vapi $^
 	touch $@
 
 libwatraysimple_la_LDFLAGS = \

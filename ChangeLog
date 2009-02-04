@@ -1,5 +1,25 @@
 2009-02-03  Matias De la Puente  <mfpuente.ar@gmail.com>
 
+	*  watraysimple/simpledocumentview.vala:
+	*  watraysimple/simpledocumentmanager.vala:
+	*  watraysimple/simpleconfiguremanager.vala:
+	*  watraysimple/Makefile.am:
+	*  watraysimple/simpleplugin.vala:
+	*  watraysimple/simpleprojectmanager.vala:
+	*  watraysimple/simpleconfiguredialog.vala:
+	*  configure.ac:
+	*  watray/watraypreferencemanager.vala:
+	
+	Added configure support for simple plugin.
+	
+	*  po/es.po:
+	*  po/POTFILES.in:
+	*  po/POTFILES.skip:
+
+	Updated spanish translation.
+
+2009-02-03  Matias De la Puente  <mfpuente.ar@gmail.com>
+
 	*  watray/watraymainwindow.vala:
 
 	Added website to the about dialog.

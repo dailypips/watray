@@ -4,5 +4,7 @@ watray/watraymainwindow.vala
 watray/watrayprojectspanel.vala
 watray/watraypluginmanagerview.vala
 watray/watraypreferencedialog.vala
+watraysimple/simpleconfiguredialog.vala
+watraysimple/simpleconfiguremanager.vala
 watraysimple/simpleplugin.vala
 watraysimple/simpledocumentmanager.vala

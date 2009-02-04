@@ -26,6 +26,7 @@ public class Simple.Plugin : GLib.Object, IPlugin
 {
 	private DocumentManager _document_manager;
 	private ProjectManager _project_manager;
+	private ConfigureManager _configure_manager;
 	
 	private const string _ui = """
 	<ui>
@@ -67,9 +68,10 @@ public class Simple.Plugin : GLib.Object, IPlugin
 	
 	construct
 	{
-		_document_manager = new DocumentManager (documents_panel);
-		_project_manager = new ProjectManager (projects_panel);
-
+		_configure_manager = new ConfigureManager ();
+		_document_manager = new DocumentManager (documents_panel, _configure_manager);
+		_project_manager = new ProjectManager (projects_panel, _configure_manager);
+		
 		var action_group = new ActionGroup ("SimplePluginActions");
 		action_group.set_translation_domain (Config.GETTEXT_PACKAGE);
 		action_group.add_actions (_action_entries, this);
@@ -77,6 +79,12 @@ public class Simple.Plugin : GLib.Object, IPlugin
 		var ui_manager = this.main_window.get_ui_manager ();
 		ui_manager.insert_action_group (action_group, -1);
 		_ui_id = ui_manager.add_ui_from_string (_ui, -1);
+		
+		this.on_configure_action += () => {
+			var configure_dialog = new ConfigureDialog (_configure_manager);
+			configure_dialog.run ();
+			configure_dialog.destroy ();
+		};
 	}
 	
 	~Plugin ()

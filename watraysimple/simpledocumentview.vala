@@ -27,16 +27,23 @@ public class Simple.DocumentView : Watray.DocumentView
 	private TextBuffer _text_buffer;
 	private TextView _text_view;
 	private string _filename;
+	private ConfigureManager _configure_manager;
 	
-	public DocumentView (string filename)
+	public DocumentView (string filename, ConfigureManager configure_manager)
 	{
 		_filename = filename;
+		_configure_manager = configure_manager;
+		
+		_configure_manager.notify["text-font"] += () => {
+			_text_view.modify_font (Pango.FontDescription.from_string (_configure_manager.text_font));
+		};
+		
 		this.tab_text = Path.get_basename (_filename);
 		
 		_text_buffer = new TextBuffer (null);
 		_text_buffer.changed += () => { this.tab_mark = true; };
 		_text_view = new TextView.with_buffer (_text_buffer);
-		_text_view.modify_font (Pango.FontDescription.from_string ("Monospace 10"));
+		_text_view.modify_font (Pango.FontDescription.from_string (_configure_manager.text_font));
 		
 		var scrolled_window = new ScrolledWindow (null, null);
 		scrolled_window.add (_text_view);

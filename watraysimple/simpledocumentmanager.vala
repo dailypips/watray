@@ -25,10 +25,12 @@ using Gtk;
 public class Simple.DocumentManager : GLib.Object
 {
 	private IDocumentsPanel _documents_panel;
+	private ConfigureManager _configure_manager;
 	
-	public DocumentManager (IDocumentsPanel documents_panel)
+	public DocumentManager (IDocumentsPanel documents_panel, ConfigureManager configure_manager)
 	{
 		_documents_panel = documents_panel;
+		_configure_manager = configure_manager;
 	}
 	
 	public void open ()
@@ -44,7 +46,7 @@ public class Simple.DocumentManager : GLib.Object
 		
 		if (dialog.run ()==ResponseType.OK)
 		{
-			var view = new DocumentView (dialog.get_filename ());
+			var view = new DocumentView (dialog.get_filename (), _configure_manager);
 			view.close_action += (document_view) => { this.on_close_document (document_view); };
 			view.open ();
 			_documents_panel.add_view (view);

@@ -19,7 +19,6 @@
  * Author:
  * 	Matias De la Puente <mfpuente.ar@gmail.com>
  */
-using Gtk;
 using GConf;
 
 internal class Watray.PreferenceManager: GLib.Object

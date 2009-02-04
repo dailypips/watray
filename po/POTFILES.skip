@@ -2,5 +2,7 @@ watray/watraymainwindow.c
 watray/watrayprojectspanel.c
 watray/watraypluginmanagerview.c
 watray/watraypreferencedialog.c
+watraysimple/simpleconfiguredialog.c
+watraysimple/simpleconfiguremanager.c
 watraysimple/simpleplugin.c
 watraysimple/simpledocumentmanager.c
