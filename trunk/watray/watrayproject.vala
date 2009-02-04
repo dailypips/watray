@@ -24,7 +24,7 @@ using Gtk;
 public errordomain Watray.ProjectError
 {
 	PROJECT_NOT_ADDED,
-	WRONG_ITEM_PATH,
+	WRONG_ITEM_PATH
 }
 
 public class Watray.Project: GLib.Object
@@ -67,7 +67,16 @@ public class Watray.Project: GLib.Object
 	
 	public void create_item (string item_path, Value? data = null) throws ProjectError
 	{
+		TreeIter iter;
+		string name;
 		var parent_iter = get_iter_from_item_path (Path.get_dirname (item_path));
+		for (int i=0; i<_projects_store.iter_n_children (parent_iter); i++)
+		{
+			_projects_store.iter_nth_child (out iter, parent_iter, i);
+			_projects_store.get (iter, Columns.NAME, out name);
+			if (name == Path.get_basename (item_path))
+				throw new ProjectError.WRONG_ITEM_PATH ("Item %s already exist", name);
+		}
 		TreeIter new_item_iter;
 		_projects_store.append (out new_item_iter, parent_iter);
 		_projects_store.set (new_item_iter, Columns.NAME, Path.get_basename (item_path), Columns.PROJECT, this, Columns.DATA, data);
@@ -75,18 +84,14 @@ public class Watray.Project: GLib.Object
 	
 	public void create_item_from_stock (string item_path, string stock_id, Value? data = null) throws ProjectError
 	{
-		var parent_iter = get_iter_from_item_path (Path.get_dirname (item_path));
-		TreeIter new_item_iter;
-		_projects_store.append (out new_item_iter, parent_iter);
-		_projects_store.set (new_item_iter, Columns.STOCK_ID, stock_id, Columns.NAME, Path.get_basename (item_path), Columns.PROJECT, this, Columns.DATA, data);
+		create_item (item_path, data);
+		set_item_icon_from_stock (item_path, stock_id);
 	}
 	
 	public void create_item_from_pixbuf (string item_path, Gdk.Pixbuf pixbuf, Value? data = null) throws ProjectError
 	{
-		var parent_iter = get_iter_from_item_path (Path.get_dirname (item_path));
-		TreeIter new_item_iter;
-		_projects_store.append (out new_item_iter, parent_iter);
-		_projects_store.set (new_item_iter, Columns.PIXBUF, pixbuf, Columns.NAME, Path.get_basename (item_path), Columns.PROJECT, this, Columns.DATA, data);
+		create_item (item_path, data);
+		set_item_icon_from_pixbuf (item_path, pixbuf);
 	}
 	
 	public void remove_item (string item_path) throws ProjectError
@@ -112,7 +117,20 @@ public class Watray.Project: GLib.Object
 			this.item_removed (item_path + "/" + item_name);
 		}
 	}
-
+	
+	public bool item_exist (string item_path)
+	{
+		try
+		{
+			get_iter_from_item_path (item_path);
+		}
+		catch (ProjectError err)
+		{
+			return false;
+		}
+		return true;
+	}
+	
 	public void set (string item_path, Value? data) throws ProjectError
 	{
 		var iter = get_iter_from_item_path (item_path);
@@ -171,8 +189,6 @@ public class Watray.Project: GLib.Object
 		{
 			if (item_name!="")
 			{
-				if (!_projects_store.iter_has_child (parent_iter))
-					throw new ProjectError.WRONG_ITEM_PATH ("Item %s not founded", item_name);
 				TreeIter iter;
 				bool item_founded = false;
 				for (int i=0; i<_projects_store.iter_n_children (parent_iter); i++)

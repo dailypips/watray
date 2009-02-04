@@ -1,5 +1,13 @@
 2009-02-04  Matias De la Puente  <mfpuente.ar@gmail.com>
 
+	*  watray/watrayproject.vala:
+
+	Do not create two items with the same path.
+	Improved create_item_from_{stock,pixbuf} methods
+	Added item_exist method.
+
+2009-02-04  Matias De la Puente  <mfpuente.ar@gmail.com>
+
 	*  watraysimple/simpledocumentmanager.vala:
 	*  watraysimple/Makefile.am:
 	*  watraysimple/simpleplugin.vala:
