@@ -23,7 +23,7 @@ using Gtk;
 
 internal enum Columns
 {
-	STOCK_ID = 0,
+	STOCK_ID,
 	PIXBUF,
 	NAME,
 	PROJECT,
@@ -133,15 +133,17 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 	private void on_row_changed (TreeSelection selection)
 	{
 		TreeIter iter;
-		Project project;
-		selection.get_selected (null, out iter);
-		_projects_store.get (iter, Columns.PROJECT, out project);
-		if (_projects_store.iter_depth (iter) == 0)
-			project.selected ();
-		else
+		if (selection.get_selected (null, out iter))
 		{
-			string item_path = get_item_path_from_iter (_projects_store.get_path (iter));
-			project.item_selected (item_path);
+			Project project;
+			_projects_store.get (iter, Columns.PROJECT, out project);
+			if (_projects_store.iter_depth (iter) == 0)
+				project.selected ();
+			else
+			{
+				string item_path = get_item_path_from_iter (_projects_store.get_path (iter));
+				project.item_selected (item_path);
+			}
 		}
 	}
 	

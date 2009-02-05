@@ -48,21 +48,25 @@ public class Watray.Project: GLib.Object
 	
 	internal void add_to_projects_store (TreeStore projects_store)
 	{
-		return_if_fail (_projects_store == null);
-		_projects_store = projects_store;
-		_projects_store.append (out _iter, null);
-		_projects_store.set (_iter, Columns.STOCK_ID, STOCK_DIRECTORY, Columns.NAME, this.name, Columns.PROJECT, this, -1);
+		if (_projects_store == null)
+		{
+			_projects_store = projects_store;
+			_projects_store.append (out _iter, null);
+			_projects_store.set (_iter, Columns.STOCK_ID, STOCK_DIRECTORY, Columns.NAME, _name, Columns.PROJECT, this);
+		}
 	}
 	
 	internal void remove_from_projects_store () throws ProjectError
 	{
-		return_if_fail (_projects_store == null);
-		if (_projects_store.iter_has_child (_iter))
-			empty_item ("/");
-		_projects_store.remove (_iter);
-		this.removed ();
-		_iter = null;
-		_projects_store = null;
+		if (_projects_store != null)
+		{
+			if (_projects_store.iter_has_child (_iter))
+				empty_item ("/");
+			_projects_store.remove (_iter);
+			this.removed ();
+			_iter = null;
+			_projects_store = null;
+		}
 	}
 	
 	public void create_item (string item_path, Value? data = null) throws ProjectError
@@ -106,15 +110,19 @@ public class Watray.Project: GLib.Object
 	public void empty_item (string item_path) throws ProjectError
 	{
 		TreeIter iter;
-		string item_name;
+		string item_name, path;
 		var parent_iter = get_iter_from_item_path (item_path);
 		while (_projects_store.iter_children (out iter, parent_iter))
 		{
 			_projects_store.get (iter, Columns.NAME, out item_name);
+			if (item_path == "/")
+				path = item_path + item_name;
+			else
+				path = item_path + "/" + item_name;
 			if (_projects_store.iter_has_child (iter))
-				empty_item (item_path + "/" + item_name);
+				empty_item (path);
 			_projects_store.remove (iter);
-			this.item_removed (item_path + "/" + item_name);
+			this.item_removed (path);
 		}
 	}
 	

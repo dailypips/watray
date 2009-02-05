@@ -53,6 +53,8 @@
 			<placeholder name="ToolsOps_5"/>
 		</menu>
 		
+		<placeholder name="MenuBarOps"/>
+		
 		<menu name="HelpMenu" action="HelpMenuAction">
 			<placeholder name="HelpOps"/>
 			<separator/>

@@ -24,20 +24,101 @@ using Gtk;
 
 public class Simple.DocumentManager : GLib.Object
 {
+	private IMainWindow _main_window;
 	private IDocumentsPanel _documents_panel;
 	private IProjectsPanel _projects_panel;
 	private ConfigureManager _configure_manager;
+	private ActionGroup _action_group;
+	private string _current_dir;
+	private HashTable<string, DocumentView> _views;
+	private Project _opened_files;
 	
-	public DocumentManager (IDocumentsPanel documents_panel, IProjectsPanel projects_panel, ConfigureManager configure_manager)
+	private uint _ui_id;
+	private const string _ui = """
+	<ui>
+		<menubar name="MainMenu">
+			<menu name="FileMenu" action="FileMenuAction">
+				<menu name="NewMenu" action="NewMenuAction">
+					<placeholder name="NewMenuOps">
+						<menuitem action="NewTextFileAction"/>
+					</placeholder>
+				</menu>
+				<menu name="OpenMenu" action="OpenMenuAction">
+					<placeholder name="OpenMenuOps">
+						<menuitem action="OpenTextFileAction"/>
+					</placeholder>
+				</menu>
+			</menu>
+			<menu name="ViewMenu" action="ViewMenuAction">
+				<placeholder name="ViewOps">
+					<menuitem name="ViewTextFiles" action="ViewTextFilesAction"/>
+				</placeholder>
+			</menu>
+		</menubar>
+		<popup name="NewPopup" action="NewPopupAction">
+			<placeholder name="NewPopupOps">
+				<menuitem action="NewTextFileAction"/>
+			</placeholder>
+		</popup>
+		<popup name="OpenPopup" action="OpenPopupAction">
+			<placeholder name="OpenPopupOps">
+				<menuitem action="OpenTextFileAction"/>
+			</placeholder>
+		</popup>
+	</ui>""";
+	
+	private const ActionEntry[] _action_entries =
 	{
+		{ "NewTextFileAction", STOCK_FILE, N_("Text file"), null, null, on_new},
+		{ "OpenTextFileAction", STOCK_FILE, N_("Text file"), null, null, on_open}
+	};
+	
+	private const ToggleActionEntry[] _toggle_action_entries =
+	{
+		{ "ViewTextFilesAction", null, N_("Opened text files"), null, null, on_show_text_files, false }
+	};
+
+	public DocumentManager (IMainWindow main_window, IDocumentsPanel documents_panel, IProjectsPanel projects_panel, ConfigureManager configure_manager)
+	{
+		_main_window = main_window;
 		_documents_panel = documents_panel;
 		_projects_panel = projects_panel;
 		_configure_manager = configure_manager;
+		_current_dir = Environment.get_home_dir ();
+		_views = new HashTable<string, DocumentView> (str_hash, str_equal);
+		_opened_files = new Project (_("Opened text files"));
+		
+		_action_group = new ActionGroup ("SimplePluginActions");
+		_action_group.set_translation_domain (Config.GETTEXT_PACKAGE);
+		_action_group.add_actions (_action_entries, this);
+		_action_group.add_toggle_actions (_toggle_action_entries, this);
+		
+		var ui_manager = _main_window.get_ui_manager ();
+		ui_manager.insert_action_group (_action_group, -1);
+		_ui_id = ui_manager.add_ui_from_string (_ui, -1);
+		
+		_configure_manager.notify["text-files-visible"] += () => {
+			update_text_files_visibility ();
+		};
+		
+		update_text_files_visibility ();
 	}
 	
-	public void open ()
+	~DocumentManager ()
+	{
+		var ui_manager = _main_window.get_ui_manager ();
+		ui_manager.remove_ui (_ui_id);
+	}
+	
+	public void on_new ()
+	{
+		
+	}
+	
+	public void on_open ()
 	{
 		var dialog = new FileChooserDialog (_("Open"), null, FileChooserAction.OPEN);
+		dialog.set_current_folder (_current_dir);
 		dialog.add_button (STOCK_CANCEL, ResponseType.CANCEL);
 		dialog.add_button (STOCK_OPEN, ResponseType.OK);
 		dialog.set_default_response (ResponseType.OK);
@@ -52,6 +133,19 @@ public class Simple.DocumentManager : GLib.Object
 			view.close_action += (document_view) => { this.on_close_document (document_view); };
 			view.open ();
 			_documents_panel.add_view (view);
+			_documents_panel.show_view (view);
+			_current_dir = dialog.get_current_folder ();
+			_views.insert (dialog.get_filename (), view);
+			if (_configure_manager.text_files_visible)
+			{
+				string item_path = "/" + Path.get_basename (dialog.get_filename ());
+				Value? data = Value (typeof(string));
+				data.set_string (dialog.get_filename ());
+				while (_opened_files.item_exist (item_path))
+					item_path += "+";
+				_opened_files.create_item_from_stock (item_path, STOCK_FILE, data);
+				view.item_path = item_path;
+			}
 		}
 		dialog.destroy ();
 	}
@@ -78,5 +172,36 @@ public class Simple.DocumentManager : GLib.Object
 		}
 		else
 			_documents_panel.remove_view (document_view);
+		if (_configure_manager.text_files_visible)
+			_opened_files.remove_item (document_view.item_path);
+	}
+	
+	public void on_show_text_files ()
+	{
+		var toggle_action = (ToggleAction)_action_group.get_action ("ViewTextFilesAction");
+		_configure_manager.text_files_visible = toggle_action.active;
+	}
+	
+	private void update_text_files_visibility ()
+	{
+		if (_configure_manager.text_files_visible)
+		{
+			Value? data;
+			_projects_panel.add_project (_opened_files);
+			foreach (string filename in _views.get_keys ())
+			{
+				string item_path = "/" + Path.get_basename (filename);
+				data = Value (typeof(string));
+				data.set_string (filename);
+				while (_opened_files.item_exist (item_path))
+					item_path += "+";
+				_opened_files.create_item_from_stock (item_path, STOCK_FILE, data);
+			}
+		}
+		else
+			_projects_panel.remove_project (_opened_files);
+		
+		var toggle_action = (ToggleAction)_action_group.get_action ("ViewTextFilesAction");
+		toggle_action.active = _configure_manager.text_files_visible;
 	}
 }

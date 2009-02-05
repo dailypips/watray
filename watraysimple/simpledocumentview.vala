@@ -29,6 +29,8 @@ public class Simple.DocumentView : Watray.DocumentView
 	private string _filename;
 	private ConfigureManager _configure_manager;
 	
+	public string item_path { set; get; }
+	
 	public DocumentView (string filename, ConfigureManager configure_manager)
 	{
 		_filename = filename;
