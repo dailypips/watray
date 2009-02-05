@@ -116,10 +116,10 @@ internal class Watray.MainWindow : Window, IMainWindow
 		_preference_manager = new PreferenceManager ();
 
 		_preference_manager.notify["projects-panel-visible"] += () => {
-			this.update_projects_panel_visibility ();
+			update_projects_panel_visibility ();
 		};
 
-		this.update_projects_panel_visibility ();
+		update_projects_panel_visibility ();
 		
 		_projects_panel.closed += () => {
 			_preference_manager.projects_panel_visible = false;

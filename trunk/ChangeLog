@@ -1,3 +1,18 @@
+2009-02-05  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpledocumentview.vala:
+	*  watraysimple/simpledocumentmanager.vala:
+	*  watraysimple/simpleplugin.vala:
+	*  watray/watrayproject.vala:
+	*  watray/watrayprojectspanel.vala:
+	*  watray/watraymainwindow.vala:
+	*  watray/watraydocumentspanel.vala:
+	*  watray/watraydocumentspanelinterface.vala:
+	*  ui/ui.xml:
+	*  po/es.po:
+
+	Added basic support for opened text files in projects panel.
+
 2009-02-04  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	*  watray/watrayproject.vala:
