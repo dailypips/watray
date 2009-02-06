@@ -102,6 +102,17 @@ public class Simple.DocumentManager : GLib.Object
 		};
 		
 		update_text_files_visibility ();
+		
+		_opened_files.item_selected += (project, item_path) => {
+			var file = _opened_files[item_path];
+			var view = _views.lookup (file.get_string ());
+			_documents_panel.show_view (view);
+		};
+		
+		_documents_panel.view_selected += (panel, view) => {
+			if (view is DocumentView && _configure_manager.text_files_visible)
+				_opened_files.select_item (((DocumentView)view).item_path);
+		};
 	}
 	
 	~DocumentManager ()
@@ -135,19 +146,17 @@ public class Simple.DocumentManager : GLib.Object
 				view = new DocumentView (dialog.get_filename (), _configure_manager);
 				view.close_action += (document_view) => { this.on_close_document (document_view); };
 				view.open ();
-				_documents_panel.add_view (view);
 				_current_dir = dialog.get_current_folder ();
 				_views.insert (dialog.get_filename (), view);
 				if (_configure_manager.text_files_visible)
 				{
-					string item_path = "/" + Path.get_basename (dialog.get_filename ());
 					Value? data = Value (typeof(string));
 					data.set_string (dialog.get_filename ());
-					while (_opened_files.item_exist (item_path))
-						item_path += "+";
-					_opened_files.create_item_from_stock (item_path, STOCK_FILE, data);
-					view.item_path = item_path;
+					while (_opened_files.item_exist (view.item_path))
+						view.item_path += "+";
+					_opened_files.create_item_from_stock (view.item_path, STOCK_FILE, data);
 				}
+				_documents_panel.add_view (view);
 			}
 			_documents_panel.show_view (view);
 		}
@@ -178,6 +187,7 @@ public class Simple.DocumentManager : GLib.Object
 			_documents_panel.remove_view (document_view);
 		if (_configure_manager.text_files_visible)
 			_opened_files.remove_item (document_view.item_path);
+		_views.remove (document_view.filename);
 	}
 	
 	public void on_show_text_files ()

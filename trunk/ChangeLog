@@ -1,5 +1,17 @@
 2009-02-06  Matias De la Puente  <mfpuente.ar@gmail.com>
 
+	*  watraysimple/simpledocumentview.vala:
+	*  watraysimple/simpledocumentmanager.vala:
+	*  watray/watrayproject.vala:
+	*  watray/watrayprojectspanel.vala:
+	*  watray/watraydocumentspanel.vala:
+	*  watray/watraydocumentspanelinterface.vala:
+
+	Show a DocumentView when an item from the projects panel is selected
+	and vice versa.
+
+2009-02-06  Matias De la Puente  <mfpuente.ar@gmail.com>
+
 	*  watraysimple/simpledocumentmanager.vala:
 
 	Don't open twice or more times the same file, just show 

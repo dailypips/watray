@@ -27,22 +27,25 @@ internal class Watray.DocumentsPanel : Gtk.Notebook, IDocumentsPanel
 	
 	public DocumentsPanel ()
 	{
-		this.switch_page += (panel, page, page_num) => { current_view = (DocumentView)this.get_nth_page ((int)page_num); };
+		this.switch_page += (panel, page, page_num) => {
+			current_view = (DocumentView)this.get_nth_page ((int)page_num);
+			this.view_selected (current_view);
+		};
 	}
 
 	public void add_view (DocumentView view)
 	{
-		this.append_page (view, view.tab_label);
+		append_page (view, view.tab_label);
 	}
 	
 	public void remove_view (DocumentView view)
 	{
-		this.remove_page (this.page_num (view));
+		remove_page (this.page_num (view));
 	}
 	
 	public void show_view (DocumentView view)
 	{
-		this.set_current_page (this.page_num (view));
+		set_current_page (this.page_num (view));
 	}
 }
 
