@@ -22,6 +22,7 @@
 
 public interface Watray.IDocumentsPanel: GLib.Object
 {
+	public signal void view_selected (DocumentView view);
 	public abstract void add_view (DocumentView view);
 	public abstract void remove_view (DocumentView view);
 	public abstract void show_view (DocumentView view);

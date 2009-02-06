@@ -92,7 +92,7 @@ internal class Watray.ProjectsPanel : VBox, IProjectsPanel
 	
 	public void add_project (Project project)
 	{
-		project.add_to_projects_store (_projects_store);
+		project.add_to_projects_store (_projects_view);
 	}
 	
 	public void remove_project (Project project) throws ProjectError

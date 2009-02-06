@@ -29,11 +29,13 @@ public class Simple.DocumentView : Watray.DocumentView
 	private string _filename;
 	private ConfigureManager _configure_manager;
 	
+	public string filename { get { return _filename; } }
 	public string item_path { set; get; }
 	
 	public DocumentView (string filename, ConfigureManager configure_manager)
 	{
 		_filename = filename;
+		_item_path = "/" + Path.get_basename (_filename);
 		_configure_manager = configure_manager;
 		
 		_configure_manager.notify["text-font"] += () => {

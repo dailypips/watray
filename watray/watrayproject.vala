@@ -31,6 +31,7 @@ public class Watray.Project: GLib.Object
 {
 	private Gtk.TreeIter? _iter = null;
 	private TreeStore _projects_store = null;
+	private TreeSelection _projects_selection = null;
 	
 	public string name { set; get; }
 	
@@ -46,11 +47,12 @@ public class Watray.Project: GLib.Object
 		this.name = name;
 	}
 	
-	internal void add_to_projects_store (TreeStore projects_store)
+	internal void add_to_projects_store (TreeView projects_view)
 	{
 		if (_projects_store == null)
 		{
-			_projects_store = projects_store;
+			_projects_store = (TreeStore)projects_view.get_model ();
+			_projects_selection = projects_view.get_selection ();
 			_projects_store.append (out _iter, null);
 			_projects_store.set (_iter, Columns.STOCK_ID, STOCK_DIRECTORY, Columns.NAME, _name, Columns.PROJECT, this);
 		}
@@ -66,6 +68,7 @@ public class Watray.Project: GLib.Object
 			this.removed ();
 			_iter = null;
 			_projects_store = null;
+			_projects_selection = null;
 		}
 	}
 	
@@ -137,6 +140,12 @@ public class Watray.Project: GLib.Object
 			return false;
 		}
 		return true;
+	}
+	
+	public void select_item (string item_path) throws ProjectError
+	{
+		var iter = get_iter_from_item_path (item_path);
+		_projects_selection.select_iter (iter);
 	}
 	
 	public void set (string item_path, Value? data) throws ProjectError
