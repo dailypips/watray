@@ -129,23 +129,27 @@ public class Simple.DocumentManager : GLib.Object
 		
 		if (dialog.run ()==ResponseType.OK)
 		{
-			var view = new DocumentView (dialog.get_filename (), _configure_manager);
-			view.close_action += (document_view) => { this.on_close_document (document_view); };
-			view.open ();
-			_documents_panel.add_view (view);
-			_documents_panel.show_view (view);
-			_current_dir = dialog.get_current_folder ();
-			_views.insert (dialog.get_filename (), view);
-			if (_configure_manager.text_files_visible)
+			var view = _views.lookup (dialog.get_filename ());
+			if (view == null)
 			{
-				string item_path = "/" + Path.get_basename (dialog.get_filename ());
-				Value? data = Value (typeof(string));
-				data.set_string (dialog.get_filename ());
-				while (_opened_files.item_exist (item_path))
-					item_path += "+";
-				_opened_files.create_item_from_stock (item_path, STOCK_FILE, data);
-				view.item_path = item_path;
+				view = new DocumentView (dialog.get_filename (), _configure_manager);
+				view.close_action += (document_view) => { this.on_close_document (document_view); };
+				view.open ();
+				_documents_panel.add_view (view);
+				_current_dir = dialog.get_current_folder ();
+				_views.insert (dialog.get_filename (), view);
+				if (_configure_manager.text_files_visible)
+				{
+					string item_path = "/" + Path.get_basename (dialog.get_filename ());
+					Value? data = Value (typeof(string));
+					data.set_string (dialog.get_filename ());
+					while (_opened_files.item_exist (item_path))
+						item_path += "+";
+					_opened_files.create_item_from_stock (item_path, STOCK_FILE, data);
+					view.item_path = item_path;
+				}
 			}
+			_documents_panel.show_view (view);
 		}
 		dialog.destroy ();
 	}
