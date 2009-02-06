@@ -1,3 +1,10 @@
+2009-02-06  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpledocumentmanager.vala:
+
+	Don't open twice or more times the same file, just show 
+	the view of the file.
+
 2009-02-05  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	*  watraysimple/simpledocumentview.vala:
