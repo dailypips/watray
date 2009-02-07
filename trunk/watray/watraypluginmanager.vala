@@ -19,11 +19,12 @@
  * Author:
  * 	Matias De la Puente <mfpuente.ar@gmail.com>
  */
+using Gee;
 
 internal class Watray.PluginManager : GLib.Object
 {
 	private string _plugins_path;
-	private HashTable<string, Plugin> _plugins;
+	private HashMap<string, Plugin> _plugins;
 	private IMainWindow _main_window;
 	private IProjectsPanel _projects_panel;
 	private IDocumentsPanel _documents_panel;
@@ -32,7 +33,7 @@ internal class Watray.PluginManager : GLib.Object
 	{
 		assert (Module.supported());
 		_plugins_path = Path.build_filename (Config.PACKAGE_LIBDIR, "watray", "plugins");
-		_plugins = new HashTable<string, Plugin> (str_hash, str_equal);
+		_plugins = new HashMap<string, Plugin> (str_hash, str_equal);
 		_main_window = main_window;
 		_projects_panel = projects_panel;
 		_documents_panel = documents_panel;
@@ -49,36 +50,36 @@ internal class Watray.PluginManager : GLib.Object
 			{
 				plugin = new Plugin (plugin_info);
 				if (plugin.load ())
-					_plugins.insert (plugin_info.name, plugin);
+					_plugins[plugin_info.name] = plugin;
 				else
 					warning ("Can't load the plugin");
 			}
 		}
 	}
 	
-	public unowned Plugin get_plugin (string plugin_name)
+	public Plugin get_plugin (string plugin_name)
 	{
-		return _plugins.lookup (plugin_name);
+		return _plugins[plugin_name];
 	}
 	
-	public List<unowned Plugin> get_plugins ()
+	public Gee.Collection<Plugin> get_plugins ()
 	{
 		return _plugins.get_values ();
 	}
 	
 	public bool activate_plugin (string plugin_name)
 	{
-		return _plugins.lookup (plugin_name).activate (_main_window, _projects_panel, _documents_panel);
+		return _plugins[plugin_name].activate (_main_window, _projects_panel, _documents_panel);
 	}
 	
 	public void deactivate_plugin (string plugin_name)
 	{
-		_plugins.lookup (plugin_name).deactivate ();
+		_plugins[plugin_name].deactivate ();
 	}
 
-	private List<string> get_plugins_descriptors ()
+	private Gee.List<string> get_plugins_descriptors ()
 	{
-		var list = new List<string> ();
+		Gee.List<string> list = new ArrayList<string> ();
 		try
 		{
 			var dir = Dir.open (_plugins_path);
@@ -87,7 +88,7 @@ internal class Watray.PluginManager : GLib.Object
 			{
 				filename = dir.read_name ();
 				if (filename != null && filename.has_suffix (".watrayplugin"))
-					list.append (Path.build_filename (_plugins_path, filename));
+					list.add (Path.build_filename (_plugins_path, filename));
 			} while (filename != null);
 		}
 		catch (Error err)

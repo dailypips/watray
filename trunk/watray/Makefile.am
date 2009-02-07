@@ -45,7 +45,7 @@ watrayinclude_HEADERS = \
 	$(NULL)
 
 watray.vala.stamp: $(watray_VALASOURCES)
-	$(VALAC) -C --pkg gtk+-2.0 --pkg gdk-2.0 --pkg gmodule-2.0 --pkg config --pkg gconf-2.0 --basedir $(top_srcdir) --library watray-1.0 --vapidir $(top_srcdir)/vapi $^
+	$(VALAC) -C --pkg gtk+-2.0 --pkg gdk-2.0 --pkg gmodule-2.0 --pkg config --pkg gconf-2.0 --pkg gee-1.0 --basedir $(top_srcdir) --library watray-1.0 --vapidir $(top_srcdir)/vapi $^
 	touch $@
 
 watray_LDADD = \
