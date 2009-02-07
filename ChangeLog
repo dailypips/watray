@@ -1,3 +1,14 @@
+2009-02-07  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpledocumentmanager.vala:
+	*  watraysimple/Makefile.am:
+	*  configure.ac:
+	*  watray/watraypluginmanager.vala:
+	*  watray/Makefile.am:
+
+	Use Gee.HashMap and Gee.ArrayList instead of 
+	GLib.HashTable and GLib.List respectively.
+
 2009-02-06  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	*  watraysimple/simpledocumentview.vala:

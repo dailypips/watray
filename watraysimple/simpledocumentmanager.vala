@@ -21,6 +21,7 @@
  */
 using Watray;
 using Gtk;
+using Gee;
 
 public class Simple.DocumentManager : GLib.Object
 {
@@ -30,7 +31,7 @@ public class Simple.DocumentManager : GLib.Object
 	private ConfigureManager _configure_manager;
 	private ActionGroup _action_group;
 	private string _current_dir;
-	private HashTable<string, DocumentView> _views;
+	private HashMap<string, DocumentView> _views;
 	private Project _opened_files;
 	
 	private uint _ui_id;
@@ -85,7 +86,7 @@ public class Simple.DocumentManager : GLib.Object
 		_projects_panel = projects_panel;
 		_configure_manager = configure_manager;
 		_current_dir = Environment.get_home_dir ();
-		_views = new HashTable<string, DocumentView> (str_hash, str_equal);
+		_views = new HashMap<string, DocumentView> (str_hash, str_equal);
 		_opened_files = new Project (_("Opened text files"));
 		
 		_action_group = new ActionGroup ("SimplePluginActions");
@@ -105,7 +106,7 @@ public class Simple.DocumentManager : GLib.Object
 		
 		_opened_files.item_selected += (project, item_path) => {
 			var file = _opened_files[item_path];
-			var view = _views.lookup (file.get_string ());
+			var view = _views[file.get_string ()];
 			_documents_panel.show_view (view);
 		};
 		
@@ -140,14 +141,14 @@ public class Simple.DocumentManager : GLib.Object
 		
 		if (dialog.run ()==ResponseType.OK)
 		{
-			var view = _views.lookup (dialog.get_filename ());
-			if (view == null)
+			DocumentView view;
+			if (!_views.contains (dialog.get_filename ()))
 			{
 				view = new DocumentView (dialog.get_filename (), _configure_manager);
 				view.close_action += (document_view) => { this.on_close_document (document_view); };
 				view.open ();
 				_current_dir = dialog.get_current_folder ();
-				_views.insert (dialog.get_filename (), view);
+				_views[dialog.get_filename ()] = view;
 				if (_configure_manager.text_files_visible)
 				{
 					Value? data = Value (typeof(string));
@@ -158,6 +159,8 @@ public class Simple.DocumentManager : GLib.Object
 				}
 				_documents_panel.add_view (view);
 			}
+			else
+				view = _views[dialog.get_filename ()];
 			_documents_panel.show_view (view);
 		}
 		dialog.destroy ();
