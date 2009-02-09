@@ -26,23 +26,30 @@ public class Simple.DocumentView : Watray.DocumentView
 {
 	private TextBuffer _text_buffer;
 	private TextView _text_view;
-	private string _filename;
 	private ConfigureManager _configure_manager;
-	
-	public string filename { get { return _filename; } }
+	private string _filename;
+
+	public string filename
+	{
+		set
+		{
+			_filename = value;
+			this.tab_text = Path.get_basename (_filename);
+		}
+		get { return _filename; }
+	}
 	public string item_path { set; get; }
+	public bool save_as { set; get; }
 	
 	public DocumentView (string filename, ConfigureManager configure_manager)
 	{
-		_filename = filename;
+		this.filename = filename;
 		_item_path = "/" + Path.get_basename (_filename);
 		_configure_manager = configure_manager;
 		
 		_configure_manager.notify["text-font"] += () => {
 			_text_view.modify_font (Pango.FontDescription.from_string (_configure_manager.text_font));
 		};
-		
-		this.tab_text = Path.get_basename (_filename);
 		
 		_text_buffer = new TextBuffer (null);
 		_text_buffer.changed += () => { this.tab_mark = true; };
@@ -54,19 +61,15 @@ public class Simple.DocumentView : Watray.DocumentView
 		scrolled_window.set_policy (PolicyType.AUTOMATIC, PolicyType.AUTOMATIC);
 		this.pack_start_defaults (scrolled_window);
 
-		this.save_action += () => { this.save (); };
-		this.copy_action += () => 
-		{
+		this.copy_action += () => {
 			var clipboard = _text_view.get_clipboard (Gdk.SELECTION_CLIPBOARD);
 			_text_buffer.copy_clipboard (clipboard);
 		};
-		this.cut_action += () => 
-		{
+		this.cut_action += () => {
 			var clipboard = _text_view.get_clipboard (Gdk.SELECTION_CLIPBOARD);
 			_text_buffer.cut_clipboard (clipboard, true);
 		};
-		this.paste_action += () => 
-		{
+		this.paste_action += () => {
 			var clipboard = _text_view.get_clipboard (Gdk.SELECTION_CLIPBOARD);
 			_text_buffer.paste_clipboard (clipboard, null, true);
 		};

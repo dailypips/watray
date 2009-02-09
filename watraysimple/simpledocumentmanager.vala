@@ -124,7 +124,31 @@ public class Simple.DocumentManager : GLib.Object
 	
 	public void on_new ()
 	{
-		
+		int i = 0;
+		string filename = _current_dir + "/" + _("Unsaved text file %i");
+		while (_views.contains (filename.printf (++i)))
+			;
+		var view = new DocumentView (filename.printf (i), _configure_manager);
+		view.save_as = true;
+		view.save_action += (document_view) => {
+			if (document_view.save_as)
+				on_save_as_document (document_view);
+			else
+				document_view.save ();
+		};
+		view.save_as_action += on_save_as_document;
+		view.close_action += on_close_document;
+		_views[view.filename] = view;
+		if (_configure_manager.text_files_visible)
+		{
+			Value? data = Value (typeof(string));
+			data.set_string (view.filename);
+			while (_opened_files.item_exist (view.item_path))
+				view.item_path += "+";
+			_opened_files.create_item_from_stock (view.item_path, STOCK_FILE, data);
+		}
+		_documents_panel.add_view (view);
+		_documents_panel.show_view (view);
 	}
 	
 	public void on_open ()
@@ -145,14 +169,16 @@ public class Simple.DocumentManager : GLib.Object
 			if (!_views.contains (dialog.get_filename ()))
 			{
 				view = new DocumentView (dialog.get_filename (), _configure_manager);
-				view.close_action += (document_view) => { this.on_close_document (document_view); };
+				view.save_action += (document_view) => { document_view.save (); };
+				view.save_as_action += on_save_as_document;
+				view.close_action += on_close_document;
 				view.open ();
 				_current_dir = dialog.get_current_folder ();
-				_views[dialog.get_filename ()] = view;
+				_views[view.filename] = view;
 				if (_configure_manager.text_files_visible)
 				{
 					Value? data = Value (typeof(string));
-					data.set_string (dialog.get_filename ());
+					data.set_string (view.filename);
 					while (_opened_files.item_exist (view.item_path))
 						view.item_path += "+";
 					_opened_files.create_item_from_stock (view.item_path, STOCK_FILE, data);
@@ -165,6 +191,39 @@ public class Simple.DocumentManager : GLib.Object
 		}
 		dialog.destroy ();
 	}
+
+	public void on_save_as_document (DocumentView view)
+	{
+		var dialog = new FileChooserDialog (_("Save file as"), null, FileChooserAction.SAVE);
+		dialog.set_current_folder (Path.get_dirname (view.filename));
+		dialog.add_button (STOCK_CANCEL, ResponseType.CANCEL);
+		dialog.add_button (STOCK_SAVE, ResponseType.OK);
+		dialog.set_default_response (ResponseType.OK);
+		var filter = new FileFilter ();
+		filter.set_name (_("All files"));
+		filter.add_pattern ("*");
+		dialog.add_filter (filter);
+	
+		if (dialog.run () == ResponseType.OK)
+		{
+			_views.remove (view.filename);
+			view.filename = dialog.get_filename ();
+			_views[view.filename] = view;
+			view.save ();
+			view.save_as = false;
+			if (_configure_manager.text_files_visible)
+			{
+				_opened_files.remove_item (view.item_path);
+				view.item_path = "/" + Path.get_basename (view.filename);
+				Value? data = Value (typeof(string));
+				data.set_string (view.filename);
+				while (_opened_files.item_exist (view.item_path))
+					view.item_path += "+";
+				_opened_files.create_item_from_stock (view.item_path, STOCK_FILE, data);
+			}
+		}
+		dialog.destroy ();
+	}
 	
 	private void on_close_document (DocumentView document_view)
 	{
@@ -174,20 +233,19 @@ public class Simple.DocumentManager : GLib.Object
 			message.add_button (STOCK_YES, ResponseType.YES);
 			message.add_button (STOCK_NO, ResponseType.NO);
 			message.add_button (STOCK_CANCEL, ResponseType.CANCEL);
-			switch (message.run ())
-			{
-				case ResponseType.YES:
-					document_view.save ();
-					_documents_panel.remove_view (document_view);
-					break;
-				case ResponseType.NO:
-					_documents_panel.remove_view (document_view);
-					break;
-			}
+			var response = message.run ();
 			message.destroy ();
+			
+			if (response == ResponseType.CANCEL)
+				return;
+			
+			if (response == ResponseType.YES)
+				if (document_view.save_as)
+					on_save_as_document (document_view);
+				else
+					document_view.save ();
 		}
-		else
-			_documents_panel.remove_view (document_view);
+		_documents_panel.remove_view (document_view);
 		if (_configure_manager.text_files_visible)
 			_opened_files.remove_item (document_view.item_path);
 		_views.remove (document_view.filename);

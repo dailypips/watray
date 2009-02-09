@@ -1,3 +1,11 @@
+2009-02-09  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpledocumentview.vala:
+	*  watraysimple/simpledocumentmanager.vala:
+	*  po/es.po:
+
+	Added 'new' and 'save as' support.
+
 2009-02-07  Matias De la Puente  <mfpuente.ar@gmail.com>
 
 	*  watraysimple/simpledocumentmanager.vala:

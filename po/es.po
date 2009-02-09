@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: watray 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-05 14:37-0200\n"
+"POT-Creation-Date: 2009-02-09 12:22-0200\n"
 "PO-Revision-Date: 2008-12-23 12:15-0200\n"
 "Last-Translator: Matias De la Puente <mfpuente.ar@gmail.com>\n"
 "Language-Team: Spanish <mfpuente.ar@gmail.com>\n"
@@ -75,25 +75,35 @@ msgstr "Mostrar archivos de texto abiertos"
 msgid "Text font"
 msgstr "Tipografía del texto"
 
-#: ../watraysimple/simpledocumentmanager.vala:72
 #: ../watraysimple/simpledocumentmanager.vala:73
+#: ../watraysimple/simpledocumentmanager.vala:74
 msgid "Text file"
 msgstr "Archivo de texto"
 
-#: ../watraysimple/simpledocumentmanager.vala:78
-#: ../watraysimple/simpledocumentmanager.vala:89
+#: ../watraysimple/simpledocumentmanager.vala:79
+#: ../watraysimple/simpledocumentmanager.vala:90
 msgid "Opened text files"
 msgstr "Archivos de texto abiertos"
 
-#: ../watraysimple/simpledocumentmanager.vala:123
+#: ../watraysimple/simpledocumentmanager.vala:128
+#, c-format
+msgid "Unsaved text file %i"
+msgstr "Archivo de texto no guardado %i"
+
+#: ../watraysimple/simpledocumentmanager.vala:156
 msgid "Open"
 msgstr "Abrir"
 
-#: ../watraysimple/simpledocumentmanager.vala:129
+#: ../watraysimple/simpledocumentmanager.vala:162
+#: ../watraysimple/simpledocumentmanager.vala:203
 msgid "All files"
 msgstr "Todos los archivos"
 
-#: ../watraysimple/simpledocumentmanager.vala:159
+#: ../watraysimple/simpledocumentmanager.vala:197
+msgid "Save file as"
+msgstr "Guardar archivo como"
+
+#: ../watraysimple/simpledocumentmanager.vala:232
 #, c-format
 msgid "Want to save the document %s?"
 msgstr "¿Desea guardar el documento %s?"
