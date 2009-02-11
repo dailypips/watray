@@ -1,0 +1,9 @@
+[Watray Plugin]
+Module=watraysimple
+Name=simple
+Icon=gtk-file
+Description=A simple plugin
+Authors=Matias De la Puente <mfpuente.ar@gmail.com>;
+Website=http://code.google.com/p/watray/
+License=LGPL
+Copyright=Copyright (C) 2008-2009 Matias De la Puente

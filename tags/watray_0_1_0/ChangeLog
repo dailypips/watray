@@ -1,0 +1,441 @@
+2009-02-11  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  NEWS:
+
+	Update for 0.1.0 release.
+
+2009-02-09  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpledocumentview.vala:
+	*  watraysimple/simpledocumentmanager.vala:
+	*  po/es.po:
+
+	Added 'new' and 'save as' support.
+
+2009-02-07  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpledocumentmanager.vala:
+	*  watraysimple/Makefile.am:
+	*  configure.ac:
+	*  watray/watraypluginmanager.vala:
+	*  watray/Makefile.am:
+
+	Use Gee.HashMap and Gee.ArrayList instead of 
+	GLib.HashTable and GLib.List respectively.
+
+2009-02-06  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpledocumentview.vala:
+	*  watraysimple/simpledocumentmanager.vala:
+	*  watray/watrayproject.vala:
+	*  watray/watrayprojectspanel.vala:
+	*  watray/watraydocumentspanel.vala:
+	*  watray/watraydocumentspanelinterface.vala:
+
+	Show a DocumentView when an item from the projects panel is selected
+	and vice versa.
+
+2009-02-06  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpledocumentmanager.vala:
+
+	Don't open twice or more times the same file, just show 
+	the view of the file.
+
+2009-02-05  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpledocumentview.vala:
+	*  watraysimple/simpledocumentmanager.vala:
+	*  watraysimple/simpleplugin.vala:
+	*  watray/watrayproject.vala:
+	*  watray/watrayprojectspanel.vala:
+	*  watray/watraymainwindow.vala:
+	*  watray/watraydocumentspanel.vala:
+	*  watray/watraydocumentspanelinterface.vala:
+	*  ui/ui.xml:
+	*  po/es.po:
+
+	Added basic support for opened text files in projects panel.
+
+2009-02-04  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayproject.vala:
+
+	Do not create two items with the same path.
+	Improved create_item_from_{stock,pixbuf} methods
+	Added item_exist method.
+
+2009-02-04  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpledocumentmanager.vala:
+	*  watraysimple/Makefile.am:
+	*  watraysimple/simpleplugin.vala:
+
+	Removed Simple.ProjectManager, DocumentManager will take care of
+	the opened files.
+
+2009-02-03  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpledocumentview.vala:
+	*  watraysimple/simpledocumentmanager.vala:
+	*  watraysimple/simpleconfiguremanager.vala:
+	*  watraysimple/Makefile.am:
+	*  watraysimple/simpleplugin.vala:
+	*  watraysimple/simpleprojectmanager.vala:
+	*  watraysimple/simpleconfiguredialog.vala:
+	*  configure.ac:
+	*  watray/watraypreferencemanager.vala:
+	
+	Added configure support for simple plugin.
+	
+	*  po/es.po:
+	*  po/POTFILES.in:
+	*  po/POTFILES.skip:
+
+	Updated spanish translation.
+
+2009-02-03  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watraymainwindow.vala:
+
+	Added website to the about dialog.
+
+2009-02-03  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watraymainwindow.vala:
+	*  ui/ui.xml:
+
+	Added about dialog and placeholders in ui.
+
+2009-02-02  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayproject.vala:
+	*  watray/watrayprojectspanel.vala:
+
+	Added menu support to project's items.
+
+2009-02-02  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayprojectspanel.vala:
+
+	Improved item and project selection.
+
+2009-02-02  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayprojectspanel.vala:
+
+	Added Project.selected and Project.item_selected signals.
+
+2009-02-02  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayproject.vala:
+
+	Added get_items method to return a list of child items.
+
+2009-02-01  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayproject.vala:
+	*  watray/watrayprojectspanel.vala:
+	*  watray/Makefile.am:
+
+	Use Value instead of ItemInfo to hold the data of the item.
+
+2009-01-30  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpleplugin.vala:
+	*  watray/watraymainwindow.vala:
+	*  watray/watraymainwindowinterface.vala:
+	*  ui/ui.xml:
+	*  po/es.po:
+
+	Improve menu and toolbar managment using UIManager.
+
+2009-01-27  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpledocumentview.vala:
+
+	Changed TextView font to Monospace 10 by default.
+
+2009-01-26  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  configure.ac:
+	*  watray-1.0.pc.in:
+	*  Makefile.am:
+
+	Added watray-1.0.pc for pkg-config
+
+2009-01-26  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayproject.vala:
+	*  watray/watrayprojectspanel.vala:
+	*  watray/watrayiteminfo.vala:
+	*  watray/Makefile.am:
+
+	Use ItemInfo instead of void* to hold the data of the item.
+
+2009-01-25  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayproject.vala:
+	
+	Added empty_item method.
+	Improved remove_item and remove_project methods using empty_item.
+	
+	*  watray/watraypluginmanagerview.vala:
+
+	Use get_iter_from_string instead of a new TreePath.
+
+2009-01-25  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayplugininterface.vala:
+	*  watray/watraypluginmanagerview.vala:
+	*  watray/watrayplugin.vala:
+
+	Added configure support for plugins.
+
+2009-01-25  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayproject.vala:
+	*  watray/watrayprojectspanel.vala:
+	*  watray/watrayprojectspanelinterface.vala:
+
+	Added remove_project to the projects panel.
+
+2009-01-24  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  po/es.po:
+
+	Updated spanish translation.
+
+2009-01-24  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpleplugin.vala:
+	
+	Remove menu items when the plugin is deactivated.
+	
+	*  watray/watraypreferencemanager.vala:
+	*  watray/watraymainwindow.vala:
+	*  watray/watraypluginmanagerview.vala:
+	*  watray/watraypreferencedialog.vala:
+
+	Added plugins activated list support using gconf.
+
+2009-01-22  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayplugininfo.vala:
+	*  watray/watrayplugin.vala:
+
+	Code cleanup.
+
+2009-01-22  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simple.watrayplugin:
+	
+	Added Website and Copyright.
+	
+	*  watray/watraypreferencemanager.vala:
+	
+	Added basic activated plugins list
+	
+	*  watray/watrayplugininfo.vala:
+	
+	Added website and copyright properties. Return authors as an array.
+	
+	*  watray/watraymainwindow.vala:
+	*  watray/watraypluginmanagerview.vala:
+	
+	Added about plugin dialog.
+	
+	*  watray/watraypluginmanager.vala:
+	
+	Get plugin by name.
+	
+2009-01-20  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayproject.vala:
+	
+	Added remove_item.
+	
+2009-01-20  Matias De la Puente  <mfpuente.ar@gmail.com>
+	
+	*  watray/watraypreferencemanager.vala:
+	
+	Added activated plugins key to gconf.
+	
+2009-01-20  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayproject.vala:
+	*  watray/watrayprojectspanel.vala:
+	*  watray/watrayprojectspanelinterface.vala:
+	
+	Better project managment.
+
+2009-01-16  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayprojectspanel.vala:
+	*  watray/watrayplugininfo.vala:
+	*  watray/watraymainwindow.vala:
+	*  watray/watraypluginmanagerview.vala:
+	*  watray/watraypluginmanager.vala:
+	*  watray/watrayplugin.vala:
+	
+	Code cleanup.
+	
+	*  po/es.po:
+
+	Update spanish translation.
+
+2009-01-16  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  po/es.po:
+
+	Update spanish translation of the about and configure plugin buttons.
+
+2009-01-16  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  configure.ac:
+	*  watray/watraypreferencemanager.vala:
+	*  watray/watrayprojectspanel.vala:
+	*  watray/watraymainwindow.vala:
+	*  watray/Makefile.am:
+
+	Added basic support for gconf.
+
+	*  watray/watraypluginmanagerview.vala:
+
+	Added about and configure plugin buttons.
+
+2009-01-15  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	* pixmaps/:
+	* configure.ac:
+	* Makefile.am:
+	
+	Remove pixmaps files. Not used for now
+
+2009-01-13  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simple.watrayplugin:
+	*  watray/watrayplugininfo.vala:
+	*  watray/watraypluginmanagerview.vala:
+
+	Added support for stock-id icons in plugins.
+	Add icon field in watraysimple plugin information file.
+
+2009-01-13  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watraypluginmanagerview.vala:
+	
+	Fix creation year.
+	
+	*  po/es.po:
+	*  po/POTFILES.skip:
+	*  po/POTFILES.in:
+
+	Added spanish translation of PluginManagerView and PreferenceDialog
+
+2009-01-13  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watraymainwindow.vala:
+	*  watray/watraypluginmanagerview.vala:
+	*  watray/watraypluginmanager.vala:
+	*  watray/watraypreferencedialog.vala:
+	*  watray/Makefile.am:
+
+	Added preferences dialog with plugins tab.
+
+2009-01-12  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watray/watrayprojectspanel.vala:
+	*  watray/watrayprojectspanelinterface.vala:
+
+	Added error handling to the project panel to check if the project was
+	added to the projects panel and if the item's path is correct.
+
+2009-01-12  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	*  watraysimple/simpledocumentview.vala:
+	*  watraysimple/Makefile.am:
+	*  watraysimple/simpleplugin.vala:
+	*  watraysimple/simpleprojectmanager.vala:
+	*  configure.ac:
+	*  watray/watrayproject.vala:
+	*  watray/watrayprojectspanel.vala:
+	*  watray/watraydocumentview.vala:
+	*  watray/watraydocumentspanel.vala:
+	*  watray/watrayprojectspanelinterface.vala:
+	*  watray/Makefile.am:
+	*  watray/watraydocumentspanelinterface.vala:
+
+	Start basic support for a project manager.
+
+2009-01-08  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	* watray/watrayprojectspanelitem.vala:
+	* watray/watrayprojectspanelinterface.vala:
+	* watray/Makefile.am
+	* watray/watrayprojectspanelproject.vala
+	
+	Replace Watray.ProjectsPanelItem with Watray.ProjectsPanelProject.
+	
+2009-01-08  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	* watray/watraydocumentspanel.vala:
+	
+	Fix remove_view method due to compiler update
+	
+2009-01-07  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	* watray/watrayprojectspanel.vala:
+	* watray/watraymainwindow.vala:
+	
+	Added title and body to the projects panel.
+	Update the toggle option on the view menu when the panel hides.
+	
+2009-01-07  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	* watray/watrayprojectspanelitem.vala:
+	* watray/watrayprojectspanel.vala:
+	* watray/watraypluginmanager.vala:
+	* watray/watrayplugininfo.vala:
+	* watray/watrayprojectspanelinterface.vala:
+	* watray/watraymainwindow.vala:
+	* watray/watraydocumentspanelview.vala:
+	* watray/watraymainwindowinterface.vala:
+	* watray/watrayplugin.vala:
+	* watray/watrayplugininterface.vala:
+	* watray/watraydocumentspanel.vala:
+	* watray/watraydocumentspanelinterface.vala:
+	* watraysimple/simpleplugin.vala:
+	* watraysimple/simpledocumentmanager.vala:
+	* watraysimple/simpledocumentview.vala:
+	
+	Added LGPL license
+	
+	* watray/watraymainwindow.vala:
+	
+	Start support for show/hide projects panel
+	
+	* ui/ui.xml:
+	
+	Added view menu
+	
+2009-01-06  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	* watraysimple/simpledocumentmanager.vala
+	* watraysimple/simpleplugin.vala
+	* po/es_AR.po
+	* po/POTFILES.skip
+	* po/POTFILES.in
+	
+	Added internationalization support for simpleplugin
+	
+2009-01-05  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	* README:
+	
+	Add README file
+	
+2009-01-05  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	Initial import
+	

@@ -1,0 +1,20 @@
+2009-01-07  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	* POTFILES.in:
+	* POTFILES.skip:
+	
+	Added projects panel translation.
+	
+	* es.po:
+	
+	Updated spanish translation.
+	
+2009-01-07  Matias De la Puente  <mfpuente.ar@gmail.com>
+
+	* LINGUAS:
+	* es_AR.po:
+	* es.po:
+	
+	Changed Argentinian Spanish to Spanish translation.
+	Update spanish translation.
+	
