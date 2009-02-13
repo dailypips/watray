@@ -1,4 +1,4 @@
-AC_INIT(Watray, 0.1.0)
+AC_INIT([watray], [0.2.0], [mfpuente.ar@gmail.com], [watray])
 AC_CONFIG_SRCDIR([Makefile.am])
 AC_CONFIG_HEADERS(config.h)
 AM_INIT_AUTOMAKE([dist-bzip2])
