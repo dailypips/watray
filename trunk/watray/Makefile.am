@@ -40,6 +40,7 @@ watrayinclude_HEADERS = \
 	watraydocumentspanelinterface.h \
 	watraydocumentview.h \
 	watraymainwindowinterface.h \
+	watrayplugininterface.h \
 	watrayproject.h \
 	watrayprojectspanelinterface.h \
 	$(NULL)
@@ -52,9 +53,13 @@ watray_LDADD = \
 	$(WATRAY_LIBS) \
 	$(NULL)
 
+watrayvapidir = ${pkgdatadir}/vapi
+watrayvapi_DATA = watray-1.0.vapi
+
 EXTRA_DIST = \
 	$(watray_VALASOURCES) \
 	watray.vala.stamp \
+	watray-1.0.vapi \
 	$(NULL)
 
 DISTCLEANFILES = \
