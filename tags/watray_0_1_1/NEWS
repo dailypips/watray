@@ -1,0 +1,13 @@
+Watray 0.1.1
+============
+
+ * Fix bug release
+
+Watray 0.1.0
+============
+
+ * Support for project manager
+ * Support for document manager
+ * Support for menu and toolbar
+ * Support for plugin manager
+ * Implemented a simple text file editor as a plugin

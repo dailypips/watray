@@ -1,0 +1,112 @@
+# Spanish translation for watray
+# Copyright (C) 2008-2009 Matias De la Puente
+# This file is distributed under the same license as the watray package.
+# Matias De la Puente <mfpuente.ar@gmail.com>, 2008-2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: watray 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-02-09 12:22-0200\n"
+"PO-Revision-Date: 2008-12-23 12:15-0200\n"
+"Last-Translator: Matias De la Puente <mfpuente.ar@gmail.com>\n"
+"Language-Team: Spanish <mfpuente.ar@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../watray/watraymainwindow.vala:29
+msgid "_File"
+msgstr "_Archivo"
+
+#: ../watray/watraymainwindow.vala:35
+msgid "_Edit"
+msgstr "_Editar"
+
+#: ../watray/watraymainwindow.vala:44
+msgid "_View"
+msgstr "_Ver"
+
+#: ../watray/watraymainwindow.vala:45
+msgid "_Tools"
+msgstr "_Herramientas"
+
+#: ../watray/watraymainwindow.vala:46
+msgid "_Help"
+msgstr "Ay_uda"
+
+#: ../watray/watraymainwindow.vala:56
+msgid "Projects Panel"
+msgstr "Panel de proyectos"
+
+#: ../watray/watrayprojectspanel.vala:52
+msgid "Projects"
+msgstr "Proyectos"
+
+#: ../watray/watraypluginmanagerview.vala:46
+msgid "Loaded Plugins"
+msgstr "Complementos cargados"
+
+#: ../watray/watraypluginmanagerview.vala:84
+msgid "About plugin"
+msgstr "Acerca del complemento"
+
+#: ../watray/watraypluginmanagerview.vala:89
+msgid "Configure plugin"
+msgstr "Configurar complemento"
+
+#: ../watray/watraypreferencedialog.vala:28
+msgid "Preferences"
+msgstr "Preferencias"
+
+#: ../watray/watraypreferencedialog.vala:39
+msgid "Plugins"
+msgstr "Complementos"
+
+#: ../watraysimple/simpleconfiguredialog.vala:34
+msgid "Text font:"
+msgstr "Tipografía del texto:"
+
+#: ../watraysimple/simpleconfiguremanager.vala:65
+msgid "Show opened text files"
+msgstr "Mostrar archivos de texto abiertos"
+
+#: ../watraysimple/simpleconfiguremanager.vala:76
+msgid "Text font"
+msgstr "Tipografía del texto"
+
+#: ../watraysimple/simpledocumentmanager.vala:73
+#: ../watraysimple/simpledocumentmanager.vala:74
+msgid "Text file"
+msgstr "Archivo de texto"
+
+#: ../watraysimple/simpledocumentmanager.vala:79
+#: ../watraysimple/simpledocumentmanager.vala:90
+msgid "Opened text files"
+msgstr "Archivos de texto abiertos"
+
+#: ../watraysimple/simpledocumentmanager.vala:128
+#, c-format
+msgid "Unsaved text file %i"
+msgstr "Archivo de texto no guardado %i"
+
+#: ../watraysimple/simpledocumentmanager.vala:156
+msgid "Open"
+msgstr "Abrir"
+
+#: ../watraysimple/simpledocumentmanager.vala:162
+#: ../watraysimple/simpledocumentmanager.vala:203
+msgid "All files"
+msgstr "Todos los archivos"
+
+#: ../watraysimple/simpledocumentmanager.vala:197
+msgid "Save file as"
+msgstr "Guardar archivo como"
+
+#: ../watraysimple/simpledocumentmanager.vala:232
+#, c-format
+msgid "Want to save the document %s?"
+msgstr "¿Desea guardar el documento %s?"
+
+#~ msgid "Select text font:"
+#~ msgstr "Seleccione tipografía del texto:"
