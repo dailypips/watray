@@ -59,7 +59,7 @@ public class Simple.DocumentView : Watray.DocumentView
 		var scrolled_window = new ScrolledWindow (null, null);
 		scrolled_window.add (_text_view);
 		scrolled_window.set_policy (PolicyType.AUTOMATIC, PolicyType.AUTOMATIC);
-		this.pack_start_defaults (scrolled_window);
+		this.pack_start (scrolled_window, true, true, 5);
 
 		this.copy_action += () => {
 			var clipboard = _text_view.get_clipboard (Gdk.SELECTION_CLIPBOARD);

@@ -137,7 +137,7 @@ internal class Watray.MainWindow : Window, IMainWindow
 		var vbox = new VBox (false, 0);
 		vbox.pack_start (menubar, false, false, 0);
 		vbox.pack_start (toolbar, false, false, 0);
-		vbox.pack_start_defaults (hpaned);
+		vbox.pack_start (hpaned, true, true, 5);
 		vbox.show ();
 
 		this.add (vbox);

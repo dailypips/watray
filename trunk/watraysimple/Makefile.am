@@ -7,9 +7,9 @@ SUBDIRS = \
 
 AM_CPPFLAGS = \
 	$(WATRAYSIMPLE_CFLAGS) \
+	-I$(top_srcdir)/watray \
 	-DPACKAGE_DATADIR=\""$(pkgdatadir)"\" \
 	-include $(CONFIG_HEADER) \
-	-I $(top_srcdir)/src \
 	$(NULL)
 
 BUILT_SOURCES = libwatraysimple.vala.stamp
@@ -30,11 +30,10 @@ libwatraysimple_la_VALASOURCES = \
 
 libwatraysimple_la_SOURCES = \
 	$(libwatraysimple_la_VALASOURCES:.vala=.c) \
-	$(libwatraysimple_la_VALASOURCES:.vala=.h) \
 	$(NULL)
 
 libwatraysimple.vala.stamp: $(libwatraysimple_la_VALASOURCES)
-	$(VALAC) -C  --pkg config --pkg gtk+-2.0 --pkg gconf-2.0 --pkg watray-1.0 --pkg gee-1.0 --vapidir $(top_srcdir)/watray --basedir $(top_srcdir) --vapidir $(top_srcdir)/vapi $^
+	$(VALAC) -C  --pkg config --pkg gtk+-2.0 --pkg gconf-2.0 --pkg watray-1.0 --pkg gee-1.0 --vapidir $(top_srcdir)/watray --vapidir $(top_srcdir)/vapi $^
 	touch $@
 
 libwatraysimple_la_LDFLAGS = \
