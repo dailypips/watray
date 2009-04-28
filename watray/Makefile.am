@@ -31,29 +31,23 @@ watray_VALASOURCES = \
 
 watray_SOURCES = \
 	$(watray_VALASOURCES:.vala=.c) \
-	$(watray_VALASOURCES:.vala=.h) \
 	$(NULL)
 
-watrayincludedir = $(includedir)/watray-1.0/watray
+watrayincludedir = $(includedir)/watray-1.0
 
 watrayinclude_HEADERS = \
-	watraydocumentspanelinterface.h \
-	watraydocumentview.h \
-	watraymainwindowinterface.h \
-	watrayplugininterface.h \
-	watrayproject.h \
-	watrayprojectspanelinterface.h \
+	watray.h \
 	$(NULL)
 
 watray.vala.stamp: $(watray_VALASOURCES)
-	$(VALAC) -C --pkg gtk+-2.0 --pkg gdk-2.0 --pkg gmodule-2.0 --pkg config --pkg gconf-2.0 --pkg gee-1.0 --basedir $(top_srcdir) --library watray-1.0 --vapidir $(top_srcdir)/vapi $^
+	$(VALAC) -C --pkg gtk+-2.0 --pkg gdk-2.0 --pkg gmodule-2.0 --pkg config --pkg gconf-2.0 --pkg gee-1.0 --basedir $(top_srcdir) -H watray.h --library watray-1.0 --vapidir $(top_srcdir)/vapi $^
 	touch $@
 
 watray_LDADD = \
 	$(WATRAY_LIBS) \
 	$(NULL)
 
-watrayvapidir = ${pkgdatadir}/vapi
+watrayvapidir = ${datadir}/vala/vapi
 watrayvapi_DATA = watray-1.0.vapi
 
 EXTRA_DIST = \
