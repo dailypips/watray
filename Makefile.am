@@ -42,13 +42,13 @@ EXTRA_DIST = \
 	watray-1.0.pc.in \
 	intltool-extract.in \
 	intltool-merge.in \
-	intltool-update.in\
+	intltool-update.in \
 	$(NULL)
 
 DISTCLEANFILES = \
 	intltool-extract \
 	intltool-merge \
-	intltool-update
+	intltool-update \
 	po/.intltool-merge-cache \
 	$(NULL)
 
