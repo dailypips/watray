@@ -22,8 +22,23 @@ watraydoc_DATA = \
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = watray-1.0.pc
 
+dist-hook: gen-ChangeLog
+
+gen_start_date = 2009-04-27
+.PHONY: gen-ChangeLog
+gen-ChangeLog:
+	if test -d .git; then						\
+	  $(top_srcdir)/gitlog-to-changelog				\
+	    --since=$(gen_start_date) > $(distdir)/cl-t;		\
+	  rm -f $(distdir)/ChangeLog;					\
+	  mv $(distdir)/cl-t $(distdir)/ChangeLog;			\
+	fi
+
 EXTRA_DIST = \
 	$(watraydoc_DATA) \
+	ChangeLog-pre-0.2.0 \
+	gitlog-to-changelog \
+	MAINTAINERS \
 	watray-1.0.pc.in \
 	intltool-extract.in \
 	intltool-merge.in \
